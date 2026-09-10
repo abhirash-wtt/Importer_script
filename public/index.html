@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DDO++ Attendance</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --panel: #fffdf8;
+      --ink: #1f1c16;
+      --muted: #6d6558;
+      --line: #e4dccf;
+      --accent: #1f4e46;
+      --accent-2: #c46b2f;
+      --ok: #2f6b4f;
+      --warn: #8a5a12;
+      --bad: #8f2d2d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font: 14px/1.45 "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+    header {
+      background: var(--accent);
+      color: #f7f3ea;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    header h1 { margin: 0; font-size: 18px; font-weight: 600; }
+    header p { margin: 2px 0 0; font-size: 12px; opacity: 0.85; }
+    .wrap { padding: 20px 24px 40px; }
+    .toolbar, .stats, .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+    nav button, .toolbar button {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    nav button.active, .toolbar button.primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    select, input {
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 8px 10px;
+      border-radius: 4px;
+      color: var(--ink);
+    }
+    .stat {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      min-width: 140px;
+      padding: 12px 14px;
+    }
+    .stat b { display: block; font-size: 22px; }
+    .stat span { color: var(--muted); font-size: 12px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--panel);
+      border: 1px solid var(--line);
+    }
+    th, td {
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+      vertical-align: top;
+    }
+    th { font-weight: 600; background: #f7f1e6; }
+    .pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-size: 11px;
+      border: 1px solid var(--line);
+    }
+    .PRESENT, .WFH { color: var(--ok); }
+    .ABSENT { color: var(--bad); }
+    .LEAVE, .OTHER { color: var(--warn); }
+    .error { color: var(--bad); }
+    .note { color: var(--muted); font-size: 12px; margin: 0 0 12px; }
+    .hidden { display: none; }
+    #login {
+      max-width: 420px;
+      margin: 80px auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 24px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>DDO++ Attendance</h1>
+      <p>Agra · Noida · Hyderabad</p>
+    </div>
+    <div id="headerMeta"></div>
+  </header>
+
+  <div id="login">
+    <h2>Connect to DDO++ API</h2>
+    <p class="note">Uses the integration token from the local POC API. Default token is already filled for this demo.</p>
+    <div class="toolbar">
+      <input id="token" type="password" style="flex:1" />
+      <button class="primary" id="connect">Open module</button>
+    </div>
+    <p id="loginError" class="error"></p>
+  </div>
+
+  <div id="app" class="wrap hidden">
+    <div class="filters">
+      <label>Location
+        <select id="location"></select>
+      </label>
+      <label>From <input id="from" type="date" /></label>
+      <label>To <input id="to" type="date" /></label>
+      <button class="primary" id="apply">Apply</button>
+    </div>
+    <nav id="tabs">
+      <button data-view="dashboard" class="active">Dashboard</button>
+      <button data-view="daily">Daily Attendance</button>
+      <button data-view="employee">Employee Attendance</button>
+      <button data-view="monthly">Monthly Attendance</button>
+      <button data-view="missing">Missing Punches</button>
+      <button data-view="exceptions">Attendance Exceptions</button>
+      <button data-view="employees">Employees</button>
+      <button data-view="history">Import History</button>
+    </nav>
+    <p class="note" id="rangeNote"></p>
+    <div id="stats" class="stats"></div>
+    <div id="content"></div>
+  </div>
+
+  <script>
+    const state = {
+      token: localStorage.getItem("ddo_token") || "dev-ddo-attendance-token",
+      view: "dashboard",
+      locations: [],
+      dashboard: null,
+      attendance: [],
+      employees: [],
+      exceptions: null,
+      batches: [],
+    };
+
+    document.getElementById("token").value = state.token;
+
+    async function api(path) {
+      const res = await fetch(path, { headers: { Authorization: "Bearer " + state.token } });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || res.statusText);
+      return data;
+    }
+
+    function qs() {
+      const location = document.getElementById("location").value || "ALL";
+      const from = document.getElementById("from").value;
+      const to = document.getElementById("to").value;
+      const params = new URLSearchParams({ location_code: location });
+      if (from) params.set("from", from);
+      if (to) params.set("to", to);
+      return params.toString();
+    }
+
+    function pill(text, cls) {
+      return '<span class="pill ' + (cls || "") + '">' + escapeHtml(text) + "</span>";
+    }
+
+    function escapeHtml(value) {
+      return String(value == null ? "" : value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
+    function table(headers, rows) {
+      return "<table><thead><tr>" +
+        headers.map((h) => "<th>" + h + "</th>").join("") +
+        "</tr></thead><tbody>" +
+        (rows.length ? rows.join("") : '<tr><td colspan="' + headers.length + '">No rows for this filter.</td></tr>') +
+        "</tbody></table>";
+    }
+
+    function renderStats(d) {
+      const items = [
+        ["Employees", d.total_employees],
+        ["Present", d.present],
+        ["Absent", d.absent],
+        ["Leave", d.leave],
+        ["Week Off", d.week_off],
+        ["WFH", d.wfh],
+        ["Missing punches", d.missing_punches],
+        ["Working hours", d.working_hours || "0:00"],
+      ];
+      document.getElementById("stats").innerHTML = items.map(
+        ([label, value]) => '<div class="stat"><b>' + escapeHtml(value) + "</b><span>" + label + "</span></div>"
+      ).join("");
+    }
+
+    function render() {
+      const d = state.dashboard || {};
+      renderStats(d);
+      document.getElementById("rangeNote").textContent =
+        (d.from && d.to ? "Period " + d.from + " to " + d.to + " · " : "") +
+        (d.record_count || 0) + " attendance records · location " + (d.location_code || "ALL");
+      const view = state.view;
+      const content = document.getElementById("content");
+
+      if (view === "dashboard") {
+        content.innerHTML = table(
+          ["Location", "Employees", "Present", "Absent", "Leave", "Week Off", "WFH", "Missing punches"],
+          (d.by_location || []).map((row) =>
+            "<tr><td>" + escapeHtml(row.location_name) + "</td><td>" + row.total_employees +
+            "</td><td>" + row.present + "</td><td>" + row.absent + "</td><td>" + row.leave +
+            "</td><td>" + row.week_off + "</td><td>" + row.wfh + "</td><td>" + row.missing_punches + "</td></tr>"
+          )
+        );
+        return;
+      }
+
+      if (view === "daily") {
+        content.innerHTML = table(
+          ["Date", "Location", "Employee", "Code", "Status", "In", "Out", "Hours", "Source"],
+          state.attendance.slice(0, 500).map((row) =>
+            "<tr><td>" + row.attendance_date + "</td><td>" + row.location_code +
+            "</td><td>" + escapeHtml(row.employee_name) + "</td><td>" + escapeHtml(row.employee_code) +
+            "</td><td>" + pill(row.status_display || row.status, row.status_category) +
+            "</td><td>" + (row.in_time || "") + "</td><td>" + (row.out_time || "") +
+            "</td><td>" + (row.working_hours || "") + "</td><td>" + escapeHtml(row.source_file || "") + "</td></tr>"
+          )
+        );
+        return;
+      }
+
+      if (view === "employee") {
+        const grouped = {};
+        for (const row of state.attendance) {
+          const key = row.location_code + "|" + row.employee_code;
+          grouped[key] = grouped[key] || {
+            name: row.employee_name, code: row.employee_code, location: row.location_code, days: 0, present: 0, absent: 0, leave: 0
+          };
+          grouped[key].days += 1;
+          if (row.status_category === "PRESENT" || row.status_category === "WFH") grouped[key].present += 1;
+          if (row.status_category === "ABSENT") grouped[key].absent += 1;
+          if (row.status_category === "LEAVE") grouped[key].leave += 1;
+        }
+        content.innerHTML = table(
+          ["Location", "Employee", "Code", "Days", "Present/WFH", "Absent", "Leave"],
+          Object.values(grouped).map((row) =>
+            "<tr><td>" + row.location + "</td><td>" + escapeHtml(row.name) + "</td><td>" + escapeHtml(row.code) +
+            "</td><td>" + row.days + "</td><td>" + row.present + "</td><td>" + row.absent + "</td><td>" + row.leave + "</td></tr>"
+          )
+        );
+        return;
+      }
+
+      if (view === "monthly") {
+        content.innerHTML = table(
+          ["Location", "Employees", "Present", "Absent", "Leave", "Week Off", "WFH", "Other"],
+          (d.by_location || []).map((row) =>
+            "<tr><td>" + escapeHtml(row.location_name) + "</td><td>" + row.total_employees +
+            "</td><td>" + row.present + "</td><td>" + row.absent + "</td><td>" + row.leave +
+            "</td><td>" + row.week_off + "</td><td>" + row.wfh + "</td><td>" + row.other + "</td></tr>"
+          )
+        );
+        return;
+      }
+
+      if (view === "missing") {
+        const rows = (state.exceptions && state.exceptions.missing_punches) || [];
+        content.innerHTML = table(
+          ["Date", "Location", "Employee", "Code", "Status", "In", "Out"],
+          rows.map((row) =>
+            "<tr><td>" + (row.attendance_date || "") + "</td><td>" + row.location_code +
+            "</td><td>" + escapeHtml(row.employee_name) + "</td><td>" + escapeHtml(row.employee_code) +
+            "</td><td>" + escapeHtml(row.status) + "</td><td>" + (row.in_time || "") + "</td><td>" + (row.out_time || "") + "</td></tr>"
+          )
+        );
+        return;
+      }
+
+      if (view === "exceptions") {
+        const unknown = (state.exceptions && state.exceptions.unknown_statuses) || [];
+        const unmapped = (state.exceptions && state.exceptions.unmapped_employees) || [];
+        const quality = (state.exceptions && state.exceptions.data_quality_issues) || [];
+        content.innerHTML =
+          "<h3>Unknown status codes (HR definition required)</h3>" +
+          table(["Location", "Employee", "Date", "Status"], unknown.map((row) =>
+            "<tr><td>" + row.location_code + "</td><td>" + escapeHtml(row.employee_name) + "</td><td>" +
+            (row.attendance_date || "") + "</td><td>" + escapeHtml(row.status) + "</td></tr>"
+          )) +
+          "<h3>Unmapped employees</h3>" +
+          table(["Location", "Name", "Provisional code"], unmapped.map((row) =>
+            "<tr><td>" + row.location_code + "</td><td>" + escapeHtml(row.employee_name) + "</td><td>" +
+            escapeHtml(row.employee_code) + "</td></tr>"
+          )) +
+          "<h3>Data quality issues</h3>" +
+          table(["Location", "Employee", "Date", "Reason"], quality.map((row) =>
+            "<tr><td>" + (row.location_code || "") + "</td><td>" + escapeHtml(row.employee_name || row.employee_code || "") +
+            "</td><td>" + (row.date || "") + "</td><td>" + escapeHtml(row.reason || "") + "</td></tr>"
+          ));
+        return;
+      }
+
+      if (view === "employees") {
+        content.innerHTML = table(
+          ["Location", "Code", "Name", "Identity"],
+          state.employees.map((row) =>
+            "<tr><td>" + row.location_code + "</td><td>" + escapeHtml(row.employee_code) +
+            "</td><td>" + escapeHtml(row.employee_name) + "</td><td>" + (row.identity_status || "") + "</td></tr>"
+          )
+        );
+        return;
+      }
+
+      if (view === "history") {
+        content.innerHTML = table(
+          ["Batch", "Location", "File", "Period", "Status", "Inserted", "Updated", "Failed"],
+          state.batches.map((row) =>
+            "<tr><td>" + row.batch_id + "</td><td>" + row.location_code + "</td><td>" + escapeHtml(row.source_file || "") +
+            "</td><td>" + (row.report_from || "") + " → " + (row.report_to || "") +
+            "</td><td>" + pill(row.status, row.status === "SUCCESS" ? "PRESENT" : "ABSENT") +
+            "</td><td>" + row.records_inserted + "</td><td>" + row.records_updated + "</td><td>" + row.records_failed + "</td></tr>"
+          )
+        );
+      }
+    }
+
+    async function refresh() {
+      const query = qs();
+      const [dash, attendance, employees, exceptions, history] = await Promise.all([
+        api("/api/dashboard?" + query),
+        api("/api/attendance?" + query),
+        api("/api/employees?" + query),
+        api("/api/exceptions"),
+        api("/api/import-history"),
+      ]);
+      state.dashboard = dash.dashboard;
+      state.attendance = attendance.records || [];
+      state.employees = employees.employees || [];
+      state.exceptions = exceptions;
+      state.batches = history.batches || [];
+      if (state.dashboard.from) document.getElementById("from").value = state.dashboard.from;
+      if (state.dashboard.to) document.getElementById("to").value = state.dashboard.to;
+      render();
+    }
+
+    async function connect() {
+      state.token = document.getElementById("token").value.trim();
+      document.getElementById("loginError").textContent = "";
+      try {
+        const locations = await api("/api/locations");
+        state.locations = locations.locations;
+        localStorage.setItem("ddo_token", state.token);
+        document.getElementById("login").classList.add("hidden");
+        document.getElementById("app").classList.remove("hidden");
+        const select = document.getElementById("location");
+        select.innerHTML = state.locations.map((row) =>
+          '<option value="' + row.location_code + '">' + row.location_name + "</option>"
+        ).join("");
+        await refresh();
+      } catch (err) {
+        document.getElementById("loginError").textContent = err.message;
+      }
+    }
+
+    document.getElementById("connect").addEventListener("click", connect);
+    document.getElementById("apply").addEventListener("click", () => refresh().catch((err) => alert(err.message)));
+    document.getElementById("tabs").addEventListener("click", (event) => {
+      const button = event.target.closest("button");
+      if (!button) return;
+      state.view = button.dataset.view;
+      document.querySelectorAll("#tabs button").forEach((el) => el.classList.toggle("active", el === button));
+      render();
+    });
+  </script>
+</body>
+</html>

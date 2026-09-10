@@ -1,0 +1,686 @@
+{
+  "batch_id": "711451bd",
+  "file_name": "Hyd Aug Rep.xls",
+  "location": "HYD",
+  "status": "SUCCESS",
+  "error": null,
+  "period": {
+    "label": "August 2026",
+    "start": "2026-08-01",
+    "end": "2026-08-31"
+  },
+  "employees_failed": 0,
+  "data_quality_issues": 130,
+  "attendance_upserted": 1730,
+  "failures": [],
+  "issues": [
+    {
+      "employee_code": "202513",
+      "date": "2026-08-08",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-09",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-10",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-11",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-12",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-13",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-14",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-15",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-16",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-17",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-18",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-19",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-20",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-21",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-22",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-23",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-24",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-25",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-26",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-27",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-28",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-29",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-30",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202513",
+      "date": "2026-08-31",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202575",
+      "date": "2026-08-01",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202575",
+      "date": "2026-08-02",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202575",
+      "date": "2026-08-03",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202575",
+      "date": "2026-08-04",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202575",
+      "date": "2026-08-05",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202575",
+      "date": "2026-08-06",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202575",
+      "date": "2026-08-07",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202575",
+      "date": "2026-08-08",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202575",
+      "date": "2026-08-09",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202575",
+      "date": "2026-08-10",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202575",
+      "date": "2026-08-11",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202575",
+      "date": "2026-08-12",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202575",
+      "date": "2026-08-13",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202575",
+      "date": "2026-08-14",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202575",
+      "date": "2026-08-15",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202575",
+      "date": "2026-08-16",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202575",
+      "date": "2026-08-17",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202575",
+      "date": "2026-08-18",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "202575",
+      "date": "2026-08-19",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-03",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-04",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-05",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-06",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-07",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-08",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-09",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-10",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-11",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-12",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-13",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-14",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-15",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-16",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-17",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-18",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-19",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-20",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-21",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-22",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-23",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-24",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-25",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-26",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-27",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-28",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-29",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-30",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23022478",
+      "date": "2026-08-31",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-08",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-09",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-10",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-11",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-12",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-13",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-14",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-15",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-16",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-17",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-18",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-19",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-20",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-21",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-22",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-23",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-24",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-25",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-26",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-27",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-28",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-29",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-30",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "23052509",
+      "date": "2026-08-31",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-08",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-09",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-10",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-11",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-12",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-13",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-14",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-15",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-16",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-17",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-18",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-19",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-20",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-21",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-22",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-23",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-24",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-25",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-26",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-27",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-28",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-29",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-30",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012795",
+      "date": "2026-08-31",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012797",
+      "date": "2026-08-22",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012797",
+      "date": "2026-08-23",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012797",
+      "date": "2026-08-24",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012797",
+      "date": "2026-08-25",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012797",
+      "date": "2026-08-26",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012797",
+      "date": "2026-08-27",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012797",
+      "date": "2026-08-28",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012797",
+      "date": "2026-08-29",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012797",
+      "date": "2026-08-30",
+      "reason": "Missing attendance status"
+    },
+    {
+      "employee_code": "25012797",
+      "date": "2026-08-31",
+      "reason": "Missing attendance status"
+    }
+  ],
+  "api_result": {
+    "ok": true,
+    "status_code": 200,
+    "attempt": 1,
+    "response": {
+      "ok": true,
+      "batch_id": "711451bd",
+      "status": "SUCCESS",
+      "location_code": "HYD",
+      "records_processed": 1730,
+      "records_inserted": 0,
+      "records_updated": 1730,
+      "records_failed": 0,
+      "unknown_status_count": 32,
+      "data_quality_issue_count": 0,
+      "failures": []
+    }
+  }
+}

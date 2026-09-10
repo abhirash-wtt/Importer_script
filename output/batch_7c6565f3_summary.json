@@ -1,0 +1,48 @@
+{
+  "batch_id": "7c6565f3",
+  "file_name": "NOIDA attendance report august.xls",
+  "location": "NOIDA",
+  "status": "SUCCESS",
+  "error": null,
+  "period": {
+    "label": "August 2026",
+    "start": "2026-07-27",
+    "end": "2026-08-25"
+  },
+  "employees_failed": 0,
+  "data_quality_issues": 2,
+  "attendance_upserted": 570,
+  "failures": [],
+  "issues": [
+    {
+      "employee_code": "UNMAPPED:shikhar",
+      "employee_name": "Shikhar",
+      "date": null,
+      "reason": "Missing employee_code; name-based identity used"
+    },
+    {
+      "employee_code": "UNMAPPED:kapil",
+      "employee_name": "Kapil",
+      "date": null,
+      "reason": "Missing employee_code; name-based identity used"
+    }
+  ],
+  "api_result": {
+    "ok": true,
+    "status_code": 200,
+    "attempt": 1,
+    "response": {
+      "ok": true,
+      "batch_id": "7c6565f3",
+      "status": "SUCCESS",
+      "location_code": "NOIDA",
+      "records_processed": 570,
+      "records_inserted": 0,
+      "records_updated": 570,
+      "records_failed": 0,
+      "unknown_status_count": 2,
+      "data_quality_issue_count": 0,
+      "failures": []
+    }
+  }
+}

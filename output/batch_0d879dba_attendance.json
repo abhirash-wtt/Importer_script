@@ -1,0 +1,4592 @@
+[
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-07-27",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-07-28",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-07-29",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-07-30",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-07-31",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-01",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-02",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-03",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-04",
+    "status": "ABSENT",
+    "raw_status": "A"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-05",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-06",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-07",
+    "status": "ABSENT",
+    "raw_status": "A"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-08",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-09",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-10",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-11",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-12",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-13",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-14",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-15",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-16",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-17",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-18",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-19",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-20",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-21",
+    "status": "ABSENT",
+    "raw_status": "A"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-22",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-23",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-24",
+    "status": "ABSENT",
+    "raw_status": "A"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202499",
+    "employee_name": "meghna gupta",
+    "location": "NOIDA",
+    "date": "2026-08-25",
+    "status": "ABSENT",
+    "raw_status": "A"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-07-27",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-07-28",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-07-29",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-07-30",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-07-31",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-01",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-02",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-03",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-04",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-05",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-06",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-07",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-08",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-09",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-10",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-11",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-12",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-13",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-14",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-15",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-16",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-17",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-18",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-19",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-20",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-21",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-22",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-23",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-24",
+    "status": "CASUAL_LEAVE",
+    "raw_status": "CL"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "202509",
+    "employee_name": "Aryan Yadav",
+    "location": "NOIDA",
+    "date": "2026-08-25",
+    "status": "CASUAL_LEAVE",
+    "raw_status": "CL"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-07-27",
+    "status": "COMP_OFF",
+    "raw_status": "CO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-07-28",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-07-29",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-07-30",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-07-31",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-01",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-02",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-03",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-04",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-05",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-06",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-07",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-08",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-09",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-10",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-11",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-12",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-13",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-14",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-15",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-16",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-17",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-18",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-19",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-20",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-21",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-22",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-23",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-24",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092020",
+    "employee_name": "Rishav johari",
+    "location": "NOIDA",
+    "date": "2026-08-25",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-07-27",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-07-28",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-07-29",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-07-30",
+    "status": "EARNED_LEAVE",
+    "raw_status": "EL"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-07-31",
+    "status": "EARNED_LEAVE",
+    "raw_status": "EL"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-01",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-02",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-03",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-04",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-05",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-06",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-07",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-08",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-09",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-10",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-11",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-12",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-13",
+    "status": "CASUAL_LEAVE",
+    "raw_status": "CL"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-14",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-15",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-16",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-17",
+    "status": "CASUAL_LEAVE",
+    "raw_status": "\u00bdCLP"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-18",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-19",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-20",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-21",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-22",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-23",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-24",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "21092026",
+    "employee_name": "Mohammad Akram Saifi",
+    "location": "NOIDA",
+    "date": "2026-08-25",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-07-27",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-07-28",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-07-29",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-07-30",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-07-31",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-01",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-02",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-03",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-04",
+    "status": "CASUAL_LEAVE",
+    "raw_status": "\u00bdCL"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-05",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-06",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-07",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-08",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-09",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-10",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-11",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-12",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-13",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-14",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-15",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-16",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-17",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-18",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-19",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-20",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-21",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-22",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-23",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-24",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "22012263",
+    "employee_name": "Akshay Chandra Srivastava",
+    "location": "NOIDA",
+    "date": "2026-08-25",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-07-27",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-07-28",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-07-29",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-07-30",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-07-31",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-01",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-02",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-03",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-04",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-05",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-06",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-07",
+    "status": "CASUAL_LEAVE",
+    "raw_status": "\u00bdCL"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-08",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-09",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-10",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-11",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-12",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-13",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-14",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-15",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-16",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-17",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-18",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-19",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-20",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-21",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-22",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-23",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-24",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23012472",
+    "employee_name": "Rishabh Suri",
+    "location": "NOIDA",
+    "date": "2026-08-25",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-07-27",
+    "status": "CASUAL_LEAVE",
+    "raw_status": "CL"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-07-28",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-07-29",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-07-30",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-07-31",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-01",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-02",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-03",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-04",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-05",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-06",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-07",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-08",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-09",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-10",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-11",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-12",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-13",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-14",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-15",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-16",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-17",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-18",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-19",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-20",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-21",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-22",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-23",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-24",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "23062524",
+    "employee_name": "Sonai Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-25",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-07-27",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-07-28",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-07-29",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-07-30",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-07-31",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-01",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-02",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-03",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-04",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-05",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-06",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-07",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-08",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-09",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-10",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-11",
+    "status": "EARNED_LEAVE",
+    "raw_status": "\u00bdELP"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-12",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-13",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-14",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-15",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-16",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-17",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-18",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-19",
+    "status": "CASUAL_LEAVE",
+    "raw_status": "CL"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-20",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-21",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-22",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-23",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-24",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012671",
+    "employee_name": "Priyanka Raghuvanshi",
+    "location": "NOIDA",
+    "date": "2026-08-25",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-07-27",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-07-28",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-07-29",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-07-30",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-07-31",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-01",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-02",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-03",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-04",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-05",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-06",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-07",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-08",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-09",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-10",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-11",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-12",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-13",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-14",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-15",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-16",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-17",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-18",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-19",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-20",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-21",
+    "status": "CASUAL_LEAVE",
+    "raw_status": "CL"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-22",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-23",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-24",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012715",
+    "employee_name": "Mayank Kumar Singh",
+    "location": "NOIDA",
+    "date": "2026-08-25",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-07-27",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-07-28",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-07-29",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-07-30",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-07-31",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-01",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-02",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-03",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-04",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-05",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-06",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-07",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-08",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-09",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-10",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-11",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-12",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-13",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-14",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-15",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-16",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-17",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-18",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-19",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-20",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-21",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-22",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-23",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-24",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012742",
+    "employee_name": "Sandeep Bhattacharya",
+    "location": "NOIDA",
+    "date": "2026-08-25",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-07-27",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-07-28",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-07-29",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-07-30",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-07-31",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-01",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-02",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-03",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-04",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-05",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-06",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-07",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-08",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-09",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-10",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-11",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-12",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-13",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-14",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-15",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-16",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-17",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-18",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-19",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-20",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-21",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-22",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-23",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-24",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012662",
+    "employee_name": "Vikas Verma",
+    "location": "NOIDA",
+    "date": "2026-08-25",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-07-27",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-07-28",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-07-29",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-07-30",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-07-31",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-01",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-02",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-03",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-04",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-05",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-06",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-07",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-08",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-09",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-10",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-11",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-12",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-13",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-14",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-15",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-16",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-17",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-18",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-19",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-20",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-21",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-22",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-23",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-24",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "EFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012729",
+    "employee_name": "Dhriti Misra",
+    "location": "NOIDA",
+    "date": "2026-08-25",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-07-27",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-07-28",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-07-29",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-07-30",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-07-31",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-01",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-02",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-03",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-04",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-05",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-06",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-07",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-08",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-09",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-10",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-11",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-12",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-13",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-14",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-15",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-16",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-17",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-18",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-19",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-20",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-21",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-22",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-23",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-24",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012747",
+    "employee_name": "Parul Gupta",
+    "location": "NOIDA",
+    "date": "2026-08-25",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-07-27",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-07-28",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-07-29",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-07-30",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-07-31",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-01",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-02",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-03",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-04",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-05",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-06",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-07",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-08",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-09",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-10",
+    "status": "CASUAL_LEAVE",
+    "raw_status": "CL"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-11",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-12",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-13",
+    "status": "EARNED_LEAVE",
+    "raw_status": "EL"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-14",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-15",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-16",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-17",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-18",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-19",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-20",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-21",
+    "status": "EARNED_LEAVE",
+    "raw_status": "EL"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-22",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-23",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-24",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012753",
+    "employee_name": "Mansi",
+    "location": "NOIDA",
+    "date": "2026-08-25",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-07-27",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-07-28",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-07-29",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-07-30",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-07-31",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-01",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-02",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-03",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-04",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-05",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-06",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-07",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-08",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-09",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-10",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-11",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-12",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-13",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-14",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-15",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-16",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-17",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-18",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-19",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-20",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-21",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-22",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-23",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-24",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012834",
+    "employee_name": "Chirag K",
+    "location": "NOIDA",
+    "date": "2026-08-25",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-07-27",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-07-28",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-07-29",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-07-30",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-07-31",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-01",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-02",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-03",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-04",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-05",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-06",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-07",
+    "status": "CASUAL_LEAVE",
+    "raw_status": "CL"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-08",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-09",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-10",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-11",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-12",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-13",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-14",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-15",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-16",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-17",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-18",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-19",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-20",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-21",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-22",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-23",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-24",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012846",
+    "employee_name": "Sakshi Rani",
+    "location": "NOIDA",
+    "date": "2026-08-25",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-07-27",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-07-28",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-07-29",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-07-30",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-07-31",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-01",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-02",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-03",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-04",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-05",
+    "status": "CASUAL_LEAVE",
+    "raw_status": "CL"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-06",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-07",
+    "status": "LOSS_OF_PAY",
+    "raw_status": "\u00bdLOP"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-08",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-09",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-10",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-11",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-12",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-13",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-14",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-15",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-16",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-17",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-18",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-19",
+    "status": "PRESENT",
+    "raw_status": "p"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-20",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-21",
+    "status": "PRESENT",
+    "raw_status": "P"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-22",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-23",
+    "status": "WEEKLY_OFF",
+    "raw_status": "WO"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-24",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  },
+  {
+    "batch_id": "0d879dba",
+    "employee_code": "25012867",
+    "employee_name": "Shreya Sharma",
+    "location": "NOIDA",
+    "date": "2026-08-25",
+    "status": "WORK_FROM_HOME",
+    "raw_status": "WFH"
+  }
+]

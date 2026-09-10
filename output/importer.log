@@ -1,0 +1,534 @@
+2026-09-08 16:44:55,641 INFO Created import batch 0d879dba for NOIDA attendance report august.xls (NOIDA)
+2026-09-08 16:44:55,645 INFO Report period: August 2026 (2026-07-27 to 2026-08-25)
+2026-09-08 16:44:55,646 INFO Found 19 employee blocks in Sheet2
+2026-09-08 16:44:55,647 WARNING Failure: Unknown employee (Shikhar)
+2026-09-08 16:44:55,647 WARNING Failure: Unknown employee (Kapil)
+2026-09-08 16:44:55,649 INFO Wrote attendance JSON to D:\Importer_script\output\batch_0d879dba_attendance.json
+2026-09-08 16:44:55,649 INFO Batch 0d879dba SUCCESS: 510 attendance rows, 2 failures, 0 data-quality issues
+2026-09-08 16:44:55,649 INFO POST http://127.0.0.1:3000/api/attendance/import location_code=NOIDA batch_id=0d879dba records=510
+2026-09-08 16:44:55,788 INFO DDO++ API accepted batch 0d879dba (HTTP 200, attempt 1/3)
+2026-09-08 16:44:55,790 INFO Wrote attendance JSON to D:\Importer_script\output\batch_0d879dba_attendance.json
+2026-09-08 16:44:55,791 INFO Moved NOIDA attendance report august.xls -> D:\Importer_script\processed\NOIDA attendance report august_20260908_164455.xls
+2026-09-08 16:44:55,943 INFO Created import batch 7bbdf1ad for Agra August Attendance report.xls (AGRA)
+2026-09-08 16:44:55,948 INFO Report period: August 2026 (None to None)
+2026-09-08 16:44:55,948 INFO Found 2 employee blocks in Sheet1
+2026-09-08 16:44:55,949 INFO Wrote attendance JSON to D:\Importer_script\output\batch_7bbdf1ad_attendance.json
+2026-09-08 16:44:55,950 INFO Batch 7bbdf1ad SUCCESS: 0 attendance rows, 0 failures, 0 data-quality issues
+2026-09-08 16:44:55,950 INFO POST http://127.0.0.1:3000/api/attendance/import location_code=AGRA batch_id=7bbdf1ad records=0
+2026-09-08 16:44:56,021 INFO DDO++ API accepted batch 7bbdf1ad (HTTP 200, attempt 1/3)
+2026-09-08 16:44:56,023 INFO Wrote attendance JSON to D:\Importer_script\output\batch_7bbdf1ad_attendance.json
+2026-09-08 16:44:56,023 INFO Moved Agra August Attendance report.xls -> D:\Importer_script\processed\Agra August Attendance report_20260908_164456.xls
+2026-09-08 16:44:56,183 INFO Created import batch 148db7a5 for Hyd Aug Rep.xls (HYD)
+2026-09-08 16:44:56,198 INFO Report period: August 2026 (None to None)
+2026-09-08 16:44:56,199 INFO Found 309 employee blocks in BasicWorkDurationReport
+2026-09-08 16:44:56,200 INFO Wrote attendance JSON to D:\Importer_script\output\batch_148db7a5_attendance.json
+2026-09-08 16:44:56,200 INFO Batch 148db7a5 SUCCESS: 0 attendance rows, 0 failures, 0 data-quality issues
+2026-09-08 16:44:56,200 INFO POST http://127.0.0.1:3000/api/attendance/import location_code=HYD batch_id=148db7a5 records=0
+2026-09-08 16:44:56,259 INFO DDO++ API accepted batch 148db7a5 (HTTP 200, attempt 1/3)
+2026-09-08 16:44:56,260 INFO Wrote attendance JSON to D:\Importer_script\output\batch_148db7a5_attendance.json
+2026-09-08 16:44:56,261 INFO Moved Hyd Aug Rep.xls -> D:\Importer_script\processed\Hyd Aug Rep.xls
+2026-09-08 16:46:42,431 INFO Created import batch 3fa108e9 for NOIDA attendance report august.xls (NOIDA)
+2026-09-08 16:46:42,434 INFO Report period: August 2024 (2024-07-27 to 2024-08-25)
+2026-09-08 16:46:42,438 INFO Found 19 employee blocks in Sheet2
+2026-09-08 16:46:42,441 INFO Wrote attendance JSON to D:\Importer_script\output\batch_3fa108e9_attendance.json
+2026-09-08 16:46:42,441 INFO Batch 3fa108e9 SUCCESS: 570 attendance rows, 0 failures, 2 data-quality issues
+2026-09-08 16:46:42,442 INFO POST http://127.0.0.1:3000/api/attendance/import location_code=NOIDA batch_id=3fa108e9 records=570
+2026-09-08 16:46:42,515 INFO DDO++ API accepted batch 3fa108e9 (HTTP 200, attempt 1/3)
+2026-09-08 16:46:42,517 INFO Wrote attendance JSON to D:\Importer_script\output\batch_3fa108e9_attendance.json
+2026-09-08 16:46:42,518 INFO Moved NOIDA attendance report august.xls -> D:\Importer_script\processed\NOIDA attendance report august_20260908_164642.xls
+2026-09-08 16:46:42,708 INFO Created import batch 61fb5589 for Agra August Attendance report.xls (AGRA)
+2026-09-08 16:46:42,718 INFO Report period: August 2026 (2026-07-27 to 2026-08-25)
+2026-09-08 16:46:42,732 INFO Found 97 employee blocks in Sheet2
+2026-09-08 16:46:42,732 WARNING Data quality: missing status for UNMAPPED:kuldeep_alok_tiwari on 2026-07-27
+2026-09-08 16:46:42,732 WARNING Data quality: missing status for UNMAPPED:kuldeep_alok_tiwari on 2026-07-28
+2026-09-08 16:46:42,732 WARNING Data quality: missing status for UNMAPPED:kuldeep_alok_tiwari on 2026-07-29
+2026-09-08 16:46:42,732 WARNING Data quality: missing status for UNMAPPED:kuldeep_alok_tiwari on 2026-07-30
+2026-09-08 16:46:42,732 WARNING Data quality: missing status for UNMAPPED:kuldeep_alok_tiwari on 2026-07-31
+2026-09-08 16:46:42,732 WARNING Data quality: missing status for UNMAPPED:kuldeep_alok_tiwari on 2026-08-01
+2026-09-08 16:46:42,732 WARNING Data quality: missing status for UNMAPPED:kuldeep_alok_tiwari on 2026-08-02
+2026-09-08 16:46:42,738 WARNING Data quality: missing status for UNMAPPED:shipra on 2026-07-27
+2026-09-08 16:46:42,738 WARNING Data quality: missing status for UNMAPPED:shipra on 2026-07-28
+2026-09-08 16:46:42,738 WARNING Data quality: missing status for UNMAPPED:shipra on 2026-07-29
+2026-09-08 16:46:42,738 WARNING Data quality: missing status for UNMAPPED:shipra on 2026-07-30
+2026-09-08 16:46:42,738 WARNING Data quality: missing status for UNMAPPED:shipra on 2026-07-31
+2026-09-08 16:46:42,738 WARNING Data quality: missing status for UNMAPPED:shipra on 2026-08-01
+2026-09-08 16:46:42,738 WARNING Data quality: missing status for UNMAPPED:shipra on 2026-08-02
+2026-09-08 16:46:42,750 INFO Wrote attendance JSON to D:\Importer_script\output\batch_61fb5589_attendance.json
+2026-09-08 16:46:42,751 INFO Batch 61fb5589 SUCCESS: 2896 attendance rows, 0 failures, 111 data-quality issues
+2026-09-08 16:46:42,755 INFO POST http://127.0.0.1:3000/api/attendance/import location_code=AGRA batch_id=61fb5589 records=2896
+2026-09-08 16:46:42,864 INFO DDO++ API accepted batch 61fb5589 (HTTP 200, attempt 1/3)
+2026-09-08 16:46:42,874 INFO Wrote attendance JSON to D:\Importer_script\output\batch_61fb5589_attendance.json
+2026-09-08 16:46:42,875 INFO Moved Agra August Attendance report.xls -> D:\Importer_script\processed\Agra August Attendance report_20260908_164642.xls
+2026-09-08 16:46:43,049 INFO Created import batch 6d54259f for Hyd Aug Rep.xls (HYD)
+2026-09-08 16:46:43,068 INFO Report period: August 2026 (2026-08-01 to 2026-08-31)
+2026-09-08 16:46:43,085 INFO Found 60 employee blocks in BasicWorkDurationReport
+2026-09-08 16:46:43,085 WARNING Data quality: missing status for 202513 on 2026-08-08
+2026-09-08 16:46:43,085 WARNING Data quality: missing status for 202513 on 2026-08-09
+2026-09-08 16:46:43,085 WARNING Data quality: missing status for 202513 on 2026-08-10
+2026-09-08 16:46:43,085 WARNING Data quality: missing status for 202513 on 2026-08-11
+2026-09-08 16:46:43,085 WARNING Data quality: missing status for 202513 on 2026-08-12
+2026-09-08 16:46:43,085 WARNING Data quality: missing status for 202513 on 2026-08-13
+2026-09-08 16:46:43,085 WARNING Data quality: missing status for 202513 on 2026-08-14
+2026-09-08 16:46:43,085 WARNING Data quality: missing status for 202513 on 2026-08-15
+2026-09-08 16:46:43,086 WARNING Data quality: missing status for 202513 on 2026-08-16
+2026-09-08 16:46:43,086 WARNING Data quality: missing status for 202513 on 2026-08-17
+2026-09-08 16:46:43,086 WARNING Data quality: missing status for 202513 on 2026-08-18
+2026-09-08 16:46:43,086 WARNING Data quality: missing status for 202513 on 2026-08-19
+2026-09-08 16:46:43,086 WARNING Data quality: missing status for 202513 on 2026-08-20
+2026-09-08 16:46:43,086 WARNING Data quality: missing status for 202513 on 2026-08-21
+2026-09-08 16:46:43,086 WARNING Data quality: missing status for 202513 on 2026-08-22
+2026-09-08 16:46:43,086 WARNING Data quality: missing status for 202513 on 2026-08-23
+2026-09-08 16:46:43,086 WARNING Data quality: missing status for 202513 on 2026-08-24
+2026-09-08 16:46:43,086 WARNING Data quality: missing status for 202513 on 2026-08-25
+2026-09-08 16:46:43,086 WARNING Data quality: missing status for 202513 on 2026-08-26
+2026-09-08 16:46:43,086 WARNING Data quality: missing status for 202513 on 2026-08-27
+2026-09-08 16:46:43,086 WARNING Data quality: missing status for 202513 on 2026-08-28
+2026-09-08 16:46:43,086 WARNING Data quality: missing status for 202513 on 2026-08-29
+2026-09-08 16:46:43,086 WARNING Data quality: missing status for 202513 on 2026-08-30
+2026-09-08 16:46:43,086 WARNING Data quality: missing status for 202513 on 2026-08-31
+2026-09-08 16:46:43,087 WARNING Data quality: missing status for 202575 on 2026-08-01
+2026-09-08 16:46:43,087 WARNING Data quality: missing status for 202575 on 2026-08-02
+2026-09-08 16:46:43,087 WARNING Data quality: missing status for 202575 on 2026-08-03
+2026-09-08 16:46:43,087 WARNING Data quality: missing status for 202575 on 2026-08-04
+2026-09-08 16:46:43,087 WARNING Data quality: missing status for 202575 on 2026-08-05
+2026-09-08 16:46:43,088 WARNING Data quality: missing status for 202575 on 2026-08-06
+2026-09-08 16:46:43,088 WARNING Data quality: missing status for 202575 on 2026-08-07
+2026-09-08 16:46:43,088 WARNING Data quality: missing status for 202575 on 2026-08-08
+2026-09-08 16:46:43,088 WARNING Data quality: missing status for 202575 on 2026-08-09
+2026-09-08 16:46:43,088 WARNING Data quality: missing status for 202575 on 2026-08-10
+2026-09-08 16:46:43,088 WARNING Data quality: missing status for 202575 on 2026-08-11
+2026-09-08 16:46:43,088 WARNING Data quality: missing status for 202575 on 2026-08-12
+2026-09-08 16:46:43,088 WARNING Data quality: missing status for 202575 on 2026-08-13
+2026-09-08 16:46:43,088 WARNING Data quality: missing status for 202575 on 2026-08-14
+2026-09-08 16:46:43,088 WARNING Data quality: missing status for 202575 on 2026-08-15
+2026-09-08 16:46:43,088 WARNING Data quality: missing status for 202575 on 2026-08-16
+2026-09-08 16:46:43,088 WARNING Data quality: missing status for 202575 on 2026-08-17
+2026-09-08 16:46:43,088 WARNING Data quality: missing status for 202575 on 2026-08-18
+2026-09-08 16:46:43,088 WARNING Data quality: missing status for 202575 on 2026-08-19
+2026-09-08 16:46:43,089 WARNING Data quality: missing status for 23022478 on 2026-08-03
+2026-09-08 16:46:43,089 WARNING Data quality: missing status for 23022478 on 2026-08-04
+2026-09-08 16:46:43,089 WARNING Data quality: missing status for 23022478 on 2026-08-05
+2026-09-08 16:46:43,089 WARNING Data quality: missing status for 23022478 on 2026-08-06
+2026-09-08 16:46:43,089 WARNING Data quality: missing status for 23022478 on 2026-08-07
+2026-09-08 16:46:43,089 WARNING Data quality: missing status for 23022478 on 2026-08-08
+2026-09-08 16:46:43,089 WARNING Data quality: missing status for 23022478 on 2026-08-09
+2026-09-08 16:46:43,089 WARNING Data quality: missing status for 23022478 on 2026-08-10
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-11
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-12
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-13
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-14
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-15
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-16
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-17
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-18
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-19
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-20
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-21
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-22
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-23
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-24
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-25
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-26
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-27
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-28
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-29
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-30
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23022478 on 2026-08-31
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23052509 on 2026-08-08
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23052509 on 2026-08-09
+2026-09-08 16:46:43,090 WARNING Data quality: missing status for 23052509 on 2026-08-10
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-11
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-12
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-13
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-14
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-15
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-16
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-17
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-18
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-19
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-20
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-21
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-22
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-23
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-24
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-25
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-26
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-27
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-28
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-29
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-30
+2026-09-08 16:46:43,091 WARNING Data quality: missing status for 23052509 on 2026-08-31
+2026-09-08 16:46:43,093 WARNING Data quality: missing status for 25012795 on 2026-08-08
+2026-09-08 16:46:43,093 WARNING Data quality: missing status for 25012795 on 2026-08-09
+2026-09-08 16:46:43,093 WARNING Data quality: missing status for 25012795 on 2026-08-10
+2026-09-08 16:46:43,093 WARNING Data quality: missing status for 25012795 on 2026-08-11
+2026-09-08 16:46:43,093 WARNING Data quality: missing status for 25012795 on 2026-08-12
+2026-09-08 16:46:43,093 WARNING Data quality: missing status for 25012795 on 2026-08-13
+2026-09-08 16:46:43,093 WARNING Data quality: missing status for 25012795 on 2026-08-14
+2026-09-08 16:46:43,093 WARNING Data quality: missing status for 25012795 on 2026-08-15
+2026-09-08 16:46:43,093 WARNING Data quality: missing status for 25012795 on 2026-08-16
+2026-09-08 16:46:43,093 WARNING Data quality: missing status for 25012795 on 2026-08-17
+2026-09-08 16:46:43,094 WARNING Data quality: missing status for 25012795 on 2026-08-18
+2026-09-08 16:46:43,094 WARNING Data quality: missing status for 25012795 on 2026-08-19
+2026-09-08 16:46:43,094 WARNING Data quality: missing status for 25012795 on 2026-08-20
+2026-09-08 16:46:43,094 WARNING Data quality: missing status for 25012795 on 2026-08-21
+2026-09-08 16:46:43,094 WARNING Data quality: missing status for 25012795 on 2026-08-22
+2026-09-08 16:46:43,094 WARNING Data quality: missing status for 25012795 on 2026-08-23
+2026-09-08 16:46:43,094 WARNING Data quality: missing status for 25012795 on 2026-08-24
+2026-09-08 16:46:43,094 WARNING Data quality: missing status for 25012795 on 2026-08-25
+2026-09-08 16:46:43,094 WARNING Data quality: missing status for 25012795 on 2026-08-26
+2026-09-08 16:46:43,094 WARNING Data quality: missing status for 25012795 on 2026-08-27
+2026-09-08 16:46:43,094 WARNING Data quality: missing status for 25012795 on 2026-08-28
+2026-09-08 16:46:43,094 WARNING Data quality: missing status for 25012795 on 2026-08-29
+2026-09-08 16:46:43,094 WARNING Data quality: missing status for 25012795 on 2026-08-30
+2026-09-08 16:46:43,095 WARNING Data quality: missing status for 25012795 on 2026-08-31
+2026-09-08 16:46:43,095 WARNING Data quality: missing status for 25012797 on 2026-08-22
+2026-09-08 16:46:43,095 WARNING Data quality: missing status for 25012797 on 2026-08-23
+2026-09-08 16:46:43,095 WARNING Data quality: missing status for 25012797 on 2026-08-24
+2026-09-08 16:46:43,095 WARNING Data quality: missing status for 25012797 on 2026-08-25
+2026-09-08 16:46:43,095 WARNING Data quality: missing status for 25012797 on 2026-08-26
+2026-09-08 16:46:43,095 WARNING Data quality: missing status for 25012797 on 2026-08-27
+2026-09-08 16:46:43,095 WARNING Data quality: missing status for 25012797 on 2026-08-28
+2026-09-08 16:46:43,095 WARNING Data quality: missing status for 25012797 on 2026-08-29
+2026-09-08 16:46:43,095 WARNING Data quality: missing status for 25012797 on 2026-08-30
+2026-09-08 16:46:43,095 WARNING Data quality: missing status for 25012797 on 2026-08-31
+2026-09-08 16:46:43,104 INFO Wrote attendance JSON to D:\Importer_script\output\batch_6d54259f_attendance.json
+2026-09-08 16:46:43,104 INFO Batch 6d54259f SUCCESS: 1730 attendance rows, 0 failures, 130 data-quality issues
+2026-09-08 16:46:43,109 INFO POST http://127.0.0.1:3000/api/attendance/import location_code=HYD batch_id=6d54259f records=1730
+2026-09-08 16:46:43,203 INFO DDO++ API accepted batch 6d54259f (HTTP 200, attempt 1/3)
+2026-09-08 16:46:43,210 INFO Wrote attendance JSON to D:\Importer_script\output\batch_6d54259f_attendance.json
+2026-09-08 16:46:43,211 INFO Moved Hyd Aug Rep.xls -> D:\Importer_script\processed\Hyd Aug Rep_20260908_164643.xls
+2026-09-08 16:47:03,115 INFO Created import batch 7c6565f3 for NOIDA attendance report august.xls (NOIDA)
+2026-09-08 16:47:03,121 INFO Report period: August 2026 (2026-07-27 to 2026-08-25)
+2026-09-08 16:47:03,124 INFO Found 19 employee blocks in Sheet2
+2026-09-08 16:47:03,140 INFO Wrote attendance JSON to D:\Importer_script\output\batch_7c6565f3_attendance.json
+2026-09-08 16:47:03,140 INFO Batch 7c6565f3 SUCCESS: 570 attendance rows, 0 failures, 2 data-quality issues
+2026-09-08 16:47:03,142 INFO POST http://127.0.0.1:3000/api/attendance/import location_code=NOIDA batch_id=7c6565f3 records=570
+2026-09-08 16:47:03,280 INFO DDO++ API accepted batch 7c6565f3 (HTTP 200, attempt 1/3)
+2026-09-08 16:47:03,284 INFO Wrote attendance JSON to D:\Importer_script\output\batch_7c6565f3_attendance.json
+2026-09-08 16:47:03,285 INFO Moved NOIDA attendance report august.xls -> D:\Importer_script\processed\NOIDA attendance report august_20260908_164703.xls
+2026-09-08 18:02:17,347 INFO Created import batch 711451bd for Hyd Aug Rep.xls (HYD)
+2026-09-08 18:02:17,363 INFO Report period: August 2026 (2026-08-01 to 2026-08-31)
+2026-09-08 18:02:17,386 INFO Found 60 employee blocks in BasicWorkDurationReport
+2026-09-08 18:02:17,386 WARNING Data quality: missing status for 202513 on 2026-08-08
+2026-09-08 18:02:17,386 WARNING Data quality: missing status for 202513 on 2026-08-09
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-10
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-11
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-12
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-13
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-14
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-15
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-16
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-17
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-18
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-19
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-20
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-21
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-22
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-23
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-24
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-25
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-26
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-27
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-28
+2026-09-08 18:02:17,387 WARNING Data quality: missing status for 202513 on 2026-08-29
+2026-09-08 18:02:17,388 WARNING Data quality: missing status for 202513 on 2026-08-30
+2026-09-08 18:02:17,388 WARNING Data quality: missing status for 202513 on 2026-08-31
+2026-09-08 18:02:17,388 WARNING Data quality: missing status for 202575 on 2026-08-01
+2026-09-08 18:02:17,388 WARNING Data quality: missing status for 202575 on 2026-08-02
+2026-09-08 18:02:17,388 WARNING Data quality: missing status for 202575 on 2026-08-03
+2026-09-08 18:02:17,388 WARNING Data quality: missing status for 202575 on 2026-08-04
+2026-09-08 18:02:17,388 WARNING Data quality: missing status for 202575 on 2026-08-05
+2026-09-08 18:02:17,388 WARNING Data quality: missing status for 202575 on 2026-08-06
+2026-09-08 18:02:17,388 WARNING Data quality: missing status for 202575 on 2026-08-07
+2026-09-08 18:02:17,388 WARNING Data quality: missing status for 202575 on 2026-08-08
+2026-09-08 18:02:17,388 WARNING Data quality: missing status for 202575 on 2026-08-09
+2026-09-08 18:02:17,388 WARNING Data quality: missing status for 202575 on 2026-08-10
+2026-09-08 18:02:17,389 WARNING Data quality: missing status for 202575 on 2026-08-11
+2026-09-08 18:02:17,389 WARNING Data quality: missing status for 202575 on 2026-08-12
+2026-09-08 18:02:17,389 WARNING Data quality: missing status for 202575 on 2026-08-13
+2026-09-08 18:02:17,389 WARNING Data quality: missing status for 202575 on 2026-08-14
+2026-09-08 18:02:17,389 WARNING Data quality: missing status for 202575 on 2026-08-15
+2026-09-08 18:02:17,389 WARNING Data quality: missing status for 202575 on 2026-08-16
+2026-09-08 18:02:17,389 WARNING Data quality: missing status for 202575 on 2026-08-17
+2026-09-08 18:02:17,389 WARNING Data quality: missing status for 202575 on 2026-08-18
+2026-09-08 18:02:17,389 WARNING Data quality: missing status for 202575 on 2026-08-19
+2026-09-08 18:02:17,389 WARNING Data quality: missing status for 23022478 on 2026-08-03
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-04
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-05
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-06
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-07
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-08
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-09
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-10
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-11
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-12
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-13
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-14
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-15
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-16
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-17
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-18
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-19
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-20
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-21
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-22
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-23
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-24
+2026-09-08 18:02:17,390 WARNING Data quality: missing status for 23022478 on 2026-08-25
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23022478 on 2026-08-26
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23022478 on 2026-08-27
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23022478 on 2026-08-28
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23022478 on 2026-08-29
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23022478 on 2026-08-30
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23022478 on 2026-08-31
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-08
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-09
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-10
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-11
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-12
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-13
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-14
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-15
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-16
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-17
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-18
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-19
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-20
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-21
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-22
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-23
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-24
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-25
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-26
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-27
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-28
+2026-09-08 18:02:17,391 WARNING Data quality: missing status for 23052509 on 2026-08-29
+2026-09-08 18:02:17,392 WARNING Data quality: missing status for 23052509 on 2026-08-30
+2026-09-08 18:02:17,392 WARNING Data quality: missing status for 23052509 on 2026-08-31
+2026-09-08 18:02:17,393 WARNING Data quality: missing status for 25012795 on 2026-08-08
+2026-09-08 18:02:17,393 WARNING Data quality: missing status for 25012795 on 2026-08-09
+2026-09-08 18:02:17,393 WARNING Data quality: missing status for 25012795 on 2026-08-10
+2026-09-08 18:02:17,393 WARNING Data quality: missing status for 25012795 on 2026-08-11
+2026-09-08 18:02:17,393 WARNING Data quality: missing status for 25012795 on 2026-08-12
+2026-09-08 18:02:17,393 WARNING Data quality: missing status for 25012795 on 2026-08-13
+2026-09-08 18:02:17,393 WARNING Data quality: missing status for 25012795 on 2026-08-14
+2026-09-08 18:02:17,393 WARNING Data quality: missing status for 25012795 on 2026-08-15
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012795 on 2026-08-16
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012795 on 2026-08-17
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012795 on 2026-08-18
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012795 on 2026-08-19
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012795 on 2026-08-20
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012795 on 2026-08-21
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012795 on 2026-08-22
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012795 on 2026-08-23
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012795 on 2026-08-24
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012795 on 2026-08-25
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012795 on 2026-08-26
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012795 on 2026-08-27
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012795 on 2026-08-28
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012795 on 2026-08-29
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012795 on 2026-08-30
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012795 on 2026-08-31
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012797 on 2026-08-22
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012797 on 2026-08-23
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012797 on 2026-08-24
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012797 on 2026-08-25
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012797 on 2026-08-26
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012797 on 2026-08-27
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012797 on 2026-08-28
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012797 on 2026-08-29
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012797 on 2026-08-30
+2026-09-08 18:02:17,394 WARNING Data quality: missing status for 25012797 on 2026-08-31
+2026-09-08 18:02:17,403 INFO Wrote attendance JSON to D:\Importer_script\output\batch_711451bd_attendance.json
+2026-09-08 18:02:17,403 INFO Batch 711451bd SUCCESS: 1730 attendance rows, 0 failures, 130 data-quality issues
+2026-09-08 18:02:17,406 INFO POST http://127.0.0.1:3000/api/attendance/import location_code=HYD batch_id=711451bd records=1730
+2026-09-08 18:02:17,511 INFO DDO++ API accepted batch 711451bd (HTTP 200, attempt 1/3)
+2026-09-08 18:02:17,518 INFO Wrote attendance JSON to D:\Importer_script\output\batch_711451bd_attendance.json
+2026-09-08 18:02:17,519 INFO Moved Hyd Aug Rep.xls -> D:\Importer_script\processed\Hyd Aug Rep_20260908_180217.xls
+2026-09-09 17:07:21,241 INFO Inbox is empty; nothing to import
+2026-09-09 17:07:32,445 INFO Inbox is empty; nothing to import
+2026-09-09 17:30:37,098 INFO Inbox is empty; nothing to import
+2026-09-09 17:36:17,807 INFO Created import batch 09cb4b2a for Aug Agra.xls (AGRA)
+2026-09-09 17:36:17,867 INFO Report period: August 2026 (2026-08-01 to 2026-08-31)
+2026-09-09 17:36:17,878 INFO Found 44 employee blocks in Sheet2
+2026-09-09 17:36:17,885 INFO Wrote attendance JSON to D:\Importer_script\output\batch_09cb4b2a_attendance.json
+2026-09-09 17:36:17,886 INFO Batch 09cb4b2a SUCCESS: 1364 attendance rows, 0 failures, 0 data-quality issues
+2026-09-09 17:36:17,891 INFO POST http://127.0.0.1:3000/api/attendance/import location_code=AGRA batch_id=09cb4b2a records=1364
+2026-09-09 17:36:18,083 INFO DDO++ API accepted batch 09cb4b2a (HTTP 200, attempt 1/3)
+2026-09-09 17:36:18,089 INFO Wrote attendance JSON to D:\Importer_script\output\batch_09cb4b2a_attendance.json
+2026-09-09 17:36:18,091 INFO Moved Aug Agra.xls -> D:\Importer_script\processed\Aug Agra.xls
+2026-09-09 17:36:18,093 INFO Created import batch afff8c69 for Aug Noida.xls (NOIDA)
+2026-09-09 17:36:18,112 INFO Report period: August 2026 (2026-08-01 to 2026-08-31)
+2026-09-09 17:36:18,123 INFO Found 39 employee blocks in Sheet3
+2026-09-09 17:36:18,131 INFO Wrote attendance JSON to D:\Importer_script\output\batch_afff8c69_attendance.json
+2026-09-09 17:36:18,131 INFO Batch afff8c69 SUCCESS: 1209 attendance rows, 0 failures, 0 data-quality issues
+2026-09-09 17:36:18,134 INFO POST http://127.0.0.1:3000/api/attendance/import location_code=NOIDA batch_id=afff8c69 records=1209
+2026-09-09 17:36:18,220 INFO DDO++ API accepted batch afff8c69 (HTTP 200, attempt 1/3)
+2026-09-09 17:36:18,225 INFO Wrote attendance JSON to D:\Importer_script\output\batch_afff8c69_attendance.json
+2026-09-09 17:36:18,226 INFO Moved Aug Noida.xls -> D:\Importer_script\processed\Aug Noida.xls
+2026-09-09 17:36:18,230 INFO Created import batch a094a7de for Hyd Aug Rep.xls (HYD)
+2026-09-09 17:36:18,252 INFO Report period: August 2026 (2026-08-01 to 2026-08-31)
+2026-09-09 17:36:18,269 INFO Found 60 employee blocks in BasicWorkDurationReport
+2026-09-09 17:36:18,270 WARNING Data quality: missing status for 202513 on 2026-08-08
+2026-09-09 17:36:18,270 WARNING Data quality: missing status for 202513 on 2026-08-09
+2026-09-09 17:36:18,270 WARNING Data quality: missing status for 202513 on 2026-08-10
+2026-09-09 17:36:18,270 WARNING Data quality: missing status for 202513 on 2026-08-11
+2026-09-09 17:36:18,270 WARNING Data quality: missing status for 202513 on 2026-08-12
+2026-09-09 17:36:18,270 WARNING Data quality: missing status for 202513 on 2026-08-13
+2026-09-09 17:36:18,271 WARNING Data quality: missing status for 202513 on 2026-08-14
+2026-09-09 17:36:18,271 WARNING Data quality: missing status for 202513 on 2026-08-15
+2026-09-09 17:36:18,271 WARNING Data quality: missing status for 202513 on 2026-08-16
+2026-09-09 17:36:18,271 WARNING Data quality: missing status for 202513 on 2026-08-17
+2026-09-09 17:36:18,271 WARNING Data quality: missing status for 202513 on 2026-08-18
+2026-09-09 17:36:18,271 WARNING Data quality: missing status for 202513 on 2026-08-19
+2026-09-09 17:36:18,271 WARNING Data quality: missing status for 202513 on 2026-08-20
+2026-09-09 17:36:18,272 WARNING Data quality: missing status for 202513 on 2026-08-21
+2026-09-09 17:36:18,272 WARNING Data quality: missing status for 202513 on 2026-08-22
+2026-09-09 17:36:18,272 WARNING Data quality: missing status for 202513 on 2026-08-23
+2026-09-09 17:36:18,272 WARNING Data quality: missing status for 202513 on 2026-08-24
+2026-09-09 17:36:18,272 WARNING Data quality: missing status for 202513 on 2026-08-25
+2026-09-09 17:36:18,272 WARNING Data quality: missing status for 202513 on 2026-08-26
+2026-09-09 17:36:18,273 WARNING Data quality: missing status for 202513 on 2026-08-27
+2026-09-09 17:36:18,273 WARNING Data quality: missing status for 202513 on 2026-08-28
+2026-09-09 17:36:18,273 WARNING Data quality: missing status for 202513 on 2026-08-29
+2026-09-09 17:36:18,273 WARNING Data quality: missing status for 202513 on 2026-08-30
+2026-09-09 17:36:18,273 WARNING Data quality: missing status for 202513 on 2026-08-31
+2026-09-09 17:36:18,274 WARNING Data quality: missing status for 202575 on 2026-08-01
+2026-09-09 17:36:18,274 WARNING Data quality: missing status for 202575 on 2026-08-02
+2026-09-09 17:36:18,274 WARNING Data quality: missing status for 202575 on 2026-08-03
+2026-09-09 17:36:18,274 WARNING Data quality: missing status for 202575 on 2026-08-04
+2026-09-09 17:36:18,275 WARNING Data quality: missing status for 202575 on 2026-08-05
+2026-09-09 17:36:18,275 WARNING Data quality: missing status for 202575 on 2026-08-06
+2026-09-09 17:36:18,275 WARNING Data quality: missing status for 202575 on 2026-08-07
+2026-09-09 17:36:18,275 WARNING Data quality: missing status for 202575 on 2026-08-08
+2026-09-09 17:36:18,275 WARNING Data quality: missing status for 202575 on 2026-08-09
+2026-09-09 17:36:18,275 WARNING Data quality: missing status for 202575 on 2026-08-10
+2026-09-09 17:36:18,276 WARNING Data quality: missing status for 202575 on 2026-08-11
+2026-09-09 17:36:18,276 WARNING Data quality: missing status for 202575 on 2026-08-12
+2026-09-09 17:36:18,276 WARNING Data quality: missing status for 202575 on 2026-08-13
+2026-09-09 17:36:18,276 WARNING Data quality: missing status for 202575 on 2026-08-14
+2026-09-09 17:36:18,276 WARNING Data quality: missing status for 202575 on 2026-08-15
+2026-09-09 17:36:18,276 WARNING Data quality: missing status for 202575 on 2026-08-16
+2026-09-09 17:36:18,276 WARNING Data quality: missing status for 202575 on 2026-08-17
+2026-09-09 17:36:18,277 WARNING Data quality: missing status for 202575 on 2026-08-18
+2026-09-09 17:36:18,277 WARNING Data quality: missing status for 202575 on 2026-08-19
+2026-09-09 17:36:18,279 WARNING Data quality: missing status for 23022478 on 2026-08-03
+2026-09-09 17:36:18,279 WARNING Data quality: missing status for 23022478 on 2026-08-04
+2026-09-09 17:36:18,280 WARNING Data quality: missing status for 23022478 on 2026-08-05
+2026-09-09 17:36:18,280 WARNING Data quality: missing status for 23022478 on 2026-08-06
+2026-09-09 17:36:18,280 WARNING Data quality: missing status for 23022478 on 2026-08-07
+2026-09-09 17:36:18,280 WARNING Data quality: missing status for 23022478 on 2026-08-08
+2026-09-09 17:36:18,280 WARNING Data quality: missing status for 23022478 on 2026-08-09
+2026-09-09 17:36:18,280 WARNING Data quality: missing status for 23022478 on 2026-08-10
+2026-09-09 17:36:18,280 WARNING Data quality: missing status for 23022478 on 2026-08-11
+2026-09-09 17:36:18,281 WARNING Data quality: missing status for 23022478 on 2026-08-12
+2026-09-09 17:36:18,281 WARNING Data quality: missing status for 23022478 on 2026-08-13
+2026-09-09 17:36:18,281 WARNING Data quality: missing status for 23022478 on 2026-08-14
+2026-09-09 17:36:18,281 WARNING Data quality: missing status for 23022478 on 2026-08-15
+2026-09-09 17:36:18,281 WARNING Data quality: missing status for 23022478 on 2026-08-16
+2026-09-09 17:36:18,282 WARNING Data quality: missing status for 23022478 on 2026-08-17
+2026-09-09 17:36:18,282 WARNING Data quality: missing status for 23022478 on 2026-08-18
+2026-09-09 17:36:18,282 WARNING Data quality: missing status for 23022478 on 2026-08-19
+2026-09-09 17:36:18,282 WARNING Data quality: missing status for 23022478 on 2026-08-20
+2026-09-09 17:36:18,282 WARNING Data quality: missing status for 23022478 on 2026-08-21
+2026-09-09 17:36:18,282 WARNING Data quality: missing status for 23022478 on 2026-08-22
+2026-09-09 17:36:18,282 WARNING Data quality: missing status for 23022478 on 2026-08-23
+2026-09-09 17:36:18,283 WARNING Data quality: missing status for 23022478 on 2026-08-24
+2026-09-09 17:36:18,283 WARNING Data quality: missing status for 23022478 on 2026-08-25
+2026-09-09 17:36:18,283 WARNING Data quality: missing status for 23022478 on 2026-08-26
+2026-09-09 17:36:18,283 WARNING Data quality: missing status for 23022478 on 2026-08-27
+2026-09-09 17:36:18,283 WARNING Data quality: missing status for 23022478 on 2026-08-28
+2026-09-09 17:36:18,283 WARNING Data quality: missing status for 23022478 on 2026-08-29
+2026-09-09 17:36:18,283 WARNING Data quality: missing status for 23022478 on 2026-08-30
+2026-09-09 17:36:18,283 WARNING Data quality: missing status for 23022478 on 2026-08-31
+2026-09-09 17:36:18,284 WARNING Data quality: missing status for 23052509 on 2026-08-08
+2026-09-09 17:36:18,284 WARNING Data quality: missing status for 23052509 on 2026-08-09
+2026-09-09 17:36:18,284 WARNING Data quality: missing status for 23052509 on 2026-08-10
+2026-09-09 17:36:18,284 WARNING Data quality: missing status for 23052509 on 2026-08-11
+2026-09-09 17:36:18,284 WARNING Data quality: missing status for 23052509 on 2026-08-12
+2026-09-09 17:36:18,284 WARNING Data quality: missing status for 23052509 on 2026-08-13
+2026-09-09 17:36:18,284 WARNING Data quality: missing status for 23052509 on 2026-08-14
+2026-09-09 17:36:18,284 WARNING Data quality: missing status for 23052509 on 2026-08-15
+2026-09-09 17:36:18,284 WARNING Data quality: missing status for 23052509 on 2026-08-16
+2026-09-09 17:36:18,285 WARNING Data quality: missing status for 23052509 on 2026-08-17
+2026-09-09 17:36:18,285 WARNING Data quality: missing status for 23052509 on 2026-08-18
+2026-09-09 17:36:18,285 WARNING Data quality: missing status for 23052509 on 2026-08-19
+2026-09-09 17:36:18,285 WARNING Data quality: missing status for 23052509 on 2026-08-20
+2026-09-09 17:36:18,285 WARNING Data quality: missing status for 23052509 on 2026-08-21
+2026-09-09 17:36:18,285 WARNING Data quality: missing status for 23052509 on 2026-08-22
+2026-09-09 17:36:18,285 WARNING Data quality: missing status for 23052509 on 2026-08-23
+2026-09-09 17:36:18,285 WARNING Data quality: missing status for 23052509 on 2026-08-24
+2026-09-09 17:36:18,285 WARNING Data quality: missing status for 23052509 on 2026-08-25
+2026-09-09 17:36:18,286 WARNING Data quality: missing status for 23052509 on 2026-08-26
+2026-09-09 17:36:18,286 WARNING Data quality: missing status for 23052509 on 2026-08-27
+2026-09-09 17:36:18,286 WARNING Data quality: missing status for 23052509 on 2026-08-28
+2026-09-09 17:36:18,286 WARNING Data quality: missing status for 23052509 on 2026-08-29
+2026-09-09 17:36:18,286 WARNING Data quality: missing status for 23052509 on 2026-08-30
+2026-09-09 17:36:18,286 WARNING Data quality: missing status for 23052509 on 2026-08-31
+2026-09-09 17:36:18,288 WARNING Data quality: missing status for 25012795 on 2026-08-08
+2026-09-09 17:36:18,289 WARNING Data quality: missing status for 25012795 on 2026-08-09
+2026-09-09 17:36:18,289 WARNING Data quality: missing status for 25012795 on 2026-08-10
+2026-09-09 17:36:18,289 WARNING Data quality: missing status for 25012795 on 2026-08-11
+2026-09-09 17:36:18,289 WARNING Data quality: missing status for 25012795 on 2026-08-12
+2026-09-09 17:36:18,290 WARNING Data quality: missing status for 25012795 on 2026-08-13
+2026-09-09 17:36:18,290 WARNING Data quality: missing status for 25012795 on 2026-08-14
+2026-09-09 17:36:18,290 WARNING Data quality: missing status for 25012795 on 2026-08-15
+2026-09-09 17:36:18,290 WARNING Data quality: missing status for 25012795 on 2026-08-16
+2026-09-09 17:36:18,290 WARNING Data quality: missing status for 25012795 on 2026-08-17
+2026-09-09 17:36:18,291 WARNING Data quality: missing status for 25012795 on 2026-08-18
+2026-09-09 17:36:18,291 WARNING Data quality: missing status for 25012795 on 2026-08-19
+2026-09-09 17:36:18,291 WARNING Data quality: missing status for 25012795 on 2026-08-20
+2026-09-09 17:36:18,291 WARNING Data quality: missing status for 25012795 on 2026-08-21
+2026-09-09 17:36:18,291 WARNING Data quality: missing status for 25012795 on 2026-08-22
+2026-09-09 17:36:18,291 WARNING Data quality: missing status for 25012795 on 2026-08-23
+2026-09-09 17:36:18,291 WARNING Data quality: missing status for 25012795 on 2026-08-24
+2026-09-09 17:36:18,292 WARNING Data quality: missing status for 25012795 on 2026-08-25
+2026-09-09 17:36:18,292 WARNING Data quality: missing status for 25012795 on 2026-08-26
+2026-09-09 17:36:18,292 WARNING Data quality: missing status for 25012795 on 2026-08-27
+2026-09-09 17:36:18,292 WARNING Data quality: missing status for 25012795 on 2026-08-28
+2026-09-09 17:36:18,292 WARNING Data quality: missing status for 25012795 on 2026-08-29
+2026-09-09 17:36:18,293 WARNING Data quality: missing status for 25012795 on 2026-08-30
+2026-09-09 17:36:18,293 WARNING Data quality: missing status for 25012795 on 2026-08-31
+2026-09-09 17:36:18,293 WARNING Data quality: missing status for 25012797 on 2026-08-22
+2026-09-09 17:36:18,293 WARNING Data quality: missing status for 25012797 on 2026-08-23
+2026-09-09 17:36:18,294 WARNING Data quality: missing status for 25012797 on 2026-08-24
+2026-09-09 17:36:18,294 WARNING Data quality: missing status for 25012797 on 2026-08-25
+2026-09-09 17:36:18,294 WARNING Data quality: missing status for 25012797 on 2026-08-26
+2026-09-09 17:36:18,294 WARNING Data quality: missing status for 25012797 on 2026-08-27
+2026-09-09 17:36:18,294 WARNING Data quality: missing status for 25012797 on 2026-08-28
+2026-09-09 17:36:18,295 WARNING Data quality: missing status for 25012797 on 2026-08-29
+2026-09-09 17:36:18,295 WARNING Data quality: missing status for 25012797 on 2026-08-30
+2026-09-09 17:36:18,295 WARNING Data quality: missing status for 25012797 on 2026-08-31
+2026-09-09 17:36:18,302 INFO Wrote attendance JSON to D:\Importer_script\output\batch_a094a7de_attendance.json
+2026-09-09 17:36:18,302 INFO Batch a094a7de SUCCESS: 1730 attendance rows, 0 failures, 130 data-quality issues
+2026-09-09 17:36:18,307 INFO POST http://127.0.0.1:3000/api/attendance/import location_code=HYD batch_id=a094a7de records=1730
+2026-09-09 17:36:18,446 INFO DDO++ API accepted batch a094a7de (HTTP 200, attempt 1/3)
+2026-09-09 17:36:18,474 INFO Wrote attendance JSON to D:\Importer_script\output\batch_a094a7de_attendance.json
+2026-09-09 17:36:18,481 INFO Moved Hyd Aug Rep.xls -> D:\Importer_script\processed\Hyd Aug Rep_20260909_173618.xls
+2026-09-09 17:36:18,484 INFO Inbox run complete: processed=3 failed=0 skipped=0
+2026-09-09 17:37:35,494 INFO Inbox is empty; nothing to import
+2026-09-09 17:40:40,184 INFO Skipping Aug Agra.xls; identical file already imported
+2026-09-09 17:40:40,184 INFO Moved Aug Agra.xls -> D:\Importer_script\processed\Aug Agra_20260909_174040.xls
+2026-09-09 17:40:40,186 INFO Skipping Aug Noida.xls; identical file already imported
+2026-09-09 17:40:40,187 INFO Moved Aug Noida.xls -> D:\Importer_script\processed\Aug Noida_20260909_174040.xls
+2026-09-09 17:40:40,189 INFO Skipping Hyd Aug Rep.xls; identical file already imported
+2026-09-09 17:40:40,190 INFO Moved Hyd Aug Rep.xls -> D:\Importer_script\processed\Hyd Aug Rep_20260909_174040.xls
+2026-09-09 17:40:40,191 INFO Inbox run complete: processed=0 failed=0 skipped=3
+2026-09-10 10:23:57,794 INFO Inbox is empty; nothing to import
+2026-09-10 10:58:02,991 INFO Skipping Aug Agra.xls; identical file already imported
+2026-09-10 10:58:02,992 INFO Moved Aug Agra.xls -> D:\Importer_script\processed\Aug Agra_20260910_105802.xls
+2026-09-10 10:58:02,993 INFO Inbox run complete: processed=0 failed=0 skipped=1
+2026-09-10 10:59:30,129 INFO Skipping Aug Agra_.xls; identical file already imported
+2026-09-10 10:59:30,129 INFO Moved Aug Agra_.xls -> D:\Importer_script\processed\Aug Agra_.xls
+2026-09-10 10:59:30,130 INFO Inbox run complete: processed=0 failed=0 skipped=1
+2026-09-10 11:04:53,224 INFO Created import batch 989f6429 for Aug Agra.xls (AGRA)
+2026-09-10 11:04:53,253 INFO Report period: August 2026 (2026-08-01 to 2026-08-31)
+2026-09-10 11:04:53,262 INFO Found 44 employee blocks in Sheet2
+2026-09-10 11:04:53,269 INFO Wrote attendance JSON to D:\Importer_script\output\batch_989f6429_attendance.json
+2026-09-10 11:04:53,269 INFO Batch 989f6429 SUCCESS: 1364 attendance rows, 0 failures, 0 data-quality issues
+2026-09-10 11:04:53,271 INFO POST http://127.0.0.1:3000/api/attendance/import location_code=AGRA batch_id=989f6429 records=1364
+2026-09-10 11:04:53,443 INFO DDO++ API accepted batch 989f6429 (HTTP 200, attempt 1/3)
+2026-09-10 11:04:53,447 INFO Wrote attendance JSON to D:\Importer_script\output\batch_989f6429_attendance.json
+2026-09-10 11:04:53,448 INFO Moved Aug Agra.xls -> D:\Importer_script\processed\Aug Agra_20260910_110453.xls
+2026-09-10 11:04:53,449 INFO Inbox run complete: processed=1 failed=0 skipped=0

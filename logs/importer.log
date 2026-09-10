@@ -1,0 +1,225 @@
+2026-09-08T10:00:59.472Z INFO Created import batch 5a56132e {"fileName":"Agra August Attendance report.xls","location":"AGRA"}
+2026-09-08T10:00:59.584Z INFO Report period: 2026-07-27 to 2026-08-25 (Sheet2)
+2026-09-08T10:00:59.588Z INFO Found 97 employee blocks in Sheet2
+2026-09-08T10:00:59.589Z WARN Missing employee_code for Rohan Kathuria; using UNMAPPED:rohan_kathuria
+2026-09-08T10:00:59.589Z WARN Missing employee_code for Pratham Vij; using UNMAPPED:pratham_vij
+2026-09-08T10:00:59.590Z WARN Missing employee_code for Tapan Tripathi; using UNMAPPED:tapan_tripathi
+2026-09-08T10:00:59.590Z WARN Missing employee_code for Kuldeep Alok Tiwari; using UNMAPPED:kuldeep_alok_tiwari
+2026-09-08T10:00:59.591Z WARN Missing employee_code for Bhuvan Dixit; using UNMAPPED:bhuvan_dixit
+2026-09-08T10:00:59.591Z WARN Missing employee_code for Samir Pamnani; using UNMAPPED:samir_pamnani
+2026-09-08T10:00:59.592Z WARN Missing employee_code for Poonam Gupta; using UNMAPPED:poonam_gupta
+2026-09-08T10:00:59.592Z WARN Missing employee_code for Shivam Chaudhary; using UNMAPPED:shivam_chaudhary
+2026-09-08T10:00:59.592Z WARN Missing employee_code for Amardeep Gupta; using UNMAPPED:amardeep_gupta
+2026-09-08T10:00:59.593Z WARN Missing employee_code for Rohit Parihar; using UNMAPPED:rohit_parihar
+2026-09-08T10:00:59.593Z WARN Missing employee_code for Vijay Pal Singh; using UNMAPPED:vijay_pal_singh
+2026-09-08T10:00:59.593Z WARN Missing employee_code for Harshit Dubey; using UNMAPPED:harshit_dubey
+2026-09-08T10:00:59.593Z WARN Missing employee_code for Richa Rathaur; using UNMAPPED:richa_rathaur
+2026-09-08T10:00:59.594Z WARN Missing employee_code for Saqib Ullah; using UNMAPPED:saqib_ullah
+2026-09-08T10:00:59.594Z WARN Missing employee_code for Samarth Baghel; using UNMAPPED:samarth_baghel
+2026-09-08T10:00:59.595Z WARN Missing employee_code for Rahul Kumar; using UNMAPPED:rahul_kumar
+2026-09-08T10:00:59.596Z WARN Missing employee_code for Rajat Sharma; using UNMAPPED:rajat_sharma
+2026-09-08T10:00:59.596Z WARN Missing employee_code for Avanish Singh; using UNMAPPED:avanish_singh
+2026-09-08T10:00:59.597Z WARN Missing employee_code for Pallavi Rawat; using UNMAPPED:pallavi_rawat
+2026-09-08T10:00:59.597Z WARN Missing employee_code for Shantanu Sharma; using UNMAPPED:shantanu_sharma
+2026-09-08T10:00:59.598Z WARN Missing employee_code for Shruti Goyal; using UNMAPPED:shruti_goyal
+2026-09-08T10:00:59.598Z WARN Missing employee_code for Rupesh Shrivastava; using UNMAPPED:rupesh_shrivastava
+2026-09-08T10:00:59.598Z WARN Missing employee_code for Kashish Rajput; using UNMAPPED:kashish_rajput
+2026-09-08T10:00:59.599Z WARN Missing employee_code for Vaibhav Jain; using UNMAPPED:vaibhav_jain
+2026-09-08T10:00:59.599Z WARN Missing employee_code for Akshay Sawant; using UNMAPPED:akshay_sawant
+2026-09-08T10:00:59.599Z WARN Missing employee_code for Richa Yadav; using UNMAPPED:richa_yadav
+2026-09-08T10:00:59.600Z WARN Missing employee_code for Vaibhav Garg; using UNMAPPED:vaibhav_garg
+2026-09-08T10:00:59.600Z WARN Missing employee_code for Avdhesh Dhakare; using UNMAPPED:avdhesh_dhakare
+2026-09-08T10:00:59.601Z WARN Missing employee_code for Ayushi Goyal; using UNMAPPED:ayushi_goyal
+2026-09-08T10:00:59.601Z WARN Missing employee_code for Aman Gupta; using UNMAPPED:aman_gupta
+2026-09-08T10:00:59.601Z WARN Missing employee_code for Yatharth Kapoor; using UNMAPPED:yatharth_kapoor
+2026-09-08T10:00:59.602Z WARN Missing employee_code for Arif Khan; using UNMAPPED:arif_khan
+2026-09-08T10:00:59.602Z WARN Missing employee_code for Anuj Gupta; using UNMAPPED:anuj_gupta
+2026-09-08T10:00:59.602Z WARN Missing employee_code for Vaishnavi Gautam; using UNMAPPED:vaishnavi_gautam
+2026-09-08T10:00:59.603Z WARN Missing employee_code for Shravan Gupta; using UNMAPPED:shravan_gupta
+2026-09-08T10:00:59.603Z WARN Missing employee_code for Rahul Saxena; using UNMAPPED:rahul_saxena
+2026-09-08T10:00:59.603Z WARN Missing employee_code for Arjit Sharma; using UNMAPPED:arjit_sharma
+2026-09-08T10:00:59.604Z WARN Missing employee_code for Vinayak Solanki; using UNMAPPED:vinayak_solanki
+2026-09-08T10:00:59.604Z WARN Missing employee_code for Arohan Harsh Dubey; using UNMAPPED:arohan_harsh_dubey
+2026-09-08T10:00:59.604Z WARN Missing employee_code for Ankit Gautam; using UNMAPPED:ankit_gautam
+2026-09-08T10:00:59.605Z WARN Missing employee_code for Harman Rashidi; using UNMAPPED:harman_rashidi
+2026-09-08T10:00:59.605Z WARN Missing employee_code for Anuj Shrivastava; using UNMAPPED:anuj_shrivastava
+2026-09-08T10:00:59.605Z WARN Missing employee_code for Sankalp Srivastava; using UNMAPPED:sankalp_srivastava
+2026-09-08T10:00:59.605Z WARN Missing employee_code for Bikash Moharana; using UNMAPPED:bikash_moharana
+2026-09-08T10:00:59.606Z WARN Missing employee_code for Priya Goyal; using UNMAPPED:priya_goyal
+2026-09-08T10:00:59.606Z WARN Missing employee_code for Nimra Gaddi; using UNMAPPED:nimra_gaddi
+2026-09-08T10:00:59.606Z WARN Missing employee_code for Sajal; using UNMAPPED:sajal
+2026-09-08T10:00:59.607Z WARN Missing employee_code for Pulkit Singhal; using UNMAPPED:pulkit_singhal
+2026-09-08T10:00:59.607Z WARN Missing employee_code for Abhirash Garg; using UNMAPPED:abhirash_garg
+2026-09-08T10:00:59.607Z WARN Missing employee_code for Adarsh Meghwal; using UNMAPPED:adarsh_meghwal
+2026-09-08T10:00:59.608Z WARN Missing employee_code for Vandana Gupta; using UNMAPPED:vandana_gupta
+2026-09-08T10:00:59.609Z WARN Missing employee_code for Raja Verma; using UNMAPPED:raja_verma
+2026-09-08T10:00:59.611Z WARN Missing employee_code for Jatin Chawla; using UNMAPPED:jatin_chawla
+2026-09-08T10:00:59.612Z WARN Missing employee_code for Payank Kaushal; using UNMAPPED:payank_kaushal
+2026-09-08T10:00:59.613Z WARN Missing employee_code for Prapti Jain; using UNMAPPED:prapti_jain
+2026-09-08T10:00:59.613Z WARN Missing employee_code for Taniya Amulani; using UNMAPPED:taniya_amulani
+2026-09-08T10:00:59.614Z WARN Missing employee_code for Sumit Timori; using UNMAPPED:sumit_timori
+2026-09-08T10:00:59.614Z WARN Missing employee_code for Aryan Gupta; using UNMAPPED:aryan_gupta
+2026-09-08T10:00:59.614Z WARN Missing employee_code for Areena khan; using UNMAPPED:areena_khan
+2026-09-08T10:00:59.615Z WARN Missing employee_code for Keshav Rathore; using UNMAPPED:keshav_rathore
+2026-09-08T10:00:59.615Z WARN Missing employee_code for Tanishka Khandelwal; using UNMAPPED:tanishka_khandelwal
+2026-09-08T10:00:59.615Z WARN Missing employee_code for Yukti; using UNMAPPED:yukti
+2026-09-08T10:00:59.615Z WARN Missing employee_code for Shubham Rajput; using UNMAPPED:shubham_rajput
+2026-09-08T10:00:59.616Z WARN Missing employee_code for Yuvraj Ghai; using UNMAPPED:yuvraj_ghai
+2026-09-08T10:00:59.616Z WARN Missing employee_code for Sumit; using UNMAPPED:sumit
+2026-09-08T10:00:59.616Z WARN Missing employee_code for Tanishq Jain; using UNMAPPED:tanishq_jain
+2026-09-08T10:00:59.617Z WARN Missing employee_code for Pallav Pachauri; using UNMAPPED:pallav_pachauri
+2026-09-08T10:00:59.617Z WARN Missing employee_code for yash agarwal; using UNMAPPED:yash_agarwal
+2026-09-08T10:00:59.617Z WARN Missing employee_code for Gunika Sharma; using UNMAPPED:gunika_sharma
+2026-09-08T10:00:59.618Z WARN Missing employee_code for Siddhartha Gupta; using UNMAPPED:siddhartha_gupta
+2026-09-08T10:00:59.618Z WARN Missing employee_code for Ashutosh Jha; using UNMAPPED:ashutosh_jha
+2026-09-08T10:00:59.618Z WARN Missing employee_code for Abhishek Jha; using UNMAPPED:abhishek_jha
+2026-09-08T10:00:59.618Z WARN Missing employee_code for Nishant Mishra; using UNMAPPED:nishant_mishra
+2026-09-08T10:00:59.619Z WARN Missing employee_code for Aryan Jain; using UNMAPPED:aryan_jain
+2026-09-08T10:00:59.619Z WARN Missing employee_code for Anmol Kaushik; using UNMAPPED:anmol_kaushik
+2026-09-08T10:00:59.619Z WARN Missing employee_code for Ashish Gautam; using UNMAPPED:ashish_gautam
+2026-09-08T10:00:59.619Z WARN Missing employee_code for Aditya Kumar; using UNMAPPED:aditya_kumar
+2026-09-08T10:00:59.620Z WARN Missing employee_code for Akanksha Sisodia; using UNMAPPED:akanksha_sisodia
+2026-09-08T10:00:59.620Z WARN Missing employee_code for Sanjana Chauhan; using UNMAPPED:sanjana_chauhan
+2026-09-08T10:00:59.620Z WARN Missing employee_code for Pragati Jain; using UNMAPPED:pragati_jain
+2026-09-08T10:00:59.620Z WARN Missing employee_code for Diya Agarwal; using UNMAPPED:diya_agarwal
+2026-09-08T10:00:59.620Z WARN Missing employee_code for Sanjana Sharma; using UNMAPPED:sanjana_sharma
+2026-09-08T10:00:59.621Z WARN Missing employee_code for Tanya Dadlani; using UNMAPPED:tanya_dadlani
+2026-09-08T10:00:59.621Z WARN Missing employee_code for Gaurav Srivastava; using UNMAPPED:gaurav_srivastava
+2026-09-08T10:00:59.621Z WARN Missing employee_code for Yogita Srivastav; using UNMAPPED:yogita_srivastav
+2026-09-08T10:00:59.621Z WARN Missing employee_code for Tanya Jain; using UNMAPPED:tanya_jain
+2026-09-08T10:00:59.622Z WARN Missing employee_code for Ritu Rathore; using UNMAPPED:ritu_rathore
+2026-09-08T10:00:59.622Z WARN Missing employee_code for Paridhi Kaushik; using UNMAPPED:paridhi_kaushik
+2026-09-08T10:00:59.622Z WARN Missing employee_code for Nidhi Sharma; using UNMAPPED:nidhi_sharma
+2026-09-08T10:00:59.622Z WARN Missing employee_code for Lovely Son; using UNMAPPED:lovely_son
+2026-09-08T10:00:59.623Z WARN Missing employee_code for NITISHA MAHESHWARI; using UNMAPPED:nitisha_maheshwari
+2026-09-08T10:00:59.623Z WARN Missing employee_code for Krati Jain; using UNMAPPED:krati_jain
+2026-09-08T10:00:59.623Z WARN Missing employee_code for Chhaya Tomar; using UNMAPPED:chhaya_tomar
+2026-09-08T10:00:59.624Z WARN Missing employee_code for Prachi Rawat; using UNMAPPED:prachi_rawat
+2026-09-08T10:00:59.624Z WARN Missing employee_code for Kanwal; using UNMAPPED:kanwal
+2026-09-08T10:00:59.624Z WARN Missing employee_code for Nitin Vashishtha; using UNMAPPED:nitin_vashishtha
+2026-09-08T10:00:59.625Z WARN Missing employee_code for Shipra; using UNMAPPED:shipra
+2026-09-08T10:00:59.701Z INFO DDO++ API accepted batch 5a56132e {"ok":true,"batch_id":"5a56132e","status":"PARTIAL","location_code":"AGRA","records_processed":2896,"records_inserted":2896,"records_updated":0,"records_failed":0,"unknown_status_count":0,"data_quality_issue_count":111,"failures":[]}
+2026-09-08T10:00:59.708Z INFO Moved Agra August Attendance report.xls -> D:\Importer_script\processed\Agra August Attendance report.xls
+2026-09-08T10:00:59.709Z INFO Created import batch 5ab3dbb7 {"fileName":"NOIDA attendance report august.xls","location":"NOIDA"}
+2026-09-08T10:00:59.721Z INFO Report period: 2024-07-27 to 2024-08-25 (Sheet2)
+2026-09-08T10:00:59.722Z INFO Found 19 employee blocks in Sheet2
+2026-09-08T10:00:59.723Z WARN Missing employee_code for Shikhar; using UNMAPPED:shikhar
+2026-09-08T10:00:59.723Z WARN Missing employee_code for Kapil; using UNMAPPED:kapil
+2026-09-08T10:00:59.777Z INFO DDO++ API accepted batch 5ab3dbb7 {"ok":true,"batch_id":"5ab3dbb7","status":"PARTIAL","location_code":"NOIDA","records_processed":570,"records_inserted":570,"records_updated":0,"records_failed":0,"unknown_status_count":2,"data_quality_issue_count":2,"failures":[]}
+2026-09-08T10:00:59.783Z INFO Moved NOIDA attendance report august.xls -> D:\Importer_script\processed\NOIDA attendance report august_202609081000597.xls
+2026-09-08T10:01:26.716Z INFO Created import batch d58bb01e {"fileName":"Agra August Attendance report.xls","location":"AGRA"}
+2026-09-08T10:01:26.799Z INFO Report period: 2026-07-27 to 2026-08-25 (Sheet2)
+2026-09-08T10:01:26.805Z INFO Found 97 employee blocks in Sheet2
+2026-09-08T10:01:26.806Z WARN Missing employee_code for Rohan Kathuria; using UNMAPPED:rohan_kathuria
+2026-09-08T10:01:26.811Z WARN Missing employee_code for Pratham Vij; using UNMAPPED:pratham_vij
+2026-09-08T10:01:26.812Z WARN Missing employee_code for Tapan Tripathi; using UNMAPPED:tapan_tripathi
+2026-09-08T10:01:26.813Z WARN Missing employee_code for Kuldeep Alok Tiwari; using UNMAPPED:kuldeep_alok_tiwari
+2026-09-08T10:01:26.813Z WARN Missing employee_code for Bhuvan Dixit; using UNMAPPED:bhuvan_dixit
+2026-09-08T10:01:26.814Z WARN Missing employee_code for Samir Pamnani; using UNMAPPED:samir_pamnani
+2026-09-08T10:01:26.815Z WARN Missing employee_code for Poonam Gupta; using UNMAPPED:poonam_gupta
+2026-09-08T10:01:26.816Z WARN Missing employee_code for Shivam Chaudhary; using UNMAPPED:shivam_chaudhary
+2026-09-08T10:01:26.816Z WARN Missing employee_code for Amardeep Gupta; using UNMAPPED:amardeep_gupta
+2026-09-08T10:01:26.817Z WARN Missing employee_code for Rohit Parihar; using UNMAPPED:rohit_parihar
+2026-09-08T10:01:26.817Z WARN Missing employee_code for Vijay Pal Singh; using UNMAPPED:vijay_pal_singh
+2026-09-08T10:01:26.818Z WARN Missing employee_code for Harshit Dubey; using UNMAPPED:harshit_dubey
+2026-09-08T10:01:26.818Z WARN Missing employee_code for Richa Rathaur; using UNMAPPED:richa_rathaur
+2026-09-08T10:01:26.819Z WARN Missing employee_code for Saqib Ullah; using UNMAPPED:saqib_ullah
+2026-09-08T10:01:26.819Z WARN Missing employee_code for Samarth Baghel; using UNMAPPED:samarth_baghel
+2026-09-08T10:01:26.820Z WARN Missing employee_code for Rahul Kumar; using UNMAPPED:rahul_kumar
+2026-09-08T10:01:26.820Z WARN Missing employee_code for Rajat Sharma; using UNMAPPED:rajat_sharma
+2026-09-08T10:01:26.821Z WARN Missing employee_code for Avanish Singh; using UNMAPPED:avanish_singh
+2026-09-08T10:01:26.821Z WARN Missing employee_code for Pallavi Rawat; using UNMAPPED:pallavi_rawat
+2026-09-08T10:01:26.821Z WARN Missing employee_code for Shantanu Sharma; using UNMAPPED:shantanu_sharma
+2026-09-08T10:01:26.822Z WARN Missing employee_code for Shruti Goyal; using UNMAPPED:shruti_goyal
+2026-09-08T10:01:26.822Z WARN Missing employee_code for Rupesh Shrivastava; using UNMAPPED:rupesh_shrivastava
+2026-09-08T10:01:26.823Z WARN Missing employee_code for Kashish Rajput; using UNMAPPED:kashish_rajput
+2026-09-08T10:01:26.823Z WARN Missing employee_code for Vaibhav Jain; using UNMAPPED:vaibhav_jain
+2026-09-08T10:01:26.823Z WARN Missing employee_code for Akshay Sawant; using UNMAPPED:akshay_sawant
+2026-09-08T10:01:26.824Z WARN Missing employee_code for Richa Yadav; using UNMAPPED:richa_yadav
+2026-09-08T10:01:26.824Z WARN Missing employee_code for Vaibhav Garg; using UNMAPPED:vaibhav_garg
+2026-09-08T10:01:26.825Z WARN Missing employee_code for Avdhesh Dhakare; using UNMAPPED:avdhesh_dhakare
+2026-09-08T10:01:26.825Z WARN Missing employee_code for Ayushi Goyal; using UNMAPPED:ayushi_goyal
+2026-09-08T10:01:26.826Z WARN Missing employee_code for Aman Gupta; using UNMAPPED:aman_gupta
+2026-09-08T10:01:26.826Z WARN Missing employee_code for Yatharth Kapoor; using UNMAPPED:yatharth_kapoor
+2026-09-08T10:01:26.827Z WARN Missing employee_code for Arif Khan; using UNMAPPED:arif_khan
+2026-09-08T10:01:26.827Z WARN Missing employee_code for Anuj Gupta; using UNMAPPED:anuj_gupta
+2026-09-08T10:01:26.827Z WARN Missing employee_code for Vaishnavi Gautam; using UNMAPPED:vaishnavi_gautam
+2026-09-08T10:01:26.828Z WARN Missing employee_code for Shravan Gupta; using UNMAPPED:shravan_gupta
+2026-09-08T10:01:26.828Z WARN Missing employee_code for Rahul Saxena; using UNMAPPED:rahul_saxena
+2026-09-08T10:01:26.828Z WARN Missing employee_code for Arjit Sharma; using UNMAPPED:arjit_sharma
+2026-09-08T10:01:26.829Z WARN Missing employee_code for Vinayak Solanki; using UNMAPPED:vinayak_solanki
+2026-09-08T10:01:26.829Z WARN Missing employee_code for Arohan Harsh Dubey; using UNMAPPED:arohan_harsh_dubey
+2026-09-08T10:01:26.830Z WARN Missing employee_code for Ankit Gautam; using UNMAPPED:ankit_gautam
+2026-09-08T10:01:26.830Z WARN Missing employee_code for Harman Rashidi; using UNMAPPED:harman_rashidi
+2026-09-08T10:01:26.831Z WARN Missing employee_code for Anuj Shrivastava; using UNMAPPED:anuj_shrivastava
+2026-09-08T10:01:26.831Z WARN Missing employee_code for Sankalp Srivastava; using UNMAPPED:sankalp_srivastava
+2026-09-08T10:01:26.832Z WARN Missing employee_code for Bikash Moharana; using UNMAPPED:bikash_moharana
+2026-09-08T10:01:26.832Z WARN Missing employee_code for Priya Goyal; using UNMAPPED:priya_goyal
+2026-09-08T10:01:26.833Z WARN Missing employee_code for Nimra Gaddi; using UNMAPPED:nimra_gaddi
+2026-09-08T10:01:26.833Z WARN Missing employee_code for Sajal; using UNMAPPED:sajal
+2026-09-08T10:01:26.833Z WARN Missing employee_code for Pulkit Singhal; using UNMAPPED:pulkit_singhal
+2026-09-08T10:01:26.834Z WARN Missing employee_code for Abhirash Garg; using UNMAPPED:abhirash_garg
+2026-09-08T10:01:26.834Z WARN Missing employee_code for Adarsh Meghwal; using UNMAPPED:adarsh_meghwal
+2026-09-08T10:01:26.834Z WARN Missing employee_code for Vandana Gupta; using UNMAPPED:vandana_gupta
+2026-09-08T10:01:26.835Z WARN Missing employee_code for Raja Verma; using UNMAPPED:raja_verma
+2026-09-08T10:01:26.835Z WARN Missing employee_code for Jatin Chawla; using UNMAPPED:jatin_chawla
+2026-09-08T10:01:26.836Z WARN Missing employee_code for Payank Kaushal; using UNMAPPED:payank_kaushal
+2026-09-08T10:01:26.836Z WARN Missing employee_code for Prapti Jain; using UNMAPPED:prapti_jain
+2026-09-08T10:01:26.839Z WARN Missing employee_code for Taniya Amulani; using UNMAPPED:taniya_amulani
+2026-09-08T10:01:26.839Z WARN Missing employee_code for Sumit Timori; using UNMAPPED:sumit_timori
+2026-09-08T10:01:26.840Z WARN Missing employee_code for Aryan Gupta; using UNMAPPED:aryan_gupta
+2026-09-08T10:01:26.840Z WARN Missing employee_code for Areena khan; using UNMAPPED:areena_khan
+2026-09-08T10:01:26.840Z WARN Missing employee_code for Keshav Rathore; using UNMAPPED:keshav_rathore
+2026-09-08T10:01:26.841Z WARN Missing employee_code for Tanishka Khandelwal; using UNMAPPED:tanishka_khandelwal
+2026-09-08T10:01:26.842Z WARN Missing employee_code for Yukti; using UNMAPPED:yukti
+2026-09-08T10:01:26.842Z WARN Missing employee_code for Shubham Rajput; using UNMAPPED:shubham_rajput
+2026-09-08T10:01:26.843Z WARN Missing employee_code for Yuvraj Ghai; using UNMAPPED:yuvraj_ghai
+2026-09-08T10:01:26.843Z WARN Missing employee_code for Sumit; using UNMAPPED:sumit
+2026-09-08T10:01:26.844Z WARN Missing employee_code for Tanishq Jain; using UNMAPPED:tanishq_jain
+2026-09-08T10:01:26.844Z WARN Missing employee_code for Pallav Pachauri; using UNMAPPED:pallav_pachauri
+2026-09-08T10:01:26.844Z WARN Missing employee_code for yash agarwal; using UNMAPPED:yash_agarwal
+2026-09-08T10:01:26.845Z WARN Missing employee_code for Gunika Sharma; using UNMAPPED:gunika_sharma
+2026-09-08T10:01:26.845Z WARN Missing employee_code for Siddhartha Gupta; using UNMAPPED:siddhartha_gupta
+2026-09-08T10:01:26.845Z WARN Missing employee_code for Ashutosh Jha; using UNMAPPED:ashutosh_jha
+2026-09-08T10:01:26.846Z WARN Missing employee_code for Abhishek Jha; using UNMAPPED:abhishek_jha
+2026-09-08T10:01:26.846Z WARN Missing employee_code for Nishant Mishra; using UNMAPPED:nishant_mishra
+2026-09-08T10:01:26.846Z WARN Missing employee_code for Aryan Jain; using UNMAPPED:aryan_jain
+2026-09-08T10:01:26.847Z WARN Missing employee_code for Anmol Kaushik; using UNMAPPED:anmol_kaushik
+2026-09-08T10:01:26.847Z WARN Missing employee_code for Ashish Gautam; using UNMAPPED:ashish_gautam
+2026-09-08T10:01:26.847Z WARN Missing employee_code for Aditya Kumar; using UNMAPPED:aditya_kumar
+2026-09-08T10:01:26.848Z WARN Missing employee_code for Akanksha Sisodia; using UNMAPPED:akanksha_sisodia
+2026-09-08T10:01:26.848Z WARN Missing employee_code for Sanjana Chauhan; using UNMAPPED:sanjana_chauhan
+2026-09-08T10:01:26.848Z WARN Missing employee_code for Pragati Jain; using UNMAPPED:pragati_jain
+2026-09-08T10:01:26.849Z WARN Missing employee_code for Diya Agarwal; using UNMAPPED:diya_agarwal
+2026-09-08T10:01:26.849Z WARN Missing employee_code for Sanjana Sharma; using UNMAPPED:sanjana_sharma
+2026-09-08T10:01:26.849Z WARN Missing employee_code for Tanya Dadlani; using UNMAPPED:tanya_dadlani
+2026-09-08T10:01:26.850Z WARN Missing employee_code for Gaurav Srivastava; using UNMAPPED:gaurav_srivastava
+2026-09-08T10:01:26.850Z WARN Missing employee_code for Yogita Srivastav; using UNMAPPED:yogita_srivastav
+2026-09-08T10:01:26.850Z WARN Missing employee_code for Tanya Jain; using UNMAPPED:tanya_jain
+2026-09-08T10:01:26.851Z WARN Missing employee_code for Ritu Rathore; using UNMAPPED:ritu_rathore
+2026-09-08T10:01:26.851Z WARN Missing employee_code for Paridhi Kaushik; using UNMAPPED:paridhi_kaushik
+2026-09-08T10:01:26.852Z WARN Missing employee_code for Nidhi Sharma; using UNMAPPED:nidhi_sharma
+2026-09-08T10:01:26.852Z WARN Missing employee_code for Lovely Son; using UNMAPPED:lovely_son
+2026-09-08T10:01:26.852Z WARN Missing employee_code for NITISHA MAHESHWARI; using UNMAPPED:nitisha_maheshwari
+2026-09-08T10:01:26.853Z WARN Missing employee_code for Krati Jain; using UNMAPPED:krati_jain
+2026-09-08T10:01:26.853Z WARN Missing employee_code for Chhaya Tomar; using UNMAPPED:chhaya_tomar
+2026-09-08T10:01:26.853Z WARN Missing employee_code for Prachi Rawat; using UNMAPPED:prachi_rawat
+2026-09-08T10:01:26.853Z WARN Missing employee_code for Kanwal; using UNMAPPED:kanwal
+2026-09-08T10:01:26.854Z WARN Missing employee_code for Nitin Vashishtha; using UNMAPPED:nitin_vashishtha
+2026-09-08T10:01:26.854Z WARN Missing employee_code for Shipra; using UNMAPPED:shipra
+2026-09-08T10:01:26.946Z INFO DDO++ API accepted batch d58bb01e {"ok":true,"batch_id":"d58bb01e","status":"PARTIAL","location_code":"AGRA","records_processed":2896,"records_inserted":2896,"records_updated":0,"records_failed":0,"unknown_status_count":0,"data_quality_issue_count":111,"failures":[]}
+2026-09-08T10:01:26.957Z INFO Moved Agra August Attendance report.xls -> D:\Importer_script\processed\Agra August Attendance report_202609081001269.xls
+2026-09-08T10:01:26.958Z INFO Created import batch 817dc023 {"fileName":"NOIDA attendance report august.xls","location":"NOIDA"}
+2026-09-08T10:01:26.972Z INFO Report period: 2026-07-27 to 2026-08-25 (Sheet2)
+2026-09-08T10:01:26.973Z INFO Found 19 employee blocks in Sheet2
+2026-09-08T10:01:26.975Z WARN Missing employee_code for Shikhar; using UNMAPPED:shikhar
+2026-09-08T10:01:26.975Z WARN Missing employee_code for Kapil; using UNMAPPED:kapil
+2026-09-08T10:01:27.053Z INFO DDO++ API accepted batch 817dc023 {"ok":true,"batch_id":"817dc023","status":"PARTIAL","location_code":"NOIDA","records_processed":570,"records_inserted":570,"records_updated":0,"records_failed":0,"unknown_status_count":2,"data_quality_issue_count":2,"failures":[]}
+2026-09-08T10:01:27.057Z INFO Moved NOIDA attendance report august.xls -> D:\Importer_script\processed\NOIDA attendance report august_202609081001270.xls
+2026-09-08T10:01:47.324Z INFO Created import batch 2f930058 {"fileName":"NOIDA attendance report august.xls","location":"NOIDA"}
+2026-09-08T10:01:47.370Z INFO Report period: 2026-07-27 to 2026-08-25 (Sheet2)
+2026-09-08T10:01:47.372Z INFO Found 19 employee blocks in Sheet2
+2026-09-08T10:01:47.374Z WARN Missing employee_code for Shikhar; using UNMAPPED:shikhar
+2026-09-08T10:01:47.375Z WARN Missing employee_code for Kapil; using UNMAPPED:kapil
+2026-09-08T10:01:47.451Z INFO DDO++ API accepted batch 2f930058 {"ok":true,"batch_id":"2f930058","status":"PARTIAL","location_code":"NOIDA","records_processed":570,"records_inserted":0,"records_updated":570,"records_failed":0,"unknown_status_count":2,"data_quality_issue_count":2,"failures":[]}
+2026-09-08T10:01:47.454Z INFO Moved NOIDA attendance report august.xls -> D:\Importer_script\processed\NOIDA attendance report august_202609081001474.xls

@@ -1,0 +1,1584 @@
+{
+  "d58bb01e": {
+    "batch_id": "d58bb01e",
+    "location_code": "AGRA",
+    "location_name": "Agra",
+    "source_file": "Agra August Attendance report.xls",
+    "file_hash": "51c1fe5cdd67b52699f64b4ff85a150ba33ca4f3aaace8cc866e98c32116ccb0",
+    "report_from": "2026-07-27",
+    "report_to": "2026-08-25",
+    "employee_count": 97,
+    "records_processed": 2896,
+    "records_inserted": 2896,
+    "records_updated": 0,
+    "records_failed": 0,
+    "unknown_status_count": 0,
+    "data_quality_issue_count": 111,
+    "status": "PARTIAL",
+    "error_message": null,
+    "started_at": "2026-09-08T10:01:26.903Z",
+    "completed_at": "2026-09-08T10:01:26.903Z",
+    "failures": [],
+    "unknown_statuses": [],
+    "data_quality_issues": [
+      {
+        "employee_code": "UNMAPPED:rohan_kathuria",
+        "employee_name": "Rohan Kathuria",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:pratham_vij",
+        "employee_name": "Pratham Vij",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:tapan_tripathi",
+        "employee_name": "Tapan Tripathi",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:kuldeep_alok_tiwari",
+        "employee_name": "Kuldeep Alok Tiwari",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:kuldeep_alok_tiwari",
+        "employee_name": "Kuldeep Alok Tiwari",
+        "date": "2026-07-27",
+        "reason": "Missing attendance status"
+      },
+      {
+        "employee_code": "UNMAPPED:kuldeep_alok_tiwari",
+        "employee_name": "Kuldeep Alok Tiwari",
+        "date": "2026-07-28",
+        "reason": "Missing attendance status"
+      },
+      {
+        "employee_code": "UNMAPPED:kuldeep_alok_tiwari",
+        "employee_name": "Kuldeep Alok Tiwari",
+        "date": "2026-07-29",
+        "reason": "Missing attendance status"
+      },
+      {
+        "employee_code": "UNMAPPED:kuldeep_alok_tiwari",
+        "employee_name": "Kuldeep Alok Tiwari",
+        "date": "2026-07-30",
+        "reason": "Missing attendance status"
+      },
+      {
+        "employee_code": "UNMAPPED:kuldeep_alok_tiwari",
+        "employee_name": "Kuldeep Alok Tiwari",
+        "date": "2026-07-31",
+        "reason": "Missing attendance status"
+      },
+      {
+        "employee_code": "UNMAPPED:kuldeep_alok_tiwari",
+        "employee_name": "Kuldeep Alok Tiwari",
+        "date": "2026-08-01",
+        "reason": "Missing attendance status"
+      },
+      {
+        "employee_code": "UNMAPPED:kuldeep_alok_tiwari",
+        "employee_name": "Kuldeep Alok Tiwari",
+        "date": "2026-08-02",
+        "reason": "Missing attendance status"
+      },
+      {
+        "employee_code": "UNMAPPED:bhuvan_dixit",
+        "employee_name": "Bhuvan Dixit",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:samir_pamnani",
+        "employee_name": "Samir Pamnani",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:poonam_gupta",
+        "employee_name": "Poonam Gupta",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:shivam_chaudhary",
+        "employee_name": "Shivam Chaudhary",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:amardeep_gupta",
+        "employee_name": "Amardeep Gupta",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:rohit_parihar",
+        "employee_name": "Rohit Parihar",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:vijay_pal_singh",
+        "employee_name": "Vijay Pal Singh",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:harshit_dubey",
+        "employee_name": "Harshit Dubey",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:richa_rathaur",
+        "employee_name": "Richa Rathaur",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:saqib_ullah",
+        "employee_name": "Saqib Ullah",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:samarth_baghel",
+        "employee_name": "Samarth Baghel",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:rahul_kumar",
+        "employee_name": "Rahul Kumar",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:rajat_sharma",
+        "employee_name": "Rajat Sharma",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:avanish_singh",
+        "employee_name": "Avanish Singh",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:pallavi_rawat",
+        "employee_name": "Pallavi Rawat",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:shantanu_sharma",
+        "employee_name": "Shantanu Sharma",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:shruti_goyal",
+        "employee_name": "Shruti Goyal",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:rupesh_shrivastava",
+        "employee_name": "Rupesh Shrivastava",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:kashish_rajput",
+        "employee_name": "Kashish Rajput",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:vaibhav_jain",
+        "employee_name": "Vaibhav Jain",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:akshay_sawant",
+        "employee_name": "Akshay Sawant",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:richa_yadav",
+        "employee_name": "Richa Yadav",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:vaibhav_garg",
+        "employee_name": "Vaibhav Garg",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:avdhesh_dhakare",
+        "employee_name": "Avdhesh Dhakare",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:ayushi_goyal",
+        "employee_name": "Ayushi Goyal",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:aman_gupta",
+        "employee_name": "Aman Gupta",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:yatharth_kapoor",
+        "employee_name": "Yatharth Kapoor",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:arif_khan",
+        "employee_name": "Arif Khan",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:anuj_gupta",
+        "employee_name": "Anuj Gupta",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:vaishnavi_gautam",
+        "employee_name": "Vaishnavi Gautam",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:shravan_gupta",
+        "employee_name": "Shravan Gupta",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:rahul_saxena",
+        "employee_name": "Rahul Saxena",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:arjit_sharma",
+        "employee_name": "Arjit Sharma",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:vinayak_solanki",
+        "employee_name": "Vinayak Solanki",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:arohan_harsh_dubey",
+        "employee_name": "Arohan Harsh Dubey",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:ankit_gautam",
+        "employee_name": "Ankit Gautam",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:harman_rashidi",
+        "employee_name": "Harman Rashidi",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:anuj_shrivastava",
+        "employee_name": "Anuj Shrivastava",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:sankalp_srivastava",
+        "employee_name": "Sankalp Srivastava",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:bikash_moharana",
+        "employee_name": "Bikash Moharana",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:priya_goyal",
+        "employee_name": "Priya Goyal",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:nimra_gaddi",
+        "employee_name": "Nimra Gaddi",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:sajal",
+        "employee_name": "Sajal",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:pulkit_singhal",
+        "employee_name": "Pulkit Singhal",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:abhirash_garg",
+        "employee_name": "Abhirash Garg",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:adarsh_meghwal",
+        "employee_name": "Adarsh Meghwal",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:vandana_gupta",
+        "employee_name": "Vandana Gupta",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:raja_verma",
+        "employee_name": "Raja Verma",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:jatin_chawla",
+        "employee_name": "Jatin Chawla",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:payank_kaushal",
+        "employee_name": "Payank Kaushal",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:prapti_jain",
+        "employee_name": "Prapti Jain",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:taniya_amulani",
+        "employee_name": "Taniya Amulani",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:sumit_timori",
+        "employee_name": "Sumit Timori",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:aryan_gupta",
+        "employee_name": "Aryan Gupta",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:areena_khan",
+        "employee_name": "Areena khan",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:keshav_rathore",
+        "employee_name": "Keshav Rathore",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:tanishka_khandelwal",
+        "employee_name": "Tanishka Khandelwal",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:yukti",
+        "employee_name": "Yukti",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:shubham_rajput",
+        "employee_name": "Shubham Rajput",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:yuvraj_ghai",
+        "employee_name": "Yuvraj Ghai",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:sumit",
+        "employee_name": "Sumit",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:tanishq_jain",
+        "employee_name": "Tanishq Jain",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:pallav_pachauri",
+        "employee_name": "Pallav Pachauri",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:yash_agarwal",
+        "employee_name": "yash agarwal",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:gunika_sharma",
+        "employee_name": "Gunika Sharma",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:siddhartha_gupta",
+        "employee_name": "Siddhartha Gupta",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:ashutosh_jha",
+        "employee_name": "Ashutosh Jha",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:abhishek_jha",
+        "employee_name": "Abhishek Jha",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:nishant_mishra",
+        "employee_name": "Nishant Mishra",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:aryan_jain",
+        "employee_name": "Aryan Jain",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:anmol_kaushik",
+        "employee_name": "Anmol Kaushik",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:ashish_gautam",
+        "employee_name": "Ashish Gautam",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:aditya_kumar",
+        "employee_name": "Aditya Kumar",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:akanksha_sisodia",
+        "employee_name": "Akanksha Sisodia",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:sanjana_chauhan",
+        "employee_name": "Sanjana Chauhan",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:pragati_jain",
+        "employee_name": "Pragati Jain",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:diya_agarwal",
+        "employee_name": "Diya Agarwal",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:sanjana_sharma",
+        "employee_name": "Sanjana Sharma",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:tanya_dadlani",
+        "employee_name": "Tanya Dadlani",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:gaurav_srivastava",
+        "employee_name": "Gaurav Srivastava",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:yogita_srivastav",
+        "employee_name": "Yogita Srivastav",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:tanya_jain",
+        "employee_name": "Tanya Jain",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:ritu_rathore",
+        "employee_name": "Ritu Rathore",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:paridhi_kaushik",
+        "employee_name": "Paridhi Kaushik",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:nidhi_sharma",
+        "employee_name": "Nidhi Sharma",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:lovely_son",
+        "employee_name": "Lovely Son",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:nitisha_maheshwari",
+        "employee_name": "NITISHA MAHESHWARI",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:krati_jain",
+        "employee_name": "Krati Jain",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:chhaya_tomar",
+        "employee_name": "Chhaya Tomar",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:prachi_rawat",
+        "employee_name": "Prachi Rawat",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:kanwal",
+        "employee_name": "Kanwal",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:nitin_vashishtha",
+        "employee_name": "Nitin Vashishtha",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:shipra",
+        "employee_name": "Shipra",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:shipra",
+        "employee_name": "Shipra",
+        "date": "2026-07-27",
+        "reason": "Missing attendance status"
+      },
+      {
+        "employee_code": "UNMAPPED:shipra",
+        "employee_name": "Shipra",
+        "date": "2026-07-28",
+        "reason": "Missing attendance status"
+      },
+      {
+        "employee_code": "UNMAPPED:shipra",
+        "employee_name": "Shipra",
+        "date": "2026-07-29",
+        "reason": "Missing attendance status"
+      },
+      {
+        "employee_code": "UNMAPPED:shipra",
+        "employee_name": "Shipra",
+        "date": "2026-07-30",
+        "reason": "Missing attendance status"
+      },
+      {
+        "employee_code": "UNMAPPED:shipra",
+        "employee_name": "Shipra",
+        "date": "2026-07-31",
+        "reason": "Missing attendance status"
+      },
+      {
+        "employee_code": "UNMAPPED:shipra",
+        "employee_name": "Shipra",
+        "date": "2026-08-01",
+        "reason": "Missing attendance status"
+      },
+      {
+        "employee_code": "UNMAPPED:shipra",
+        "employee_name": "Shipra",
+        "date": "2026-08-02",
+        "reason": "Missing attendance status"
+      }
+    ]
+  },
+  "817dc023": {
+    "batch_id": "817dc023",
+    "location_code": "NOIDA",
+    "location_name": "Noida",
+    "source_file": "NOIDA attendance report august.xls",
+    "file_hash": "3f92c669d6b8a684052dce336085c56ef3f9a273acbf0e9cc5065b1c61b090f2",
+    "report_from": "2026-07-27",
+    "report_to": "2026-08-25",
+    "employee_count": 19,
+    "records_processed": 570,
+    "records_inserted": 570,
+    "records_updated": 0,
+    "records_failed": 0,
+    "unknown_status_count": 2,
+    "data_quality_issue_count": 2,
+    "status": "PARTIAL",
+    "error_message": null,
+    "started_at": "2026-09-08T10:01:27.010Z",
+    "completed_at": "2026-09-08T10:01:27.010Z",
+    "failures": [],
+    "unknown_statuses": [
+      {
+        "employee_code": "25012729",
+        "attendance_date": "2026-08-24",
+        "status": "EFH"
+      },
+      {
+        "employee_code": "25012867",
+        "attendance_date": "2026-08-07",
+        "status": "½LOP"
+      }
+    ],
+    "data_quality_issues": [
+      {
+        "employee_code": "UNMAPPED:shikhar",
+        "employee_name": "Shikhar",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:kapil",
+        "employee_name": "Kapil",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      }
+    ]
+  },
+  "2f930058": {
+    "batch_id": "2f930058",
+    "location_code": "NOIDA",
+    "location_name": "Noida",
+    "source_file": "NOIDA attendance report august.xls",
+    "file_hash": "3f92c669d6b8a684052dce336085c56ef3f9a273acbf0e9cc5065b1c61b090f2",
+    "report_from": "2026-07-27",
+    "report_to": "2026-08-25",
+    "employee_count": 19,
+    "records_processed": 570,
+    "records_inserted": 0,
+    "records_updated": 570,
+    "records_failed": 0,
+    "unknown_status_count": 2,
+    "data_quality_issue_count": 2,
+    "status": "PARTIAL",
+    "error_message": null,
+    "started_at": "2026-09-08T10:01:47.421Z",
+    "completed_at": "2026-09-08T10:01:47.421Z",
+    "failures": [],
+    "unknown_statuses": [
+      {
+        "employee_code": "25012729",
+        "attendance_date": "2026-08-24",
+        "status": "EFH"
+      },
+      {
+        "employee_code": "25012867",
+        "attendance_date": "2026-08-07",
+        "status": "½LOP"
+      }
+    ],
+    "data_quality_issues": [
+      {
+        "employee_code": "UNMAPPED:shikhar",
+        "employee_name": "Shikhar",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      },
+      {
+        "employee_code": "UNMAPPED:kapil",
+        "employee_name": "Kapil",
+        "date": null,
+        "reason": "Missing employee_code; name-based identity used"
+      }
+    ]
+  },
+  "0d879dba": {
+    "batch_id": "0d879dba",
+    "location_code": "NOIDA",
+    "location_name": "Noida",
+    "source_file": "NOIDA attendance report august.xls",
+    "file_hash": "",
+    "report_from": "2026-07-27",
+    "report_to": "2026-08-25",
+    "employee_count": 17,
+    "records_processed": 510,
+    "records_inserted": 0,
+    "records_updated": 510,
+    "records_failed": 0,
+    "unknown_status_count": 2,
+    "data_quality_issue_count": 0,
+    "status": "SUCCESS",
+    "error_message": null,
+    "started_at": "2026-09-08T11:14:55.758Z",
+    "completed_at": "2026-09-08T11:14:55.758Z",
+    "failures": [],
+    "unknown_statuses": [
+      {
+        "employee_code": "25012729",
+        "attendance_date": "2026-08-24",
+        "status": "EFH"
+      },
+      {
+        "employee_code": "25012867",
+        "attendance_date": "2026-08-07",
+        "status": "½LOP"
+      }
+    ],
+    "data_quality_issues": []
+  },
+  "7bbdf1ad": {
+    "batch_id": "7bbdf1ad",
+    "location_code": "AGRA",
+    "location_name": "Agra",
+    "source_file": "Agra August Attendance report.xls",
+    "file_hash": "",
+    "report_from": null,
+    "report_to": null,
+    "employee_count": 0,
+    "records_processed": 0,
+    "records_inserted": 0,
+    "records_updated": 0,
+    "records_failed": 0,
+    "unknown_status_count": 0,
+    "data_quality_issue_count": 0,
+    "status": "SUCCESS",
+    "error_message": null,
+    "started_at": "2026-09-08T11:14:55.993Z",
+    "completed_at": "2026-09-08T11:14:55.993Z",
+    "failures": [],
+    "unknown_statuses": [],
+    "data_quality_issues": []
+  },
+  "148db7a5": {
+    "batch_id": "148db7a5",
+    "location_code": "HYD",
+    "location_name": "Hyderabad",
+    "source_file": "Hyd Aug Rep.xls",
+    "file_hash": "",
+    "report_from": null,
+    "report_to": null,
+    "employee_count": 0,
+    "records_processed": 0,
+    "records_inserted": 0,
+    "records_updated": 0,
+    "records_failed": 0,
+    "unknown_status_count": 0,
+    "data_quality_issue_count": 0,
+    "status": "SUCCESS",
+    "error_message": null,
+    "started_at": "2026-09-08T11:14:56.241Z",
+    "completed_at": "2026-09-08T11:14:56.241Z",
+    "failures": [],
+    "unknown_statuses": [],
+    "data_quality_issues": []
+  },
+  "3fa108e9": {
+    "batch_id": "3fa108e9",
+    "location_code": "NOIDA",
+    "location_name": "Noida",
+    "source_file": "NOIDA attendance report august.xls",
+    "file_hash": "",
+    "report_from": "2024-07-27",
+    "report_to": "2024-08-25",
+    "employee_count": 19,
+    "records_processed": 570,
+    "records_inserted": 570,
+    "records_updated": 0,
+    "records_failed": 0,
+    "unknown_status_count": 2,
+    "data_quality_issue_count": 0,
+    "status": "SUCCESS",
+    "error_message": null,
+    "started_at": "2026-09-08T11:16:42.486Z",
+    "completed_at": "2026-09-08T11:16:42.486Z",
+    "failures": [],
+    "unknown_statuses": [
+      {
+        "employee_code": "25012729",
+        "attendance_date": "2024-08-24",
+        "status": "EFH"
+      },
+      {
+        "employee_code": "25012867",
+        "attendance_date": "2024-08-07",
+        "status": "½LOP"
+      }
+    ],
+    "data_quality_issues": []
+  },
+  "61fb5589": {
+    "batch_id": "61fb5589",
+    "location_code": "AGRA",
+    "location_name": "Agra",
+    "source_file": "Agra August Attendance report.xls",
+    "file_hash": "",
+    "report_from": "2026-07-27",
+    "report_to": "2026-08-25",
+    "employee_count": 97,
+    "records_processed": 2896,
+    "records_inserted": 0,
+    "records_updated": 2896,
+    "records_failed": 0,
+    "unknown_status_count": 0,
+    "data_quality_issue_count": 0,
+    "status": "SUCCESS",
+    "error_message": null,
+    "started_at": "2026-09-08T11:16:42.809Z",
+    "completed_at": "2026-09-08T11:16:42.809Z",
+    "failures": [],
+    "unknown_statuses": [],
+    "data_quality_issues": []
+  },
+  "6d54259f": {
+    "batch_id": "6d54259f",
+    "location_code": "HYD",
+    "location_name": "Hyderabad",
+    "source_file": "Hyd Aug Rep.xls",
+    "file_hash": "",
+    "report_from": "2026-08-01",
+    "report_to": "2026-08-31",
+    "employee_count": 60,
+    "records_processed": 1730,
+    "records_inserted": 1730,
+    "records_updated": 0,
+    "records_failed": 0,
+    "unknown_status_count": 32,
+    "data_quality_issue_count": 0,
+    "status": "SUCCESS",
+    "error_message": null,
+    "started_at": "2026-09-08T11:16:43.157Z",
+    "completed_at": "2026-09-08T11:16:43.157Z",
+    "failures": [],
+    "unknown_statuses": [
+      {
+        "employee_code": "20121825",
+        "attendance_date": "2026-08-14",
+        "status": "AL"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-01",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-02",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-03",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-04",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-05",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-06",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-07",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-08",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-09",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-10",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-11",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-12",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-13",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-14",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-15",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-16",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-17",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-18",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-19",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-20",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-21",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-22",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-23",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-24",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-25",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-26",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-27",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-28",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-29",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-30",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-31",
+        "status": "ML"
+      }
+    ],
+    "data_quality_issues": []
+  },
+  "7c6565f3": {
+    "batch_id": "7c6565f3",
+    "location_code": "NOIDA",
+    "location_name": "Noida",
+    "source_file": "NOIDA attendance report august.xls",
+    "file_hash": "",
+    "report_from": "2026-07-27",
+    "report_to": "2026-08-25",
+    "employee_count": 19,
+    "records_processed": 570,
+    "records_inserted": 0,
+    "records_updated": 570,
+    "records_failed": 0,
+    "unknown_status_count": 2,
+    "data_quality_issue_count": 0,
+    "status": "SUCCESS",
+    "error_message": null,
+    "started_at": "2026-09-08T11:17:03.232Z",
+    "completed_at": "2026-09-08T11:17:03.232Z",
+    "failures": [],
+    "unknown_statuses": [
+      {
+        "employee_code": "25012729",
+        "attendance_date": "2026-08-24",
+        "status": "EFH"
+      },
+      {
+        "employee_code": "25012867",
+        "attendance_date": "2026-08-07",
+        "status": "½LOP"
+      }
+    ],
+    "data_quality_issues": []
+  },
+  "711451bd": {
+    "batch_id": "711451bd",
+    "location_code": "HYD",
+    "location_name": "Hyderabad",
+    "source_file": "Hyd Aug Rep.xls",
+    "file_hash": "",
+    "report_from": "2026-08-01",
+    "report_to": "2026-08-31",
+    "employee_count": 60,
+    "records_processed": 1730,
+    "records_inserted": 0,
+    "records_updated": 1730,
+    "records_failed": 0,
+    "unknown_status_count": 32,
+    "data_quality_issue_count": 0,
+    "status": "SUCCESS",
+    "error_message": null,
+    "started_at": "2026-09-08T12:32:17.465Z",
+    "completed_at": "2026-09-08T12:32:17.465Z",
+    "failures": [],
+    "unknown_statuses": [
+      {
+        "employee_code": "20121825",
+        "attendance_date": "2026-08-14",
+        "status": "AL"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-01",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-02",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-03",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-04",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-05",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-06",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-07",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-08",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-09",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-10",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-11",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-12",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-13",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-14",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-15",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-16",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-17",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-18",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-19",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-20",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-21",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-22",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-23",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-24",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-25",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-26",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-27",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-28",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-29",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-30",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-31",
+        "status": "ML"
+      }
+    ],
+    "data_quality_issues": []
+  },
+  "09cb4b2a": {
+    "batch_id": "09cb4b2a",
+    "location_code": "AGRA",
+    "location_name": "Agra",
+    "source_file": "Aug Agra.xls",
+    "file_hash": "",
+    "report_from": "2026-08-01",
+    "report_to": "2026-08-31",
+    "employee_count": 44,
+    "records_processed": 1364,
+    "records_inserted": 1364,
+    "records_updated": 0,
+    "records_failed": 0,
+    "unknown_status_count": 0,
+    "data_quality_issue_count": 0,
+    "status": "SUCCESS",
+    "error_message": null,
+    "started_at": "2026-09-09T12:06:18.027Z",
+    "completed_at": "2026-09-09T12:06:18.027Z",
+    "failures": [],
+    "unknown_statuses": [],
+    "data_quality_issues": []
+  },
+  "afff8c69": {
+    "batch_id": "afff8c69",
+    "location_code": "NOIDA",
+    "location_name": "Noida",
+    "source_file": "Aug Noida.xls",
+    "file_hash": "",
+    "report_from": "2026-08-01",
+    "report_to": "2026-08-31",
+    "employee_count": 39,
+    "records_processed": 1209,
+    "records_inserted": 784,
+    "records_updated": 425,
+    "records_failed": 0,
+    "unknown_status_count": 1,
+    "data_quality_issue_count": 0,
+    "status": "SUCCESS",
+    "error_message": null,
+    "started_at": "2026-09-09T12:06:18.170Z",
+    "completed_at": "2026-09-09T12:06:18.170Z",
+    "failures": [],
+    "unknown_statuses": [
+      {
+        "employee_code": "25012867",
+        "attendance_date": "2026-08-07",
+        "status": "½LOP"
+      }
+    ],
+    "data_quality_issues": []
+  },
+  "a094a7de": {
+    "batch_id": "a094a7de",
+    "location_code": "HYD",
+    "location_name": "Hyderabad",
+    "source_file": "Hyd Aug Rep.xls",
+    "file_hash": "",
+    "report_from": "2026-08-01",
+    "report_to": "2026-08-31",
+    "employee_count": 60,
+    "records_processed": 1730,
+    "records_inserted": 0,
+    "records_updated": 1730,
+    "records_failed": 0,
+    "unknown_status_count": 32,
+    "data_quality_issue_count": 0,
+    "status": "SUCCESS",
+    "error_message": null,
+    "started_at": "2026-09-09T12:06:18.359Z",
+    "completed_at": "2026-09-09T12:06:18.359Z",
+    "failures": [],
+    "unknown_statuses": [
+      {
+        "employee_code": "20121825",
+        "attendance_date": "2026-08-14",
+        "status": "AL"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-01",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-02",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-03",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-04",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-05",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-06",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-07",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-08",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-09",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-10",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-11",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-12",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-13",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-14",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-15",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-16",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-17",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-18",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-19",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-20",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-21",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-22",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-23",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-24",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-25",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-26",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-27",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-28",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-29",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-30",
+        "status": "ML"
+      },
+      {
+        "employee_code": "21071972",
+        "attendance_date": "2026-08-31",
+        "status": "ML"
+      }
+    ],
+    "data_quality_issues": []
+  },
+  "989f6429": {
+    "batch_id": "989f6429",
+    "location_code": "AGRA",
+    "location_name": "Agra",
+    "source_file": "Aug Agra.xls",
+    "file_hash": "",
+    "report_from": "2026-08-01",
+    "report_to": "2026-08-31",
+    "employee_count": 44,
+    "records_processed": 1364,
+    "records_inserted": 0,
+    "records_updated": 1364,
+    "records_failed": 0,
+    "unknown_status_count": 0,
+    "data_quality_issue_count": 0,
+    "status": "SUCCESS",
+    "error_message": null,
+    "started_at": "2026-09-10T05:34:53.345Z",
+    "completed_at": "2026-09-10T05:34:53.345Z",
+    "failures": [],
+    "unknown_statuses": [],
+    "data_quality_issues": []
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "finished_at": "2026-09-10T11:04:53",
+  "ok": true,
+  "already_running": false,
+  "processed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "empty": false,
+  "results": [
+    {
+      "file": "Aug Agra.xls",
+      "location": "AGRA",
+      "status": "SUCCESS"
+    }
+  ]
+}

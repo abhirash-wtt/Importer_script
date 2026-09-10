@@ -1,0 +1,18 @@
+{
+  "name": "importer_script",
+  "version": "1.0.0",
+  "main": "attendance_api.js",
+  "scripts": {
+    "start": "node attendance_api.js",
+    "api": "node attendance_api.js",
+    "import": "node attendance_import.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "pg": "^8.23.0",
+    "xlsx": "^0.18.5"
+  }
+}
