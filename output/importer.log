@@ -535,3 +535,32 @@
 2026-09-10 13:00:02,191 INFO Inbox is empty; nothing to import
 2026-09-10 14:38:56,207 INFO Scanning extra drop folder D:\Attendance
 2026-09-10 14:38:56,208 INFO Inbox is empty; nothing to import
+2026-09-10 16:04:04,568 INFO Scanning extra drop folder D:\Attendance
+2026-09-10 16:04:04,573 INFO Created import batch 5a8c3988 for June Agra.xls (AGRA)
+2026-09-10 16:04:04,653 INFO Report period: June 2026 (2026-06-01 to 2026-06-30)
+2026-09-10 16:04:04,669 INFO Found 44 employee blocks in Sheet2
+2026-09-10 16:04:04,677 INFO Wrote attendance JSON to D:\Importer_script\output\batch_5a8c3988_attendance.json
+2026-09-10 16:04:04,677 INFO Batch 5a8c3988 SUCCESS: 1320 attendance rows, 0 failures, 0 data-quality issues
+2026-09-10 16:04:04,679 INFO POST http://127.0.0.1:3000/api/attendance/import location_code=AGRA batch_id=5a8c3988 records=1320
+2026-09-10 16:04:04,806 INFO DDO++ API accepted batch 5a8c3988 (HTTP 200, attempt 1/3)
+2026-09-10 16:04:04,811 INFO Wrote attendance JSON to D:\Importer_script\output\batch_5a8c3988_attendance.json
+2026-09-10 16:04:04,812 INFO Moved June Agra.xls -> D:\Importer_script\processed\June Agra.xls
+2026-09-10 16:04:04,813 INFO Inbox run complete: processed=1 failed=0 skipped=0
+2026-09-10 16:04:15,166 INFO Scanning extra drop folder D:\Attendance
+2026-09-10 16:04:15,166 INFO Inbox is empty; nothing to import
+2026-09-10 16:07:31,239 INFO Scanning extra drop folder D:\Attendance
+2026-09-10 16:07:31,240 INFO Skipping June Agra.xls; still being written (13s old)
+2026-09-10 16:07:31,241 INFO Inbox run complete: processed=0 failed=0 skipped=1
+2026-09-10 16:18:01,982 INFO Scanning extra drop folder D:\Attendance
+2026-09-10 16:18:01,983 INFO Inbox is empty; nothing to import
+2026-09-10 16:22:01,907 INFO Scanning extra drop folder D:\Attendance
+2026-09-10 16:22:01,911 INFO Created import batch 10b7e85a for Noida ABHIRASH Jun.xls (NOIDA)
+2026-09-10 16:22:01,946 INFO Report period: June 2026 (2026-06-01 to 2026-06-30)
+2026-09-10 16:22:01,961 INFO Found 39 employee blocks in Sheet3
+2026-09-10 16:22:01,968 INFO Wrote attendance JSON to D:\Importer_script\output\batch_10b7e85a_attendance.json
+2026-09-10 16:22:01,968 INFO Batch 10b7e85a SUCCESS: 1170 attendance rows, 0 failures, 0 data-quality issues
+2026-09-10 16:22:01,971 INFO POST http://127.0.0.1:3000/api/attendance/import location_code=NOIDA batch_id=10b7e85a records=1170
+2026-09-10 16:22:02,072 INFO DDO++ API accepted batch 10b7e85a (HTTP 200, attempt 1/3)
+2026-09-10 16:22:02,076 INFO Wrote attendance JSON to D:\Importer_script\output\batch_10b7e85a_attendance.json
+2026-09-10 16:22:02,077 INFO Moved Noida ABHIRASH Jun.xls -> D:\Importer_script\processed\Noida ABHIRASH Jun.xls
+2026-09-10 16:22:02,078 INFO Inbox run complete: processed=1 failed=0 skipped=0

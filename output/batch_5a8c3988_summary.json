@@ -1,0 +1,35 @@
+{
+  "batch_id": "5a8c3988",
+  "file_name": "June Agra.xls",
+  "location": "AGRA",
+  "status": "SUCCESS",
+  "error": null,
+  "period": {
+    "label": "June 2026",
+    "start": "2026-06-01",
+    "end": "2026-06-30"
+  },
+  "employees_failed": 0,
+  "data_quality_issues": 0,
+  "attendance_upserted": 1320,
+  "failures": [],
+  "issues": [],
+  "api_result": {
+    "ok": true,
+    "status_code": 200,
+    "attempt": 1,
+    "response": {
+      "ok": true,
+      "batch_id": "5a8c3988",
+      "status": "SUCCESS",
+      "location_code": "AGRA",
+      "records_processed": 1320,
+      "records_inserted": 1320,
+      "records_updated": 0,
+      "records_failed": 0,
+      "unknown_status_count": 0,
+      "data_quality_issue_count": 0,
+      "failures": []
+    }
+  }
+}

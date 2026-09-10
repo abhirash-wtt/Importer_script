@@ -1,9 +1,16 @@
 {
-  "finished_at": "2026-09-10T14:38:56",
+  "finished_at": "2026-09-10T16:22:02",
   "ok": true,
   "already_running": false,
-  "processed": 0,
+  "processed": 1,
   "failed": 0,
   "skipped": 0,
-  "empty": true
+  "empty": false,
+  "results": [
+    {
+      "file": "Noida ABHIRASH Jun.xls",
+      "location": "NOIDA",
+      "status": "SUCCESS"
+    }
+  ]
 }
