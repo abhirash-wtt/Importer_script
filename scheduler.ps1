@@ -1,5 +1,5 @@
 # DDO++ attendance importer — office wrapper.
-# Scans inbox\AGRA, inbox\NOIDA, and inbox\HYD, then POSTs each report.
+# Scans inbox\AGRA, inbox\NOIDA, inbox\HYD, and D:\Attendance, then POSTs each report.
 #
 # Manual run:
 #   powershell -NoProfile -ExecutionPolicy Bypass -File .\scheduler.ps1

@@ -45,6 +45,7 @@ CONFIG = {
     "api_timeout_seconds": int(os.getenv("DDO_API_TIMEOUT_SECONDS", "30")),
     "api_max_retries": int(os.getenv("DDO_API_MAX_RETRIES", "3")),
     "inbox_dir": os.getenv("INBOX_DIR", str(BASE_DIR / "inbox")).strip(),
+    "attendance_dir": os.getenv("ATTENDANCE_DIR", r"D:\Attendance").strip(),
     "processed_dir": str(BASE_DIR / "processed"),
     "failed_dir": str(BASE_DIR / "failed"),
     "output_dir": str(BASE_DIR / "output"),
@@ -1048,35 +1049,79 @@ class _SingleInstance:
         self.handle = None
 
 
-def _discover_inbox_files(inbox: Path) -> list:
+def _extra_drop_dirs(inbox: Path) -> list:
+    roots = []
+    raw = CONFIG.get("attendance_dir") or ""
+    if not raw:
+        return roots
+    path = Path(raw)
+    try:
+        if path.is_dir() and path.resolve() != inbox.resolve():
+            roots.append(path)
+        elif not path.exists():
+            LOGGER.info("Attendance drop folder not found; skipping %s", path)
+    except OSError as exc:
+        LOGGER.warning("Could not access attendance drop folder %s: %s", path, exc)
+    return roots
+
+
+def _scan_drop_root(root: Path, create_location_folders: bool, seen: set) -> list:
     found = []
-    seen = set()
     for folder in LOCATION_FOLDERS:
-        location_dir = inbox / folder
-        location_dir.mkdir(parents=True, exist_ok=True)
+        location_dir = root / folder
+        if create_location_folders:
+            location_dir.mkdir(parents=True, exist_ok=True)
+        elif not location_dir.is_dir():
+            continue
         for path in sorted(location_dir.iterdir()):
             if not _is_excel_report(path):
                 continue
-            seen.add(path.resolve())
-            found.append((path, folder))
-    hyd_alias = inbox / "HYDERABAD"
-    if hyd_alias.exists():
-        for path in sorted(hyd_alias.iterdir()):
-            if not _is_excel_report(path) or path.resolve() in seen:
+            resolved = path.resolve()
+            if resolved in seen:
                 continue
-            seen.add(path.resolve())
+            seen.add(resolved)
+            found.append((path, folder))
+    hyd_alias = root / "HYDERABAD"
+    if hyd_alias.is_dir():
+        for path in sorted(hyd_alias.iterdir()):
+            if not _is_excel_report(path):
+                continue
+            resolved = path.resolve()
+            if resolved in seen:
+                continue
+            seen.add(resolved)
             found.append((path, "HYD"))
-    for path in sorted(inbox.iterdir()):
-        if not _is_excel_report(path) or path.resolve() in seen:
+    try:
+        children = sorted(root.iterdir())
+    except OSError as exc:
+        LOGGER.warning("Could not read drop folder %s: %s", root, exc)
+        return found
+    for path in children:
+        if not _is_excel_report(path):
+            continue
+        resolved = path.resolve()
+        if resolved in seen:
             continue
         location = infer_location(path)
         if not location:
             LOGGER.warning(
-                "Skipping %s; put it in inbox/AGRA, inbox/NOIDA, or inbox/HYD, or include the location in the file name",
+                "Skipping %s in %s; put it in AGRA, NOIDA, or HYD, or include the location in the file name",
                 path.name,
+                root,
             )
             continue
+        seen.add(resolved)
         found.append((path, location))
+    return found
+
+
+def _discover_inbox_files(inbox: Path) -> list:
+    found = []
+    seen = set()
+    found.extend(_scan_drop_root(inbox, create_location_folders=True, seen=seen))
+    for extra in _extra_drop_dirs(inbox):
+        LOGGER.info("Scanning extra drop folder %s", extra)
+        found.extend(_scan_drop_root(extra, create_location_folders=False, seen=seen))
     return found
 
 
@@ -1203,12 +1248,12 @@ def _parse_args(argv=None):
     parser.add_argument(
         "files",
         nargs="*",
-        help="Attendance .xls/.xlsx files. If omitted with --inbox, scans inbox/AGRA, inbox/NOIDA, and inbox/HYD.",
+        help="Attendance .xls/.xlsx files. If omitted with --inbox, scans inbox plus D:\\Attendance.",
     )
     parser.add_argument(
         "--inbox",
         action="store_true",
-        help="Process every ready Excel file in inbox location folders.",
+        help="Process every ready Excel file in inbox and D:\\Attendance.",
     )
     parser.add_argument(
         "--location",

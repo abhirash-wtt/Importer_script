@@ -532,3 +532,6 @@
 2026-09-10 11:04:53,447 INFO Wrote attendance JSON to D:\Importer_script\output\batch_989f6429_attendance.json
 2026-09-10 11:04:53,448 INFO Moved Aug Agra.xls -> D:\Importer_script\processed\Aug Agra_20260910_110453.xls
 2026-09-10 11:04:53,449 INFO Inbox run complete: processed=1 failed=0 skipped=0
+2026-09-10 13:00:02,191 INFO Inbox is empty; nothing to import
+2026-09-10 14:38:56,207 INFO Scanning extra drop folder D:\Attendance
+2026-09-10 14:38:56,208 INFO Inbox is empty; nothing to import
