@@ -1,0 +1,13 @@
+services:
+  attendance-api:
+    build: .
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      DDO_API_BIND: 0.0.0.0
+      DDO_API_PORT: 3000
+      DDO_TRUST_PROXY: "1"
+    ports:
+      - "127.0.0.1:3000:3000"

@@ -347,6 +347,8 @@ function moveFile(filePath, targetDir) {
 function isAllowedEndpoint(endpoint) {
   const parsed = new URL(endpoint);
   const host = (parsed.hostname || "").toLowerCase();
+  const pathName = (parsed.pathname || "").toLowerCase();
+  if (pathName.includes("/admin/")) return false;
   if (parsed.protocol === "https:") return true;
   return parsed.protocol === "http:" && ["127.0.0.1", "localhost", "::1"].includes(host);
 }
@@ -389,6 +391,11 @@ function postJson(endpoint, token, locationCode, payload, timeoutMs) {
 }
 
 async function sendToApi(batch) {
+  if (String(CONFIG.apiEndpoint).toLowerCase().includes("/admin/")) {
+    throw new Error(
+      "DDO_API_ENDPOINT is the NocoBase admin page, not the import API. Use https://<host>/api/attendance/import"
+    );
+  }
   if (!isAllowedEndpoint(CONFIG.apiEndpoint)) {
     throw new Error(`DDO++ API endpoint must use HTTPS (http only for localhost): ${CONFIG.apiEndpoint}`);
   }
@@ -603,12 +610,12 @@ async function main() {
   if (!files.length) {
     files = fs
       .readdirSync(CONFIG.inputDir)
-      .filter((name) => /\.xls[x]?$/i.test(name))
+      .filter((name) => /\.xls[x]?$/i.test(name) && !name.startsWith("~$"))
       .map((name) => path.join(CONFIG.inputDir, name));
   }
   if (!files.length) {
-    log("ERROR", "No input file was provided and input/ contains no .xls/.xlsx reports.");
-    process.exitCode = 1;
+    log("INFO", "Inbox is empty; nothing to import");
+    process.exitCode = 0;
     return;
   }
 

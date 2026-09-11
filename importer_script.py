@@ -405,6 +405,11 @@ def send_attendance_to_ddo_api(batch):
 
     if not endpoint:
         raise RuntimeError("DDO_API_ENDPOINT is not configured")
+    if "/admin/" in endpoint.lower():
+        raise RuntimeError(
+            "DDO_API_ENDPOINT is the NocoBase admin page, not the import API. "
+            "Use https://<host>/api/attendance/import"
+        )
     if not _is_allowed_endpoint(endpoint):
         raise RuntimeError(
             f"DDO++ API endpoint must use HTTPS (http is allowed only for localhost): {endpoint}"
@@ -524,6 +529,9 @@ def send_attendance_to_ddo_api(batch):
 def _is_allowed_endpoint(endpoint):
     parsed = urllib.parse.urlparse(endpoint)
     host = (parsed.hostname or "").lower()
+    path = (parsed.path or "").lower()
+    if "/admin/" in path:
+        return False
     if parsed.scheme == "https" and parsed.netloc:
         return True
     return parsed.scheme == "http" and host in {"127.0.0.1", "localhost", "::1"}
@@ -1125,6 +1133,43 @@ def _discover_inbox_files(inbox: Path) -> list:
     return found
 
 
+def _notify_failure(summary: dict) -> None:
+    if summary.get("empty") or summary.get("already_running") or summary.get("ok"):
+        return
+    url = os.getenv("DDO_ALERT_WEBHOOK_URL", "").strip()
+    if not url:
+        LOGGER.error(
+            "Import failed (processed=%s failed=%s). Set DDO_ALERT_WEBHOOK_URL to notify a channel.",
+            summary.get("processed"),
+            summary.get("failed"),
+        )
+        return
+    payload = json.dumps(
+        {
+            "text": (
+                "DDO attendance import failed: "
+                f"processed={summary.get('processed')} failed={summary.get('failed')} "
+                f"skipped={summary.get('skipped')}"
+            ),
+            "processed": summary.get("processed"),
+            "failed": summary.get("failed"),
+            "skipped": summary.get("skipped"),
+            "results": (summary.get("results") or [])[:20],
+        }
+    ).encode("utf-8")
+    request = urllib.request.Request(
+        url,
+        data=payload,
+        method="POST",
+        headers={"Content-Type": "application/json", "Accept": "application/json"},
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=10) as response:
+            LOGGER.info("Failure alert posted (%s)", response.status)
+    except Exception as exc:
+        LOGGER.error("Could not post failure alert: %s", exc)
+
+
 def _write_last_run(summary: dict) -> Path:
     output_dir = Path(CONFIG["output_dir"])
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -1134,6 +1179,7 @@ def _write_last_run(summary: dict) -> Path:
     }
     path = output_dir / "last_run.json"
     path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    _notify_failure(summary)
     return path
 
 

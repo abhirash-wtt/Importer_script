@@ -564,3 +564,5 @@
 2026-09-10 16:22:02,076 INFO Wrote attendance JSON to D:\Importer_script\output\batch_10b7e85a_attendance.json
 2026-09-10 16:22:02,077 INFO Moved Noida ABHIRASH Jun.xls -> D:\Importer_script\processed\Noida ABHIRASH Jun.xls
 2026-09-10 16:22:02,078 INFO Inbox run complete: processed=1 failed=0 skipped=0
+2026-09-11 10:26:15,010 INFO Scanning extra drop folder D:\Attendance
+2026-09-11 10:26:15,011 INFO Inbox is empty; nothing to import
