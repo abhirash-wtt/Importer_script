@@ -1,9 +1,17 @@
 {
-  "finished_at": "2026-09-11T10:26:15",
-  "ok": true,
+  "finished_at": "2026-09-11T12:35:34",
+  "ok": false,
   "already_running": false,
   "processed": 0,
-  "failed": 0,
+  "failed": 1,
   "skipped": 0,
-  "empty": true
+  "empty": false,
+  "results": [
+    {
+      "file": "hyd.xlsx",
+      "location": "HYD",
+      "status": "FAILED",
+      "error": "Excel xlsx file; not supported"
+    }
+  ]
 }

@@ -13,13 +13,18 @@ import urllib.parse
 import urllib.request
 import uuid
 from dataclasses import dataclass, field
-from datetime import date, datetime
+from datetime import date, datetime, time as dt_time, timedelta
 from pathlib import Path
 
 try:
     import xlrd
 except ImportError:
-    sys.exit("Missing dependency: xlrd. Install with: python -m pip install xlrd")
+    xlrd = None
+
+try:
+    from openpyxl import load_workbook
+except ImportError:
+    load_workbook = None
 
 BASE_DIR = Path(__file__).resolve().parent
 LOGGER = logging.getLogger("ddo_importer")
@@ -202,16 +207,49 @@ def create_import_batch(file, location):
 
 
 def read_excel(file):
-    workbook = xlrd.open_workbook(file)
-    sheet = _select_sheet(workbook)
-    rows = []
-    for row_idx in range(sheet.nrows):
-        rows.append([_cell_text(sheet.cell_value(row_idx, col_idx)) for col_idx in range(sheet.ncols)])
+    path = Path(file)
+    suffix = path.suffix.lower()
+    if suffix == ".xlsx":
+        if load_workbook is None:
+            raise RuntimeError("Missing dependency: openpyxl. Install with: python -m pip install openpyxl")
+        sheets = _read_xlsx_sheets(path)
+    elif suffix == ".xls":
+        if xlrd is None:
+            raise RuntimeError("Missing dependency: xlrd. Install with: python -m pip install xlrd")
+        sheets = _read_xls_sheets(path)
+    else:
+        raise ValueError(f"Unsupported Excel type: {suffix}")
+
+    sheet = _select_sheet(sheets)
     return {
-        "file_name": Path(file).name,
-        "sheet_name": sheet.name,
-        "rows": rows,
+        "file_name": path.name,
+        "sheet_name": sheet["name"],
+        "rows": sheet["rows"],
     }
+
+
+def _read_xls_sheets(path):
+    workbook = xlrd.open_workbook(path)
+    sheets = []
+    for sheet in workbook.sheets():
+        rows = [
+            [_cell_text(sheet.cell_value(row_idx, col_idx)) for col_idx in range(sheet.ncols)]
+            for row_idx in range(sheet.nrows)
+        ]
+        sheets.append({"name": sheet.name, "rows": rows})
+    return sheets
+
+
+def _read_xlsx_sheets(path):
+    workbook = load_workbook(path, data_only=True, read_only=True)
+    try:
+        sheets = []
+        for sheet in workbook.worksheets:
+            rows = [[_cell_text(cell) for cell in row] for row in sheet.iter_rows(values_only=True)]
+            sheets.append({"name": sheet.title, "rows": rows})
+        return sheets
+    finally:
+        workbook.close()
 
 
 def extract_report_period(report):
@@ -785,21 +823,43 @@ def process_file(file, location=None, raise_on_error=True):
 def _cell_text(value):
     if value is None:
         return ""
+    if isinstance(value, bool):
+        return "TRUE" if value else "FALSE"
+    if isinstance(value, datetime):
+        if value.date() in (date(1899, 12, 30), date(1899, 12, 31), date(1900, 1, 1)):
+            return value.strftime("%H:%M:%S")
+        if value.time() == datetime.min.time():
+            return value.date().isoformat()
+        return value.strftime("%Y-%m-%d %H:%M:%S")
+    if isinstance(value, dt_time):
+        return value.strftime("%H:%M:%S")
+    if isinstance(value, date):
+        return value.isoformat()
+    if isinstance(value, timedelta):
+        total_seconds = int(value.total_seconds())
+        hours, remainder = divmod(abs(total_seconds), 3600)
+        minutes, seconds = divmod(remainder, 60)
+        sign = "-" if total_seconds < 0 else ""
+        if seconds:
+            return f"{sign}{hours}:{minutes:02d}:{seconds:02d}"
+        return f"{sign}{hours}:{minutes:02d}"
     if isinstance(value, float) and value.is_integer():
         return str(int(value))
     return str(value).strip()
 
 
-def _select_sheet(workbook):
-    best_sheet = workbook.sheet_by_index(0)
+def _select_sheet(sheets):
+    if not sheets:
+        raise ValueError("Workbook has no sheets")
+    best_sheet = sheets[0]
     best_score = -1
-    for sheet in workbook.sheets():
+    for sheet in sheets:
         preview = []
-        for row_idx in range(min(sheet.nrows, 12)):
-            preview.extend(_cell_text(sheet.cell_value(row_idx, col_idx)) for col_idx in range(min(sheet.ncols, 40)))
+        for row in sheet["rows"][:12]:
+            preview.extend(row[:40])
         joined = " ".join(preview).lower()
         score = 0
-        if "basicworkduration" in sheet.name.lower():
+        if "basicworkduration" in sheet["name"].lower():
             score += 50
         if "emp. code" in joined or "emp code" in joined:
             score += 20
@@ -807,7 +867,7 @@ def _select_sheet(workbook):
             score += 15
         if "status" in joined and "intime" in joined.replace(" ", ""):
             score += 15
-        score += min(sheet.nrows, 200) / 10
+        score += min(len(sheet["rows"]), 200) / 10
         if score > best_score:
             best_score = score
             best_sheet = sheet

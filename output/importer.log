@@ -566,3 +566,12 @@
 2026-09-10 16:22:02,078 INFO Inbox run complete: processed=1 failed=0 skipped=0
 2026-09-11 10:26:15,010 INFO Scanning extra drop folder D:\Attendance
 2026-09-11 10:26:15,011 INFO Inbox is empty; nothing to import
+2026-09-11 12:35:34,272 INFO Scanning extra drop folder D:\Attendance
+2026-09-11 12:35:34,273 INFO Created import batch cd4f7caa for hyd.xlsx (HYD)
+2026-09-11 12:35:34,276 ERROR Import failed for hyd.xlsx: Excel xlsx file; not supported
+2026-09-11 12:35:34,276 INFO Wrote attendance JSON to D:\Importer_script\output\batch_cd4f7caa_attendance.json
+2026-09-11 12:35:34,276 INFO Batch cd4f7caa FAILED: 0 attendance rows, 0 failures, 0 data-quality issues
+2026-09-11 12:35:34,276 ERROR Batch cd4f7caa error: Excel xlsx file; not supported
+2026-09-11 12:35:34,277 INFO Moved hyd.xlsx -> D:\Importer_script\failed\hyd.xlsx
+2026-09-11 12:35:34,277 ERROR Import failed (processed=0 failed=1). Set DDO_ALERT_WEBHOOK_URL to notify a channel.
+2026-09-11 12:35:34,278 INFO Inbox run complete: processed=0 failed=1 skipped=0

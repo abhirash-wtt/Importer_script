@@ -1,0 +1,14 @@
+{
+  "batch_id": "cd4f7caa",
+  "file_name": "hyd.xlsx",
+  "location": "HYD",
+  "status": "FAILED",
+  "error": "Excel xlsx file; not supported",
+  "period": {},
+  "employees_failed": 0,
+  "data_quality_issues": 0,
+  "attendance_upserted": 0,
+  "failures": [],
+  "issues": [],
+  "api_result": {}
+}
