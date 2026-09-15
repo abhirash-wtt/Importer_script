@@ -1,0 +1,20 @@
+[Unit]
+Description=DDO++ attendance sidecar API
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/ddo-attendance
+Environment=NODE_ENV=production
+Environment=DDO_API_BIND=127.0.0.1
+Environment=DDO_API_PORT=3000
+Environment=DDO_TRUST_PROXY=1
+EnvironmentFile=-/opt/ddo-attendance/.env
+ExecStart=/usr/bin/node attendance_api.js
+Restart=on-failure
+RestartSec=5
+User=www-data
+Group=www-data
+
+[Install]
+WantedBy=multi-user.target

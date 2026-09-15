@@ -15,21 +15,69 @@ function log(level, message, extra) {
   console.log(`${new Date().toISOString()} ${level} ${line}`);
 }
 
+function sslConfig() {
+  const mode = String(process.env.PGSSLMODE || process.env.DATABASE_SSL || "").toLowerCase();
+  if (!mode || mode === "disable" || mode === "false" || mode === "0") return undefined;
+  if (mode === "no-verify") return { rejectUnauthorized: false };
+  if (
+    mode === "require" ||
+    mode === "true" ||
+    mode === "1" ||
+    mode === "prefer" ||
+    mode === "verify-ca" ||
+    mode === "verify-full"
+  ) {
+    return { rejectUnauthorized: process.env.PGSSL_REJECT_UNAUTHORIZED !== "false" };
+  }
+  return undefined;
+}
+
 function configFromEnv() {
+  const ssl = sslConfig();
   if (process.env.DATABASE_URL) {
-    return { connectionString: process.env.DATABASE_URL };
+    const config = { connectionString: process.env.DATABASE_URL };
+    if (ssl) config.ssl = ssl;
+    return config;
   }
   const host = process.env.DB_HOST || process.env.DATABASE_HOST || process.env.PGHOST;
   const database = process.env.DB_DATABASE || process.env.DATABASE_DATABASE || process.env.PGDATABASE;
   const user = process.env.DB_USER || process.env.DATABASE_USER || process.env.PGUSER;
   const password = process.env.DB_PASSWORD || process.env.DATABASE_PASSWORD || process.env.PGPASSWORD;
   if (!host || !database || !user) return null;
-  return {
+  const config = {
     host,
     port: Number(process.env.DB_PORT || process.env.DATABASE_PORT || process.env.PGPORT || 5432),
     database,
     user,
     password: password || "",
+  };
+  if (ssl) config.ssl = ssl;
+  return config;
+}
+
+function redactedConfig() {
+  const config = configFromEnv();
+  if (!config) return { configured: false };
+  if (config.connectionString) {
+    let host = "";
+    let database = "";
+    try {
+      const parsed = new URL(config.connectionString.replace(/^postgres(ql)?:/i, "http:"));
+      host = parsed.hostname;
+      database = parsed.pathname.replace(/^\//, "");
+    } catch {
+      host = "(unparsed)";
+    }
+    return { configured: true, via: "DATABASE_URL", host, database, ssl: Boolean(config.ssl) };
+  }
+  return {
+    configured: true,
+    via: "discrete",
+    host: config.host,
+    port: config.port,
+    database: config.database,
+    user: config.user,
+    ssl: Boolean(config.ssl),
   };
 }
 
@@ -50,6 +98,7 @@ async function connect() {
     ...config,
     max: Number(process.env.DB_POOL_SIZE || 10),
     idleTimeoutMillis: 30_000,
+    connectionTimeoutMillis: Number(process.env.DB_CONNECT_TIMEOUT_MS || 10_000),
   });
   pool.on("error", (err) => log("ERROR", `PostgreSQL pool error: ${err.message}`));
   return pool;
@@ -423,6 +472,8 @@ async function close() {
 
 module.exports = {
   isEnabled,
+  configFromEnv,
+  redactedConfig,
   connect,
   ping,
   ensureSchema,

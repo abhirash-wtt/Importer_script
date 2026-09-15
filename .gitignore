@@ -11,7 +11,12 @@ logs/
 output/last_run.json
 output/last_run.txt
 output/processed_hashes.json
+output/importer.lock
 
 # Python bytecode
 __pycache__/
 *.py[cod]
+
+# Dependencies and backups
+node_modules/
+backups/

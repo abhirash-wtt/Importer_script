@@ -1,7 +1,9 @@
 "use strict";
 
 /**
- * DDO++ Attendance Module POC API
+ * DDO++ Attendance sidecar API — receiving service for office importer POSTs.
+ *
+ * Deploy this on ddoplusnodeapi.walkingtree.tech (with db.js + schema/).
  *
  * POST /api/attendance/import
  * GET  /api/attendance
@@ -58,26 +60,8 @@ const STATUS_MASTER = [
   { code: "WFHP", display_name: "WFHP", category: "WFH", is_half_day: false, hr_definition_required: true },
 ];
 
-const STATUS_INDEX = new Map(STATUS_MASTER.map((row) => [normalizeStatusKey(row.code), row]));
-const PUBLIC_DIR = path.join(BASE_DIR, "public");
-const DATA_DIR = process.env.DDO_DATA_DIR || path.join(BASE_DIR, "api_data");
-const PORT = Number(process.env.DDO_API_PORT || 3000);
-const TOKEN = (process.env.DDO_API_TOKEN || "dev-ddo-attendance-token").trim();
-const TLS_CERT = (process.env.DDO_TLS_CERT || "").trim();
-const TLS_KEY = (process.env.DDO_TLS_KEY || "").trim();
-const MAX_BODY_BYTES = 10 * 1024 * 1024;
-
-const files = {
-  attendance: path.join(DATA_DIR, "attendance.json"),
-  batches: path.join(DATA_DIR, "batches.json"),
-  employees: path.join(DATA_DIR, "employees.json"),
-};
-
-fs.mkdirSync(DATA_DIR, { recursive: true });
-
-function log(level, message, extra) {
-  const line = extra ? `${message} ${JSON.stringify(extra)}` : message;
-  console.log(`${new Date().toISOString()} ${level} ${line}`);
+function isProduction() {
+  return String(process.env.NODE_ENV || "").toLowerCase() === "production";
 }
 
 function loadEnvFile(filePath) {
@@ -90,6 +74,41 @@ function loadEnvFile(filePath) {
     const value = line.slice(eq + 1).trim().replace(/^['"]|['"]$/g, "");
     if (!(key in process.env)) process.env[key] = value;
   }
+}
+
+const STATUS_INDEX = new Map(STATUS_MASTER.map((row) => [normalizeStatusKey(row.code), row]));
+const PUBLIC_DIR = path.join(BASE_DIR, "public");
+const DATA_DIR = process.env.DDO_DATA_DIR || path.join(BASE_DIR, "api_data");
+const PORT = Number(process.env.DDO_API_PORT || 3000);
+const BIND = (process.env.DDO_API_BIND || "0.0.0.0").trim();
+const POC_TOKEN = "dev-ddo-attendance-token";
+const TOKEN = (process.env.DDO_API_TOKEN || (isProduction() ? "" : POC_TOKEN)).trim();
+const TLS_CERT = (process.env.DDO_TLS_CERT || "").trim();
+const TLS_KEY = (process.env.DDO_TLS_KEY || "").trim();
+const MAX_BODY_BYTES = 10 * 1024 * 1024;
+const ALLOW_IPS = String(process.env.DDO_API_ALLOW_IPS || "")
+  .split(",")
+  .map((item) => item.trim())
+  .filter(Boolean);
+const TRUST_PROXY =
+  process.env.DDO_TRUST_PROXY === "0" || process.env.DDO_TRUST_PROXY === "false"
+    ? false
+    : isProduction() || process.env.DDO_TRUST_PROXY === "1" || process.env.DDO_TRUST_PROXY === "true";
+const CORS_ORIGIN = process.env.DDO_CORS_ORIGIN || "*";
+
+const files = {
+  attendance: path.join(DATA_DIR, "attendance.json"),
+  batches: path.join(DATA_DIR, "batches.json"),
+  employees: path.join(DATA_DIR, "employees.json"),
+};
+
+if (!isProduction()) {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+}
+
+function log(level, message, extra) {
+  const line = extra ? `${message} ${JSON.stringify(extra)}` : message;
+  console.log(`${new Date().toISOString()} ${level} ${line}`);
 }
 
 function readStore(filePath) {
@@ -107,6 +126,9 @@ function sendJson(res, statusCode, payload) {
     "Content-Type": "application/json; charset=utf-8",
     "Content-Length": Buffer.byteLength(body),
     "Cache-Control": "no-store",
+    "Access-Control-Allow-Origin": CORS_ORIGIN,
+    "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Location-Code",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   });
   res.end(body);
 }
@@ -124,6 +146,49 @@ function requireAuth(req, res) {
     return false;
   }
   return true;
+}
+
+function normalizeIp(ip) {
+  if (!ip) return "";
+  const value = String(ip).trim();
+  if (value.startsWith("::ffff:")) return value.slice(7);
+  return value;
+}
+
+function clientIp(req) {
+  if (TRUST_PROXY) {
+    const forwarded = req.headers["x-forwarded-for"];
+    if (forwarded) return normalizeIp(String(forwarded).split(",")[0]);
+    if (req.headers["x-real-ip"]) return normalizeIp(req.headers["x-real-ip"]);
+  }
+  return normalizeIp(req.socket && req.socket.remoteAddress);
+}
+
+function parseIpv4(ip) {
+  const parts = String(ip).split(".").map(Number);
+  if (parts.length !== 4 || parts.some((n) => Number.isNaN(n) || n < 0 || n > 255)) return null;
+  return ((parts[0] << 24) >>> 0) + (parts[1] << 16) + (parts[2] << 8) + parts[3];
+}
+
+function ipMatches(ip, rule) {
+  if (ip === rule) return true;
+  if (!rule.includes("/")) return false;
+  const [range, bitsRaw] = rule.split("/");
+  const ipNum = parseIpv4(ip);
+  const rangeNum = parseIpv4(range);
+  const bits = Number(bitsRaw);
+  if (ipNum == null || rangeNum == null || Number.isNaN(bits) || bits < 0 || bits > 32) return false;
+  const mask = bits === 0 ? 0 : (~0 << (32 - bits)) >>> 0;
+  return (ipNum & mask) === (rangeNum & mask);
+}
+
+function allowImportIp(req, res) {
+  if (!ALLOW_IPS.length) return true;
+  const ip = clientIp(req);
+  if (ALLOW_IPS.some((rule) => ipMatches(ip, rule))) return true;
+  log("WARN", "Import POST rejected by IP allow-list", { ip });
+  sendJson(res, 403, { ok: false, error: "Forbidden" });
+  return false;
 }
 
 function readBody(req) {
@@ -294,6 +359,12 @@ function importAttendance(payload, headerLocation) {
       dataQualityIssues,
       startedAt: importedAt,
     });
+  }
+
+  if (isProduction()) {
+    const error = new Error("PostgreSQL is required in production. JSON file store is disabled.");
+    error.statusCode = 503;
+    throw error;
   }
 
   return persistImportJson({
@@ -591,6 +662,16 @@ async function handleRequest(req, res) {
   const route = `${req.method} ${url.pathname}`;
 
   try {
+    if (req.method === "OPTIONS") {
+      res.writeHead(204, {
+        "Access-Control-Allow-Origin": CORS_ORIGIN,
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Location-Code",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      });
+      res.end();
+      return;
+    }
+
     if (route === "GET /health") {
       let database = { enabled: db.isEnabled(), ok: false };
       if (db.isEnabled()) {
@@ -606,7 +687,9 @@ async function handleRequest(req, res) {
         service: "ddo-attendance-api",
         module: "DDO++ Attendance sidecar",
         store: database.enabled ? "postgres" : "json",
+        production: isProduction(),
         database,
+        postgres: typeof db.redactedConfig === "function" ? db.redactedConfig() : { configured: db.isEnabled() },
       });
       return;
     }
@@ -616,6 +699,7 @@ async function handleRequest(req, res) {
     if (!requireAuth(req, res)) return;
 
     if (route === "POST /api/attendance/import") {
+      if (!allowImportIp(req, res)) return;
       const raw = await readBody(req);
       let payload;
       try {
@@ -716,19 +800,32 @@ const useHttps = Boolean(TLS_CERT && TLS_KEY);
 const server = createServer();
 
 async function start() {
+  if (isProduction() && !db.isEnabled()) {
+    throw new Error("NODE_ENV=production requires DATABASE_URL or DB_HOST/DB_DATABASE/DB_USER/DB_PASSWORD.");
+  }
+  if (!TOKEN) {
+    throw new Error("DDO_API_TOKEN is not configured.");
+  }
+  if (isProduction() && TOKEN === POC_TOKEN) {
+    log("WARN", "Using POC token dev-ddo-attendance-token in production. Rotate DDO_API_TOKEN when you can.");
+  }
+
   if (db.isEnabled()) {
     await db.connect();
     await db.ensureSchema(STATUS_MASTER);
-    log("INFO", "Attendance store: PostgreSQL (NocoBase/DDO database)");
+    log("INFO", "Attendance store: PostgreSQL (NocoBase/DDO database)", db.redactedConfig());
   } else {
     log("WARN", "DATABASE_URL / DB_HOST not set; using JSON files. Set Postgres env to persist for DDO++.");
   }
-  server.listen(PORT, () => {
+  server.listen(PORT, BIND, () => {
     const scheme = useHttps ? "https" : "http";
-    log("INFO", `DDO++ attendance API listening on ${scheme}://127.0.0.1:${PORT}`);
+    log("INFO", `DDO++ attendance API listening on ${scheme}://${BIND}:${PORT}`);
     log("INFO", "POST /api/attendance/import  GET /api/dashboard");
+    if (ALLOW_IPS.length) {
+      log("INFO", `Import allow-list enabled (${ALLOW_IPS.length} entries)`);
+    }
     if (!useHttps) {
-      log("WARN", "TLS cert/key not configured; using HTTP. Set DDO_TLS_CERT and DDO_TLS_KEY for HTTPS.");
+      log("WARN", "TLS cert/key not configured; using HTTP. Put Nginx/IIS in front for HTTPS.");
     }
   });
 }

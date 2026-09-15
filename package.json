@@ -5,7 +5,13 @@
   "scripts": {
     "start": "node attendance_api.js",
     "api": "node attendance_api.js",
-    "import": "node attendance_import.js"
+    "import": "node attendance_import.js",
+    "check-db": "node scripts/check_postgres.js",
+    "apply-schema": "node scripts/apply_schema.js",
+    "register-collections": "node scripts/register_nocobase_collections.js",
+    "smoke-import": "node scripts/smoke_import.js",
+    "backup-att": "node scripts/backup_att.js",
+    "generate-token": "node scripts/generate_token.js"
   },
   "keywords": [],
   "author": "",
