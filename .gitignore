@@ -1,1 +1,17 @@
 .env
+
+# Logs
+*.log
+logs/
+
+# Temp and machine-local importer state
+*.lock
+*.tmp
+*.temp
+output/last_run.json
+output/last_run.txt
+output/processed_hashes.json
+
+# Python bytecode
+__pycache__/
+*.py[cod]
