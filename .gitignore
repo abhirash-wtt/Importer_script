@@ -20,3 +20,9 @@ __pycache__/
 # Dependencies and backups
 node_modules/
 backups/
+
+# Excel attendance files (machine-local)
+*.xls
+*.xlsx
+*.xlsm
+
