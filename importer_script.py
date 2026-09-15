@@ -127,12 +127,24 @@ class AttendanceRecord:
     out_time: str | None = None
     total_minutes: int | None = None
 
+    def to_api_dict(self) -> dict:
+        return {
+            "employee_code": self.employee_code,
+            "employee_name": self.employee_name,
+            "attendance_date": self.date,
+            "status": self.raw_status,
+            "in_time": self.in_time,
+            "out_time": self.out_time,
+            "total_minutes": self.total_minutes,
+        }
+
 
 @dataclass
 class ImportBatch:
     id: str
     file_name: str
     location: str
+    file_hash: str = ""
     status: str = "PENDING"
     error: str | None = None
     period: dict = field(default_factory=dict)
@@ -195,6 +207,7 @@ def create_import_batch(file, location):
         id=str(uuid.uuid4())[:8],
         file_name=Path(file).name,
         location=location,
+        file_hash=_file_hash(Path(file)),
     )
     _current_batch = batch
     LOGGER.info("Created import batch %s for %s (%s)", batch.id, batch.file_name, location)
@@ -368,6 +381,7 @@ def _batch_summary(batch):
     return {
         "batch_id": batch.id,
         "file_name": batch.file_name,
+        "file_hash": batch.file_hash,
         "location": batch.location,
         "status": batch.status,
         "error": batch.error,
@@ -396,6 +410,20 @@ def _write_batch_outputs(batch):
     )
 
 
+def _row_to_api_dict(row) -> dict:
+    if isinstance(row, AttendanceRecord):
+        return row.to_api_dict()
+    return {
+        "employee_code": row["employee_code"],
+        "employee_name": row["employee_name"],
+        "attendance_date": row["date"],
+        "status": row.get("raw_status") or row.get("status"),
+        "in_time": row.get("in_time"),
+        "out_time": row.get("out_time"),
+        "total_minutes": row.get("total_minutes"),
+    }
+
+
 def send_attendance_to_ddo_api(batch):
     endpoint = os.getenv("DDO_API_ENDPOINT", CONFIG.get("api_endpoint", "")).strip()
     token = os.getenv("DDO_API_TOKEN", CONFIG.get("api_token", "")).strip()
@@ -416,22 +444,12 @@ def send_attendance_to_ddo_api(batch):
 
     payload = {
         "location_code": location_code,
-        "report_from": batch.period.get("start"),
-        "report_to": batch.period.get("end"),
+        "report_from": batch.period.get("from") or batch.period.get("start"),
+        "report_to": batch.period.get("to") or batch.period.get("end"),
         "source_file": batch.file_name,
+        "file_hash": batch.file_hash,
         "batch_id": batch.id,
-        "records": [
-            {
-                "employee_code": row["employee_code"],
-                "employee_name": row["employee_name"],
-                "attendance_date": row["date"],
-                "status": row.get("raw_status") or row.get("status"),
-                "in_time": row.get("in_time"),
-                "out_time": row.get("out_time"),
-                "total_minutes": row.get("total_minutes"),
-            }
-            for row in batch.attendance_rows
-        ],
+        "records": [_row_to_api_dict(row) for row in batch.attendance_rows],
     }
 
     body = json.dumps(payload).encode("utf-8")

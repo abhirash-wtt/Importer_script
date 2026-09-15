@@ -37,7 +37,7 @@ const DEPARTMENT_NAMES = new Set(
 
 const CONFIG = {
   location: (process.env.LOCATION_CODE || "").trim().toUpperCase(),
-  apiEndpoint: (process.env.DDO_API_ENDPOINT || "http://127.0.0.1:3000/api/attendance/import").trim(),
+  apiEndpoint: (process.env.DDO_API_ENDPOINT || "").trim(),
   apiToken: (process.env.DDO_API_TOKEN || "dev-ddo-attendance-token").trim(),
   apiTimeoutMs: Number(process.env.DDO_API_TIMEOUT_SECONDS || 30) * 1000,
   apiMaxRetries: Number(process.env.DDO_API_MAX_RETRIES || 3),
@@ -389,6 +389,7 @@ function postJson(endpoint, token, locationCode, payload, timeoutMs) {
 }
 
 async function sendToApi(batch) {
+  if (!CONFIG.apiEndpoint) throw new Error("DDO_API_ENDPOINT is not configured");
   if (!isAllowedEndpoint(CONFIG.apiEndpoint)) {
     throw new Error(`DDO++ API endpoint must use HTTPS (http only for localhost): ${CONFIG.apiEndpoint}`);
   }
