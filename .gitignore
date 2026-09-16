@@ -2,16 +2,29 @@
 
 # Logs
 *.log
-logs/
+logs/*
+!logs/.gitkeep
 
 # Temp and machine-local importer state
 *.lock
 *.tmp
 *.temp
-output/last_run.json
-output/last_run.txt
-output/processed_hashes.json
-output/importer.lock
+output/*
+!output/.gitkeep
+
+# Runtime folders (Excel moves here; keep folder placeholders)
+processed/*
+!processed/.gitkeep
+failed/*
+!failed/.gitkeep
+inbox/**/*
+!inbox/.gitkeep
+!inbox/AGRA/
+!inbox/NOIDA/
+!inbox/HYD/
+!inbox/AGRA/.gitkeep
+!inbox/NOIDA/.gitkeep
+!inbox/HYD/.gitkeep
 
 # Python bytecode
 __pycache__/
@@ -25,4 +38,5 @@ backups/
 *.xls
 *.xlsx
 *.xlsm
+*.bak
 

@@ -46,7 +46,9 @@ _load_env_file(BASE_DIR / ".env")
 CONFIG = {
     "location": os.getenv("LOCATION_CODE", "NOIDA").strip(),
     "api_endpoint": os.getenv("DDO_API_ENDPOINT", "").strip(),
-    "api_token": os.getenv("DDO_API_TOKEN", "").strip(),
+    "api_token": (
+        os.getenv("ATTENDANCE_INTEGRATION_TOKEN") or os.getenv("DDO_API_TOKEN") or ""
+    ).strip(),
     "api_timeout_seconds": int(os.getenv("DDO_API_TIMEOUT_SECONDS", "30")),
     "api_max_retries": int(os.getenv("DDO_API_MAX_RETRIES", "3")),
     "inbox_dir": os.getenv("INBOX_DIR", str(BASE_DIR / "inbox")).strip(),
@@ -464,7 +466,11 @@ def _row_to_api_dict(row) -> dict:
 
 def send_attendance_to_ddo_api(batch):
     endpoint = os.getenv("DDO_API_ENDPOINT", CONFIG.get("api_endpoint", "")).strip()
-    token = os.getenv("DDO_API_TOKEN", CONFIG.get("api_token", "")).strip()
+    token = (
+        os.getenv("ATTENDANCE_INTEGRATION_TOKEN")
+        or os.getenv("DDO_API_TOKEN", CONFIG.get("api_token", ""))
+        or ""
+    ).strip()
     location_code = validate_location(batch.location or get_location_from_config())
     timeout = CONFIG["api_timeout_seconds"]
     max_retries = max(1, CONFIG["api_max_retries"])
@@ -481,7 +487,7 @@ def send_attendance_to_ddo_api(batch):
             f"DDO++ API endpoint must use HTTPS (http is allowed only for localhost): {endpoint}"
         )
     if not token:
-        raise RuntimeError("DDO_API_TOKEN is not configured")
+        raise RuntimeError("ATTENDANCE_INTEGRATION_TOKEN or DDO_API_TOKEN is not configured")
     if not location_code:
         raise RuntimeError("LOCATION_CODE is not configured")
 

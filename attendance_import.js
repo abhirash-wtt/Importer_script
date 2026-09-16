@@ -38,7 +38,7 @@ const DEPARTMENT_NAMES = new Set(
 const CONFIG = {
   location: (process.env.LOCATION_CODE || "").trim().toUpperCase(),
   apiEndpoint: (process.env.DDO_API_ENDPOINT || "").trim(),
-  apiToken: (process.env.DDO_API_TOKEN || "dev-ddo-attendance-token").trim(),
+  apiToken: (process.env.ATTENDANCE_INTEGRATION_TOKEN || process.env.DDO_API_TOKEN || "").trim(),
   apiTimeoutMs: Number(process.env.DDO_API_TIMEOUT_SECONDS || 30) * 1000,
   apiMaxRetries: Number(process.env.DDO_API_MAX_RETRIES || 3),
   inputDir: path.join(BASE_DIR, "input"),
@@ -400,7 +400,7 @@ async function sendToApi(batch) {
   if (!isAllowedEndpoint(CONFIG.apiEndpoint)) {
     throw new Error(`DDO++ API endpoint must use HTTPS (http only for localhost): ${CONFIG.apiEndpoint}`);
   }
-  if (!CONFIG.apiToken) throw new Error("DDO_API_TOKEN is not configured");
+  if (!CONFIG.apiToken) throw new Error("ATTENDANCE_INTEGRATION_TOKEN or DDO_API_TOKEN is not configured");
 
   const payload = {
     location_code: batch.location,
