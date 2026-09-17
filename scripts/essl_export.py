@@ -5,12 +5,12 @@ Automate eSSL eTimeTrackLite (native WinForms) with pywinauto.
 Office flow:
   1) Login
   2) Utilities -> Device Management
-     - select LGF/UGF devices (skip USB)
+     - select LGF/UGF devices (skip USB and UGF IN 1)
      - Start Download
      - wait until all selected devices finish
   3) Close all dialogs until the main window is plain
   4) Attendance Reports -> Daily Attendance Reports -> Detailed Attendance Report
-  5) Export -> Save As: folder in address bar, filename only in File name
+  5) Export -> Save As: {Month} {Location}.xls (e.g. Aug Agra.xls from LOCATION_CODE)
   6) Close open pages, then Log Off (3rd toolbar icon)
   7) Click Close on the Login dialog to exit the app
 
@@ -55,21 +55,17 @@ APP_EXE_CANDIDATES = [
 DEFAULT_USER = os.getenv("ESSL_USER", "essl")
 DEFAULT_PASSWORD = os.getenv("ESSL_PASSWORD", "essl")
 DEFAULT_EXPORT_DIR = Path(os.getenv("ATTENDANCE_DIR", r"D:\Attendance"))
-DEFAULT_DEVICES = [
-    d.strip()
-    for d in os.getenv(
-        "ESSL_DEVICES",
-        "LGF OUT,LGF IN,UGF OUT,UGF IN 1",
-    ).split(",")
-    if d.strip()
-]
-SKIP_DEVICES = [
-    d.strip().upper()
-    for d in os.getenv("ESSL_SKIP_DEVICES", "USB").split(",")
-    if d.strip()
-]
+DEFAULT_DEVICES_CSV = "LGF OUT,LGF IN,UGF OUT"
+DEFAULT_SKIP_CSV = "USB,UGF IN 1"
 # Office request: Daily -> Detailed Attendance Report
 DEFAULT_REPORT = os.getenv("ESSL_REPORT", "detailed").strip().lower()
+
+LOCATION_EXPORT_NAMES = {
+    "AGRA": "Agra",
+    "NOIDA": "Noida",
+    "HYD": "Hyd",
+    "HYDERABAD": "Hyd",
+}
 
 LOGGER = logging.getLogger("essl_export")
 
@@ -117,7 +113,8 @@ def load_dotenv() -> None:
     env_path = REPO_ROOT / ".env"
     if not env_path.exists():
         return
-    for line in env_path.read_text(encoding="utf-8", errors="ignore").splitlines():
+    text = env_path.read_text(encoding="utf-8-sig", errors="ignore")
+    for line in text.splitlines():
         line = line.strip()
         if not line or line.startswith("#") or "=" not in line:
             continue
@@ -626,12 +623,65 @@ def first_by_title(parent, title: str, control_type: str):
     return matches[0]
 
 
+def _row_device_name(main, idx: int) -> str:
+    """Read Device Name cell value for row idx (UIA name is only a label)."""
+    cells = [
+        c
+        for c in main.descendants(control_type="DataItem")
+        if (c.window_text() or "") == f"Device Name Row {idx}"
+    ]
+    if not cells:
+        known = ["USB", "LGF OUT", "LGF IN", "UGF OUT", "UGF IN 1"]
+        return known[idx] if 0 <= idx < len(known) else ""
+    cell = cells[0]
+    try:
+        if hasattr(cell, "iface_value") and cell.iface_value is not None:
+            value = str(cell.iface_value.CurrentValue or "").strip()
+            if value:
+                return value
+    except Exception:
+        pass
+    try:
+        legacy = cell.legacy_properties() or {}
+        value = str(legacy.get("Value") or "").strip()
+        if value:
+            return value
+    except Exception:
+        pass
+    known = ["USB", "LGF OUT", "LGF IN", "UGF OUT", "UGF IN 1"]
+    return known[idx] if 0 <= idx < len(known) else ""
+
+
+def _click_row_checkbox(main, idx: int) -> bool:
+    """Click the checkbox cell for Device List row idx."""
+    cells = [
+        c
+        for c in main.descendants(control_type="DataItem")
+        if (c.window_text() or "") == f" Row {idx}"
+    ]
+    if not cells:
+        return False
+    cells.sort(key=lambda c: c.rectangle().left)
+    cell = cells[0]
+    try:
+        r = cell.rectangle()
+        mouse.click(coords=(r.left + max(6, r.width() // 2), r.top + max(6, r.height() // 2)))
+        return True
+    except Exception:
+        try:
+            cell.click_input()
+            return True
+        except Exception:
+            return False
+
+
 def select_devices(main, wanted: list[str], skip: list[str]) -> None:
     """
-    Select-all via header checkbox, then uncheck USB (row 0).
+    Select-all via header checkbox, then uncheck skipped devices (USB, UGF IN 1, ...).
     Confirmed office layout: USB, LGF OUT, LGF IN, UGF OUT, UGF IN 1.
     """
-    LOGGER.info("Selecting devices (wanted=%s skip=%s)", wanted, skip)
+    skip_upper = {s.strip().upper() for s in skip if s.strip()}
+    LOGGER.info("Selecting devices (wanted=%s skip=%s)", wanted, sorted(skip_upper))
     main = _connect_main_fast() or main
     main.set_focus()
     time.sleep(0.5)
@@ -643,6 +693,7 @@ def select_devices(main, wanted: list[str], skip: list[str]) -> None:
             r = c.rectangle()
         except Exception:
             continue
+        # Header select-all is the tiny unnamed checkbox above the grid
         if not name and r.top < 140 and r.left < 40 and r.width() <= 24:
             header = c
             break
@@ -650,25 +701,40 @@ def select_devices(main, wanted: list[str], skip: list[str]) -> None:
     if header is not None:
         LOGGER.info("Clicking header select-all checkbox")
         header.click_input()
-        time.sleep(0.5)
+        time.sleep(0.8)
     else:
         LOGGER.warning("Header checkbox not found")
 
+    # Reconnect after select-all — UIA tree goes stale and row DataItems disappear otherwise
+    main = _connect_main_fast() or main
+    time.sleep(0.4)
+
+    unchecked = []
     for idx in range(0, 12):
+        main = _connect_main_fast() or main
         cells = [
             c
             for c in main.descendants(control_type="DataItem")
             if (c.window_text() or "") == f" Row {idx}"
         ]
         if not cells:
+            if idx == 0:
+                LOGGER.warning("No device rows found after select-all")
             break
-        cells.sort(key=lambda c: c.rectangle().left)
-        cell = cells[0]
-        should_skip = idx == 0 and any(s.upper() == "USB" for s in skip)
-        if should_skip:
-            LOGGER.info("Unchecking row %s (USB)", idx)
-            cell.click_input()
-            time.sleep(0.35)
+        device = _row_device_name(main, idx)
+        LOGGER.info("Row %s device=%r", idx, device)
+        if device.upper() in skip_upper:
+            if _click_row_checkbox(main, idx):
+                LOGGER.info("Unchecked row %s (%s)", idx, device)
+                unchecked.append(device)
+                time.sleep(0.45)
+            else:
+                LOGGER.warning("Failed to uncheck row %s (%s)", idx, device)
+
+    if not unchecked and skip_upper:
+        LOGGER.warning("No skip devices were unchecked (expected %s)", sorted(skip_upper))
+    else:
+        LOGGER.info("Skip devices unchecked: %s", unchecked)
 
     if first_by_title(main, "Start Download", "Button") is not None:
         LOGGER.info("Device Management ready (Start Download visible)")
@@ -1122,6 +1188,26 @@ def export_excel(main, export_dir: Path, export_name: str) -> Path:
     raise TimeoutError(f"Export file not found at {target}")
 
 
+def _csv_list(raw: str) -> list[str]:
+    return [p.strip() for p in (raw or "").split(",") if p.strip()]
+
+
+def configured_devices() -> list[str]:
+    return _csv_list(os.getenv("ESSL_DEVICES", DEFAULT_DEVICES_CSV))
+
+
+def configured_skip_devices() -> list[str]:
+    return [d.upper() for d in _csv_list(os.getenv("ESSL_SKIP_DEVICES", DEFAULT_SKIP_CSV))]
+
+
+def default_export_name(report: str | None = None) -> str:
+    """Build Excel name like 'Aug Agra.xls' from LOCATION_CODE + current month."""
+    code = (os.getenv("LOCATION_CODE") or "NOIDA").strip().upper()
+    location = LOCATION_EXPORT_NAMES.get(code, code.title())
+    month = datetime.now().strftime("%b")  # Jan, Feb, ... Aug
+    return f"{month} {location}.xls"
+
+
 def run(args: argparse.Namespace) -> int:
     load_dotenv()
     setup_logging()
@@ -1129,7 +1215,8 @@ def run(args: argparse.Namespace) -> int:
     export_dir = Path(args.export_dir or os.getenv("ATTENDANCE_DIR", DEFAULT_EXPORT_DIR))
     user = args.user or os.getenv("ESSL_USER", DEFAULT_USER)
     password = args.password or os.getenv("ESSL_PASSWORD", DEFAULT_PASSWORD)
-    devices = args.devices or DEFAULT_DEVICES
+    devices = args.devices or configured_devices()
+    skip_devices = configured_skip_devices()
     report = (args.report or DEFAULT_REPORT).lower()
 
     if args.dump_ui:
@@ -1150,7 +1237,7 @@ def run(args: argparse.Namespace) -> int:
 
     if not args.skip_sync:
         open_device_management(main)
-        select_devices(main, devices, SKIP_DEVICES)
+        select_devices(main, devices, skip_devices)
         if args.select_only:
             LOGGER.info("Select-only mode complete - inspect device checkboxes, then run without --select-only.")
             return 0
@@ -1172,15 +1259,8 @@ def run(args: argparse.Namespace) -> int:
     generate_report(main)
     main = find_main_window(timeout=15)
 
-    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    default_name = (
-        f"Monthly_Attendance_Report_{stamp}.xls"
-        if report.startswith("monthly")
-        else f"Daily_Detailed_Attendance_Report_{stamp}.xls"
-        if report.startswith("detailed") or "detailed" in report
-        else f"Daily_Attendance_Report_{stamp}.xls"
-    )
-    export_name = args.export_name or default_name
+    export_name = args.export_name or default_export_name(report)
+    LOGGER.info("Export file name: %s (from LOCATION_CODE + month)", export_name)
     path = export_excel(main, export_dir, export_name)
 
     main = find_main_window(timeout=10)

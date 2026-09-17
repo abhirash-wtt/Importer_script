@@ -31,7 +31,6 @@ __pycache__/
 *.py[cod]
 
 # Dependencies and backups
-node_modules/
 backups/
 
 # Excel attendance files (machine-local)
@@ -39,4 +38,3 @@ backups/
 *.xlsx
 *.xlsm
 *.bak
-

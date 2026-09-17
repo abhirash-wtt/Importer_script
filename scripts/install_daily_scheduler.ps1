@@ -1,9 +1,12 @@
 # Registers a Windows Task Scheduler job that runs scripts\scheduler.ps1.
 #
-# Twice daily at 01:00 and 13:00 local time (default):
+# Default: Monday-Friday at 13:00 (1 PM)
 #   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1
 #
-# Office 10-minute cadence (from the first DailyTimes value, Mon-Sat):
+# Custom times (still Mon-Fri):
+#   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1 -DailyTimes 09:00,13:00
+#
+# Office cadence (from the first DailyTimes value, Mon-Fri):
 #   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1 -EveryMinutes 10
 #
 # Remove the task:
@@ -11,7 +14,7 @@
 
 param(
     [string]$TaskName = "DDO-Attendance-Importer",
-    [string[]]$DailyTimes = @("01:00", "13:00"),
+    [string[]]$DailyTimes = @("13:00"),
     [int]$EveryMinutes = 0,
     [switch]$Unregister
 )
@@ -34,18 +37,20 @@ if ($Unregister) {
 $action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$Scheduler`"" -WorkingDirectory $Root
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable -MultipleInstances IgnoreNew
 
+$weekdays = @([DayOfWeek]::Monday, [DayOfWeek]::Tuesday, [DayOfWeek]::Wednesday, [DayOfWeek]::Thursday, [DayOfWeek]::Friday)
+
 if ($EveryMinutes -gt 0) {
     $startTime = $DailyTimes[0]
-    $trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Monday, Tuesday, Wednesday, Thursday, Friday, Saturday -At $startTime
+    $trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Monday, Tuesday, Wednesday, Thursday, Friday -At $startTime
     $trigger.RepetitionInterval = [TimeSpan]::FromMinutes($EveryMinutes)
     $trigger.RepetitionDuration = [TimeSpan]::FromHours(12)
-    $description = "Import Agra, Noida, and Hyderabad attendance every $EveryMinutes minutes from $startTime."
+    $description = "Import attendance every $EveryMinutes minutes from $startTime (Mon-Fri)."
 } else {
     $trigger = foreach ($time in $DailyTimes) {
-        New-ScheduledTaskTrigger -Daily -At $time
+        New-ScheduledTaskTrigger -Weekly -DaysOfWeek Monday, Tuesday, Wednesday, Thursday, Friday -At $time
     }
     $timesLabel = $DailyTimes -join " and "
-    $description = "Import Agra, Noida, and Hyderabad attendance daily at $timesLabel."
+    $description = "Import attendance Mon-Fri at $timesLabel."
 }
 
 Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger -Settings $settings -Description $description -Force | Out-Null

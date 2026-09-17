@@ -1,12 +1,14 @@
-# Register a daily Task Scheduler job for eSSL -> Excel export (pywinauto).
+# Register Weekday Task Scheduler job for eSSL -> Excel export (pywinauto).
+#
+# Default: Monday-Friday at 13:00 (1 PM)
 #
 #   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_essl_export_scheduler.ps1
 #   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_essl_export_scheduler.ps1 -Unregister
-#   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_essl_export_scheduler.ps1 -At "07:30"
+#   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_essl_export_scheduler.ps1 -At "13:00"
 
 param(
     [string]$TaskName = "DDO-eSSL-Export",
-    [string]$At = "07:30",
+    [string]$At = "13:00",
     [switch]$Unregister,
     [switch]$SkipSync
 )
@@ -35,7 +37,11 @@ $action = New-ScheduledTaskAction `
     -Argument ($argsList -join " ") `
     -WorkingDirectory $Root
 
-$trigger = New-ScheduledTaskTrigger -Daily -At $At
+# Monday-Friday only (office weekdays)
+$trigger = New-ScheduledTaskTrigger -Weekly `
+    -DaysOfWeek Monday, Tuesday, Wednesday, Thursday, Friday `
+    -At $At
+
 $settings = New-ScheduledTaskSettingsSet `
     -AllowStartIfOnBatteries `
     -DontStopIfGoingOnBatteries `
@@ -48,10 +54,10 @@ Register-ScheduledTask `
     -Trigger $trigger `
     -Settings $settings `
     -Principal $principal `
-    -Description "Export Daily Attendance Excel from eSSL eTimeTrackLite into D:\Attendance" `
+    -Description "Export Daily Attendance Excel from eSSL eTimeTrackLite into D:\Attendance (Mon-Fri)" `
     -Force | Out-Null
 
-Write-Host "Registered $TaskName daily at $At"
+Write-Host "Registered $TaskName Mon-Fri at $At"
 Write-Host "  python: $Python"
 Write-Host "  script: $Script"
 Write-Host "Run once now:"
