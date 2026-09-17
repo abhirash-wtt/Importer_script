@@ -33,10 +33,10 @@ npm install
 
 | Variable | What to set |
 |---|---|
-| `LOCATION_CODE` | **Must match this office:** `AGRA`, `NOIDA`, or `HYD` |
+| `LOCATION_CODE` | **This PC's office:** `AGRA`, `NOIDA`, or `HYD` |
 | `DDO_API_ENDPOINT` | Import API URL (same for all offices unless told otherwise) |
 | `ATTENDANCE_INTEGRATION_TOKEN` | Shared import token from the server team |
-| `ATTENDANCE_DIR` | Optional extra drop folder (default `D:\Attendance`) |
+| `ATTENDANCE_DIR` | **Single drop folder** (default `D:\Attendance`) |
 
 Example for Hyderabad:
 
@@ -49,14 +49,14 @@ ATTENDANCE_DIR=D:\Attendance
 
 `DDO_API_TOKEN` is an optional fallback name for the same token.
 
-## Drop folders
+## One drop folder (per PC)
 
-Put Excel reports in any of:
+1. Set `LOCATION_CODE` and `ATTENDANCE_DIR` in `.env`
+2. Create the folder once: `mkdir D:\Attendance` (or whatever you set)
+3. HR / anyone drops the Excel (`.xls` / `.xlsx`) **directly into that folder**
+4. The scheduler converts it to JSON and POSTs it using this PC's `LOCATION_CODE`
 
-- `inbox\AGRA`, `inbox\NOIDA`, `inbox\HYD`
-- `D:\Attendance` (or `D:\Attendance\AGRA`, `\NOIDA`, `\HYD`)
-
-Files with the location in the name (for example `June Agra.xls`) also work at the root of those folders.
+No `NOIDA` / `AGRA` / `HYD` subfolders under `D:\Attendance` are required.
 
 ## Run once
 
@@ -84,4 +84,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\install_daily_scheduler.ps
 
 ## Archive
 
-Old backend/API/Postgres/docs samples live under `archive/` and are not required to run the importer.
+- Old backend/API/Postgres samples: `archive/unused/`
+- Old TimeTrak RPA (AutoHotkey, export watcher): `archive/unused/timetrak_automation/`
+
+Not required to run the importer.

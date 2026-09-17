@@ -50,9 +50,15 @@ if ($EveryMinutes -gt 0) {
 Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger -Settings $settings -Description $description -Force | Out-Null
 Write-Host "Registered '$TaskName'."
 Write-Host $description
-Write-Host "Drop .xls files in:"
-Write-Host "  $Root\inbox\AGRA"
-Write-Host "  $Root\inbox\NOIDA"
-Write-Host "  $Root\inbox\HYD"
-Write-Host "  D:\Attendance (or D:\Attendance\AGRA, \NOIDA, \HYD)"
+Write-Host "Drop Excel files directly into:"
+Write-Host "  $((Get-Content (Join-Path $Root '.env') | Where-Object { $_ -match '^ATTENDANCE_DIR=' }) -replace '^ATTENDANCE_DIR=','' -replace '\"','')"
+Write-Host "  (default D:\Attendance — set ATTENDANCE_DIR in .env)"
+Write-Host "Location for this PC comes from LOCATION_CODE in .env (no subfolders needed)."
 Write-Host "Test now: powershell -NoProfile -ExecutionPolicy Bypass -File `"$Scheduler`""
+Write-Host ""
+Write-Host "After each run check:"
+Write-Host "  $Root\output\last_run.txt"
+Write-Host "  $Root\output\scheduler_runs.log"
+Write-Host "  $Root\output\importer.log"
+Write-Host "To enable Task Scheduler History (Admin PowerShell):"
+Write-Host '  wevtutil set-log Microsoft-Windows-TaskScheduler/Operational /enabled:true'

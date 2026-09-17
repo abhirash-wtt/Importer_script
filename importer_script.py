@@ -1020,16 +1020,24 @@ def infer_location(file_path, explicit=None):
 
 
 def _inbox_root():
+    """Legacy inbox path (optional). Primary drop folder is ATTENDANCE_DIR."""
     path = Path(CONFIG["inbox_dir"])
     path.mkdir(parents=True, exist_ok=True)
-    for folder in LOCATION_FOLDERS:
-        (path / folder).mkdir(parents=True, exist_ok=True)
+    return path
+
+
+def _office_drop_dir() -> Path | None:
+    """Single per-PC folder where HR drops Excel. Location comes from LOCATION_CODE."""
+    raw = (CONFIG.get("attendance_dir") or "").strip()
+    if not raw:
+        return None
+    path = Path(raw)
+    path.mkdir(parents=True, exist_ok=True)
     return path
 
 
 def _is_excel_report(path: Path) -> bool:
     return path.is_file() and path.suffix.lower() in EXCEL_SUFFIXES and not path.name.startswith("~$")
-
 
 def _is_file_ready(path: Path) -> bool:
     try:
@@ -1141,79 +1149,66 @@ class _SingleInstance:
         self.handle = None
 
 
-def _extra_drop_dirs(inbox: Path) -> list:
-    roots = []
-    raw = CONFIG.get("attendance_dir") or ""
-    if not raw:
-        return roots
-    path = Path(raw)
-    try:
-        if path.is_dir() and path.resolve() != inbox.resolve():
-            roots.append(path)
-        elif not path.exists():
-            LOGGER.info("Attendance drop folder not found; skipping %s", path)
-    except OSError as exc:
-        LOGGER.warning("Could not access attendance drop folder %s: %s", path, exc)
-    return roots
-
-
-def _scan_drop_root(root: Path, create_location_folders: bool, seen: set) -> list:
+def _scan_flat_drop(root: Path, office_location: str, seen: set) -> list:
+    """Pick Excel files directly in root; tag them with this PC's LOCATION_CODE."""
     found = []
-    for folder in LOCATION_FOLDERS:
-        location_dir = root / folder
-        if create_location_folders:
-            location_dir.mkdir(parents=True, exist_ok=True)
-        elif not location_dir.is_dir():
-            continue
-        for path in sorted(location_dir.iterdir()):
-            if not _is_excel_report(path):
-                continue
-            resolved = path.resolve()
-            if resolved in seen:
-                continue
-            seen.add(resolved)
-            found.append((path, folder))
-    hyd_alias = root / "HYDERABAD"
-    if hyd_alias.is_dir():
-        for path in sorted(hyd_alias.iterdir()):
-            if not _is_excel_report(path):
-                continue
-            resolved = path.resolve()
-            if resolved in seen:
-                continue
-            seen.add(resolved)
-            found.append((path, "HYD"))
     try:
         children = sorted(root.iterdir())
     except OSError as exc:
         LOGGER.warning("Could not read drop folder %s: %s", root, exc)
         return found
+
     for path in children:
+        if path.is_dir():
+            # Legacy: still accept D:\Attendance\NOIDA\file.xls if someone used old layout
+            name = path.name.upper()
+            if name in ALLOWED_LOCATIONS or name == "HYDERABAD":
+                loc = ALLOWED_LOCATIONS.get(name, "HYD")
+                for child in sorted(path.iterdir()):
+                    if not _is_excel_report(child):
+                        continue
+                    resolved = child.resolve()
+                    if resolved in seen:
+                        continue
+                    seen.add(resolved)
+                    found.append((child, loc))
+            continue
         if not _is_excel_report(path):
             continue
         resolved = path.resolve()
         if resolved in seen:
             continue
-        location = infer_location(path)
-        if not location:
-            LOGGER.warning(
-                "Skipping %s in %s; put it in AGRA, NOIDA, or HYD, or include the location in the file name",
-                path.name,
-                root,
-            )
-            continue
         seen.add(resolved)
-        found.append((path, location))
+        found.append((path, office_location))
+
     return found
 
 
 def _discover_inbox_files(inbox: Path) -> list:
+    """
+    One-folder office flow:
+      ATTENDANCE_DIR (e.g. D:\\Attendance) + LOCATION_CODE from .env
+    Optional legacy: also scan INBOX_DIR if it has Excel files.
+    """
     found = []
     seen = set()
-    found.extend(_scan_drop_root(inbox, create_location_folders=True, seen=seen))
-    for extra in _extra_drop_dirs(inbox):
-        LOGGER.info("Scanning extra drop folder %s", extra)
-        found.extend(_scan_drop_root(extra, create_location_folders=False, seen=seen))
+    office_location = normalize_location(validate_location(get_location_from_config()))
+
+    drop = _office_drop_dir()
+    if drop is not None:
+        LOGGER.info("Scanning drop folder %s as %s", drop, office_location)
+        found.extend(_scan_flat_drop(drop, office_location, seen))
+
+    # Optional legacy repo inbox (flat only — no AGRA/NOIDA/HYD subfolders required)
+    try:
+        if inbox.exists() and (drop is None or inbox.resolve() != drop.resolve()):
+            legacy = _scan_flat_drop(inbox, office_location, seen)
+            if legacy:
+                LOGGER.info("Also found %s file(s) under %s", len(legacy), inbox)
+                found.extend(legacy)
+    except OSError as exc:
+        LOGGER.warning("Could not scan inbox %s: %s", inbox, exc)
+
     return found
 
 
@@ -1296,7 +1291,7 @@ def process_inbox(explicit_location=None) -> dict:
         results = []
 
         if not candidates:
-            LOGGER.info("Inbox is empty; nothing to import")
+            LOGGER.info("Drop folder is empty; nothing to import")
             summary = {
                 "ok": True,
                 "already_running": False,
