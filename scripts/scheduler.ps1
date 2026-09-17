@@ -2,13 +2,14 @@
 # Scans ATTENDANCE_DIR (single drop folder), converts Excel → JSON, POSTs to DDO++.
 #
 # Manual run:
-#   powershell -NoProfile -ExecutionPolicy Bypass -File .\scheduler.ps1
+#   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\scheduler.ps1
 #
 # Every run appends to output\scheduler_runs.log (works even when Task Scheduler History is off).
 
 $ErrorActionPreference = "Stop"
 
-$Root = Split-Path -Parent $MyInvocation.MyCommand.Path
+$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$Root = Split-Path -Parent $ScriptDir
 Set-Location $Root
 
 $stampDir = Join-Path $Root "output"
@@ -66,9 +67,9 @@ try {
     }
 
     $python = Find-Python
-    $importer = Join-Path $Root "importer_script.py"
+    $importer = Join-Path $Root "scripts\importer_script.py"
     if (-not (Test-Path $importer)) {
-        throw "importer_script.py was not found in $Root"
+        throw "importer_script.py was not found in $Root\scripts"
     }
 
     $pythonArgs = $python.Args + @($importer, "--inbox")

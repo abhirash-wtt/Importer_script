@@ -26,7 +26,7 @@ try:
 except ImportError:
     load_workbook = None
 
-BASE_DIR = Path(__file__).resolve().parent
+REPO_ROOT = Path(__file__).resolve().parent.parent
 LOGGER = logging.getLogger("ddo_importer")
 
 
@@ -41,7 +41,7 @@ def _load_env_file(path: Path) -> None:
         os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
 
 
-_load_env_file(BASE_DIR / ".env")
+_load_env_file(REPO_ROOT / ".env")
 
 CONFIG = {
     "location": os.getenv("LOCATION_CODE", "NOIDA").strip(),
@@ -51,11 +51,11 @@ CONFIG = {
     ).strip(),
     "api_timeout_seconds": int(os.getenv("DDO_API_TIMEOUT_SECONDS", "30")),
     "api_max_retries": int(os.getenv("DDO_API_MAX_RETRIES", "3")),
-    "inbox_dir": os.getenv("INBOX_DIR", str(BASE_DIR / "inbox")).strip(),
+    "inbox_dir": os.getenv("INBOX_DIR", str(REPO_ROOT / "inbox")).strip(),
     "attendance_dir": os.getenv("ATTENDANCE_DIR", r"D:\Attendance").strip(),
-    "processed_dir": str(BASE_DIR / "processed"),
-    "failed_dir": str(BASE_DIR / "failed"),
-    "output_dir": str(BASE_DIR / "output"),
+    "processed_dir": str(REPO_ROOT / "processed"),
+    "failed_dir": str(REPO_ROOT / "failed"),
+    "output_dir": str(REPO_ROOT / "output"),
     "stable_seconds": int(os.getenv("INBOX_STABLE_SECONDS", "15")),
 }
 
@@ -996,7 +996,7 @@ def _move_file(file, target_dir):
 
 def _default_input_file():
     candidates = [
-        BASE_DIR / "NOIDA attendance report august.xls",
+        REPO_ROOT / "NOIDA attendance report august.xls",
         Path(r"C:\Users\WTT\Downloads\NOIDA attendance report august.xls"),
     ]
     for candidate in candidates:
@@ -1418,7 +1418,7 @@ if __name__ == "__main__":
     missing = [path for path in files if not path.exists()]
     if missing:
         LOGGER.error("Input file not found: %s", missing[0])
-        sys.exit("Usage: python importer_script.py --inbox | python importer_script.py <attendance.xls>")
+        sys.exit("Usage: python scripts/importer_script.py --inbox | python scripts/importer_script.py <attendance.xls>")
 
     for path in files:
         file_location = location or infer_location(path) or get_location_from_config()

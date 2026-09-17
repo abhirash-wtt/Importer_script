@@ -1,13 +1,13 @@
-# Registers a Windows Task Scheduler job that runs scheduler.ps1.
+# Registers a Windows Task Scheduler job that runs scripts\scheduler.ps1.
 #
 # Twice daily at 01:00 and 13:00 local time (default):
-#   powershell -NoProfile -ExecutionPolicy Bypass -File .\install_daily_scheduler.ps1
+#   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1
 #
 # Office 10-minute cadence (from the first DailyTimes value, Mon-Sat):
-#   powershell -NoProfile -ExecutionPolicy Bypass -File .\install_daily_scheduler.ps1 -EveryMinutes 10
+#   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1 -EveryMinutes 10
 #
 # Remove the task:
-#   powershell -NoProfile -ExecutionPolicy Bypass -File .\install_daily_scheduler.ps1 -Unregister
+#   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1 -Unregister
 
 param(
     [string]$TaskName = "DDO-Attendance-Importer",
@@ -18,10 +18,11 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-$Root = Split-Path -Parent $MyInvocation.MyCommand.Path
-$Scheduler = Join-Path $Root "scheduler.ps1"
+$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$Root = Split-Path -Parent $ScriptDir
+$Scheduler = Join-Path $Root "scripts\scheduler.ps1"
 if (-not (Test-Path $Scheduler)) {
-    throw "scheduler.ps1 was not found in $Root"
+    throw "scheduler.ps1 was not found in $Root\scripts"
 }
 
 if ($Unregister) {
@@ -52,7 +53,7 @@ Write-Host "Registered '$TaskName'."
 Write-Host $description
 Write-Host "Drop Excel files directly into:"
 Write-Host "  $((Get-Content (Join-Path $Root '.env') | Where-Object { $_ -match '^ATTENDANCE_DIR=' }) -replace '^ATTENDANCE_DIR=','' -replace '\"','')"
-Write-Host "  (default D:\Attendance — set ATTENDANCE_DIR in .env)"
+Write-Host "  (default D:\Attendance - set ATTENDANCE_DIR in .env)"
 Write-Host "Location for this PC comes from LOCATION_CODE in .env (no subfolders needed)."
 Write-Host "Test now: powershell -NoProfile -ExecutionPolicy Bypass -File `"$Scheduler`""
 Write-Host ""

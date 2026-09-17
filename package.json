@@ -2,9 +2,9 @@
   "name": "importer_script",
   "version": "1.0.0",
   "description": "Office attendance importer: read Excel, convert to JSON, POST to DDO++ API",
-  "main": "attendance_import.js",
+  "main": "scripts/attendance_import.js",
   "scripts": {
-    "import": "node attendance_import.js"
+    "import": "node scripts/attendance_import.js"
   },
   "license": "ISC",
   "dependencies": {

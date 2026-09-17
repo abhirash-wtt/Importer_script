@@ -6,8 +6,8 @@
  * Same package at every site. Location is configuration, not Excel content:
  *   LOCATION_CODE=AGRA | NOIDA | HYD
  *
- *   node attendance_import.js
- *   node attendance_import.js --location NOIDA "C:\\path\\report.xls"
+ *   node scripts/attendance_import.js
+ *   node scripts/attendance_import.js --location NOIDA "C:\\path\\report.xls"
  */
 
 const crypto = require("crypto");
@@ -18,8 +18,8 @@ const path = require("path");
 const { URL } = require("url");
 const XLSX = require("xlsx");
 
-const BASE_DIR = __dirname;
-loadEnvFile(path.join(BASE_DIR, ".env"));
+const REPO_ROOT = path.join(__dirname, "..");
+loadEnvFile(path.join(REPO_ROOT, ".env"));
 
 const ALLOWED_LOCATIONS = new Set(["AGRA", "NOIDA", "HYD"]);
 const WEEKDAY_CODES = { M: 0, T: 1, W: 2, TH: 3, F: 4, ST: 5, S: 6 };
@@ -41,11 +41,11 @@ const CONFIG = {
   apiToken: (process.env.ATTENDANCE_INTEGRATION_TOKEN || process.env.DDO_API_TOKEN || "").trim(),
   apiTimeoutMs: Number(process.env.DDO_API_TIMEOUT_SECONDS || 30) * 1000,
   apiMaxRetries: Number(process.env.DDO_API_MAX_RETRIES || 3),
-  inputDir: path.join(BASE_DIR, "input"),
-  processedDir: path.join(BASE_DIR, "processed"),
-  failedDir: path.join(BASE_DIR, "failed"),
-  logsDir: path.join(BASE_DIR, "logs"),
-  outputDir: path.join(BASE_DIR, "output"),
+  inputDir: path.join(REPO_ROOT, "input"),
+  processedDir: path.join(REPO_ROOT, "processed"),
+  failedDir: path.join(REPO_ROOT, "failed"),
+  logsDir: path.join(REPO_ROOT, "logs"),
+  outputDir: path.join(REPO_ROOT, "output"),
 };
 
 function loadEnvFile(filePath) {
