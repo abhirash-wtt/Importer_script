@@ -1002,15 +1002,19 @@ def _format_essl_date(day) -> str:
 
 def set_report_date_range(win, from_day=None, to_day=None) -> None:
     """
-    Set From Date = yesterday, To Date = today so In/Out punches across
-    the overnight boundary are included correctly.
+    Set From Date = To Date = yesterday.
+
+    Daily 1 PM runs must not include "today" (often In-only, incomplete).
+    Using only yesterday avoids overlapping the same calendar day on consecutive
+    runs (which would otherwise upsert/duplicate partial then full records).
     """
     today = datetime.now().date()
-    to_day = to_day or today
-    from_day = from_day or (today - timedelta(days=1))
+    yesterday = today - timedelta(days=1)
+    from_day = from_day or yesterday
+    to_day = to_day or yesterday
     from_text = _format_essl_date(from_day)
     to_text = _format_essl_date(to_day)
-    LOGGER.info("Setting report dates: From=%s To=%s", from_text, to_text)
+    LOGGER.info("Setting report dates: From=%s To=%s (yesterday only)", from_text, to_text)
 
     # Collect editable date fields (DateTimePicker / Edit / ComboBox near date labels)
     candidates = []
@@ -1289,7 +1293,7 @@ def generate_report(main, report: str | None = None, timeout: float = 30.0) -> N
     if report in ("monthly-basic", "monthly", "monthly_basic"):
         select_monthly_basic_work_duration(win)
         time.sleep(0.3)
-        set_report_date_range(win)  # From=yesterday, To=today
+        set_report_date_range(win)  # From=To=yesterday (one complete day)
         time.sleep(0.3)
         select_walking_tree_company(win)
         time.sleep(0.3)

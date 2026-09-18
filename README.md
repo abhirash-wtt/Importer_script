@@ -171,7 +171,7 @@ python scripts\importer_script.py --location NOIDA "C:\path\to\report.xls"
 On **Monthly Status Report** filter dialog, before Generate:
 
 1. Report Type = **Basic Work Duration**
-2. **From Date** = yesterday, **To Date** = today (covers In/Out across days)
+2. **From Date** = yesterday, **To Date** = yesterday (one complete day — avoids overlapping “today’s In-only” with tomorrow’s full day)
 3. Tick **Filter Company**
 4. Click **Deselect All**
 5. Click **WalkingTree** only
@@ -186,7 +186,7 @@ Filtering to Walking Tree keeps the file smaller and avoids API payload limits.
 
 ### Export from eSSL, then import (automated)
 
-Default report is **Monthly Status → Basic Work Duration**, with **From=yesterday / To=today**, **Filter Company → WalkingTree**, then Generate. Previous Excel of the same name is moved to `ATTENDANCE_DIR\previous\` before save (and Confirm Save As → Yes is clicked if Windows still asks).
+Default report is **Monthly Status → Basic Work Duration**, with **From=To=yesterday**, **Filter Company → WalkingTree**, then Generate. Previous Excel of the same name is moved to `ATTENDANCE_DIR\previous\` before save (and Confirm Save As → Yes is clicked if Windows still asks).
 
 Full flow (device sync + monthly basic export + save to `D:\Attendance` + logout + Close):
 
@@ -261,7 +261,7 @@ After a scheduled run, check:
 2. Utilities → Device Management → select **LGF OUT / LGF IN / UGF OUT** (skip **USB** and **UGF IN 1**) → Start Download → wait  
 3. Close dialogs until the main window is plain  
 4. Attendance Reports → Monthly Reports → Monthly Status → **Report Type = Basic Work Duration**  
-   then set **From Date = yesterday**, **To Date = today**  
+   then set **From Date = yesterday**, **To Date = yesterday** (complete day only)
    then **Filter Company → Deselect All → WalkingTree → Generate**  
 5. Export Excel into `ATTENDANCE_DIR` as `{Month} {Location}.xls` (previous file is moved to `ATTENDANCE_DIR\previous\`)  
 6. Close dialogs → Log Off (3rd toolbar icon) → Close on login dialog  
