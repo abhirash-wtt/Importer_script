@@ -51,8 +51,9 @@ CONFIG = {
     ).strip(),
     "api_timeout_seconds": int(os.getenv("DDO_API_TIMEOUT_SECONDS", "30")),
     "api_max_retries": int(os.getenv("DDO_API_MAX_RETRIES", "3")),
-    # Keep each POST under reverse-proxy body limits (HTTP 413 Payload Too Large).
-    "api_chunk_size": int(os.getenv("DDO_API_CHUNK_SIZE", "100")),
+    # Small chunks + pause between POSTs so DDO++ / Postgres can keep up.
+    "api_chunk_size": int(os.getenv("DDO_API_CHUNK_SIZE", "50")),
+    "api_chunk_delay_seconds": float(os.getenv("DDO_API_CHUNK_DELAY_SECONDS", "2")),
     "api_max_body_bytes": int(os.getenv("DDO_API_MAX_BODY_BYTES", "90000")),
     "inbox_dir": os.getenv("INBOX_DIR", str(REPO_ROOT / "inbox")).strip(),
     "attendance_dir": os.getenv("ATTENDANCE_DIR", r"D:\Attendance").strip(),
@@ -477,7 +478,8 @@ def send_attendance_to_ddo_api(batch):
     location_code = validate_location(batch.location or get_location_from_config())
     timeout = CONFIG["api_timeout_seconds"]
     max_retries = max(1, CONFIG["api_max_retries"])
-    chunk_size = max(1, CONFIG.get("api_chunk_size", 100))
+    chunk_size = max(1, CONFIG.get("api_chunk_size", 50))
+    chunk_delay = max(0.0, float(CONFIG.get("api_chunk_delay_seconds", 2)))
     max_body_bytes = max(20_000, CONFIG.get("api_max_body_bytes", 90_000))
 
     if not endpoint:
@@ -504,16 +506,26 @@ def send_attendance_to_ddo_api(batch):
         chunks = _split_records_for_api(all_records, chunk_size, max_body_bytes, location_code, batch)
 
     LOGGER.info(
-        "POST %s location_code=%s batch_id=%s records=%s chunks=%s",
+        "POST %s location_code=%s batch_id=%s records=%s chunks=%s chunk_size=%s delay=%ss",
         endpoint,
         location_code,
         batch.id,
         len(all_records),
         len(chunks),
+        chunk_size,
+        chunk_delay,
     )
 
     chunk_results = []
     for chunk_index, records in enumerate(chunks, start=1):
+        if chunk_index > 1 and chunk_delay > 0:
+            LOGGER.info(
+                "Waiting %.1fs before chunk %s/%s so the database can settle",
+                chunk_delay,
+                chunk_index,
+                len(chunks),
+            )
+            time.sleep(chunk_delay)
         chunk_id = batch.id if len(chunks) == 1 else f"{batch.id}-p{chunk_index}"
         result = _post_attendance_chunk(
             endpoint=endpoint,
