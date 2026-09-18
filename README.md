@@ -77,11 +77,14 @@ That will:
 4. `pip install -r requirements.txt`  
 5. Create the attendance drop folder (`D:\Attendance` by default)  
 6. Open Notepad so you can set `LOCATION_CODE` and the API token  
+7. **Register both Task Scheduler jobs** (Mon–Fri 13:00):
+   - `DDO-Attendance-Importer`
+   - `DDO-eSSL-Export`
 
-Optional: register daily Task Scheduler jobs in the same run:
+Skip scheduler registration if you only want packages/config:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -RegisterSchedulers
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -SkipSchedulers
 ```
 
 ### 3. Edit `.env` (required)

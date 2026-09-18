@@ -3,13 +3,19 @@
 # Double-click Install.bat, or run:
 #   powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 #
+# Registers both Task Scheduler jobs by default (Mon-Fri 13:00):
+#   DDO-Attendance-Importer
+#   DDO-eSSL-Export
+#
 # Optional:
-#   .\install.ps1 -RegisterSchedulers
+#   .\install.ps1 -SkipSchedulers
 #   .\install.ps1 -SkipEnvEdit
 
 param(
-    [switch]$RegisterSchedulers,
-    [switch]$SkipEnvEdit
+    [switch]$SkipSchedulers,
+    [switch]$SkipEnvEdit,
+    # Kept for compatibility; schedulers register by default now
+    [switch]$RegisterSchedulers
 )
 
 $ErrorActionPreference = "Stop"
@@ -121,10 +127,15 @@ if (-not $SkipEnvEdit -and ($createdEnv -or $tokenMissing -or -not $locationOk))
     Start-Process -FilePath "notepad.exe" -ArgumentList $envPath -Wait
 }
 
-if ($RegisterSchedulers) {
-    Write-Step "Registering Windows Task Scheduler jobs"
+if (-not $SkipSchedulers) {
+    Write-Step "Registering Windows Task Scheduler jobs (Mon-Fri 13:00)"
     & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root "scripts\install_daily_scheduler.ps1")
+    if ($LASTEXITCODE -ne 0) { throw "Failed to register DDO-Attendance-Importer" }
     & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root "scripts\install_essl_export_scheduler.ps1")
+    if ($LASTEXITCODE -ne 0) { throw "Failed to register DDO-eSSL-Export" }
+    Write-Host "Registered: DDO-Attendance-Importer + DDO-eSSL-Export"
+} else {
+    Write-Host "Skipped Task Scheduler registration (-SkipSchedulers)"
 }
 
 Write-Host ""
@@ -133,12 +144,14 @@ Write-Host ""
 Write-Host "Next steps:"
 Write-Host "  1. Confirm .env has LOCATION_CODE and ATTENDANCE_INTEGRATION_TOKEN"
 Write-Host "  2. Drop Excel into: $attendanceDir"
-Write-Host "  3. Test import:"
+Write-Host "  3. Keep Windows logged on and unlocked for eSSL export (monitor off is OK)"
+Write-Host "  4. Test import:"
 Write-Host ('       "{0}" scripts\importer_script.py --inbox' -f $Python)
-Write-Host "  4. Optional eSSL export:"
+Write-Host "  5. Test eSSL export (monthly basic):"
 Write-Host ('       "{0}" scripts\essl_export.py --skip-sync' -f $Python)
-Write-Host "  5. Optional schedulers:"
-Write-Host "       powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -RegisterSchedulers"
-Write-Host "       (or run scripts\install_daily_scheduler.ps1 / install_essl_export_scheduler.ps1)"
+if ($SkipSchedulers) {
+    Write-Host "  6. Register schedulers later:"
+    Write-Host "       powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1"
+}
 Write-Host ""
 Write-Host "Full guide: README.md"
