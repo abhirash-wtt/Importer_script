@@ -111,7 +111,9 @@ ESSL_PASSWORD=essl
 ESSL_DEVICES=LGF OUT,LGF IN,UGF OUT
 # Always skip USB; also skip broken devices until fixed
 ESSL_SKIP_DEVICES=USB,UGF IN 1
-ESSL_REPORT=detailed
+ESSL_REPORT=monthly-basic
+# Company filter on Monthly Status Report (Deselect All, then this name)
+ESSL_COMPANY=WalkingTree
 ```
 
 **Per-branch devices:** each office edits `.env` only — do not hard-code other floors in the script.
@@ -161,16 +163,36 @@ One file:
 python scripts\importer_script.py --location NOIDA "C:\path\to\report.xls"
 ```
 
-### Export from eSSL, then import
+### Manual export from eSSL (recommended for smaller Excel)
 
-Full flow (device sync + Daily Detailed report + save to `D:\Attendance` + logout + Close):
+On **Monthly Status Report** filter dialog, before Generate:
+
+1. Report Type = **Basic Work Duration**
+2. **From Date** = yesterday, **To Date** = today (covers In/Out across days)
+3. Tick **Filter Company**
+4. Click **Deselect All**
+5. Click **WalkingTree** only
+6. Click **Generate**
+7. Export / Save As Excel into `D:\Attendance` (old file of the same name is moved to `D:\Attendance\previous\`)
+   - Archived name looks like `Sep Agra_20260918_121824.xls`
+   - The number is a timestamp: **`YYYYMMDD_HHMMSS`** when it was replaced  
+     (e.g. `20260918_121824` = 18 Sep 2026 at 12:18:24). Not an employee/device ID.
+8. Run importer: `python scripts\importer_script.py --inbox`
+
+Filtering to Walking Tree keeps the file smaller and avoids API payload limits.
+
+### Export from eSSL, then import (automated)
+
+Default report is **Monthly Status → Basic Work Duration**, with **From=yesterday / To=today**, **Filter Company → WalkingTree**, then Generate. Previous Excel of the same name is moved to `ATTENDANCE_DIR\previous\` before save (and Confirm Save As → Yes is clicked if Windows still asks).
+
+Full flow (device sync + monthly basic export + save to `D:\Attendance` + logout + Close):
 
 ```powershell
 python scripts\essl_export.py
 python scripts\importer_script.py --inbox
 ```
 
-Saves as **`{Month} {Location}.xls`** in `ATTENDANCE_DIR` (overwrites the same name if it already exists):
+Saves as **`{Month} {Location}.xls`** in `ATTENDANCE_DIR` (old same-name file goes to `previous\`):
 
 | `LOCATION_CODE` | Example file (September) |
 |-----------------|--------------------------|
@@ -178,13 +200,21 @@ Saves as **`{Month} {Location}.xls`** in `ATTENDANCE_DIR` (overwrites the same n
 | `NOIDA` | `Sep Noida.xls` |
 | `HYD` | `Sep Hyd.xls` |
 
+When a new export would overwrite that name, the previous file is moved to:
+
+`ATTENDANCE_DIR\previous\{Month} {Location}_YYYYMMDD_HHMMSS.xls`
+
+Example: `D:\Attendance\previous\Sep Agra_20260918_121824.xls`  
+→ archived on **2026-09-18** at **12:18:24** (local PC time). The suffix is only a replace timestamp so you can tell older copies apart.
+
 Useful variants:
 
 ```powershell
 python scripts\essl_export.py --skip-sync          # export only, no device download
 python scripts\essl_export.py --sync-only          # devices only
 python scripts\essl_export.py --login-only         # test login
-python scripts\essl_export.py --report monthly-basic
+python scripts\essl_export.py --report monthly-basic   # default: importer-compatible
+python scripts\essl_export.py --report detailed        # Daily Detailed (importer does not parse yet)
 python scripts\essl_export.py --export-name "Custom Name.xls"   # override default name
 ```
 
@@ -227,8 +257,10 @@ After a scheduled run, check:
 1. Login to eTimeTrackLite  
 2. Utilities → Device Management → select **LGF OUT / LGF IN / UGF OUT** (skip **USB** and **UGF IN 1**) → Start Download → wait  
 3. Close dialogs until the main window is plain  
-4. Attendance Reports → Daily Attendance Reports → Detailed Attendance Report → Generate  
-5. Export Excel into `ATTENDANCE_DIR` as `{Month} {Location}.xls` (e.g. `Sep Agra.xls` from `LOCATION_CODE=AGRA`)  
+4. Attendance Reports → Monthly Reports → Monthly Status → **Report Type = Basic Work Duration**  
+   then set **From Date = yesterday**, **To Date = today**  
+   then **Filter Company → Deselect All → WalkingTree → Generate**  
+5. Export Excel into `ATTENDANCE_DIR` as `{Month} {Location}.xls` (previous file is moved to `ATTENDANCE_DIR\previous\`)  
 6. Close dialogs → Log Off (3rd toolbar icon) → Close on login dialog  
 
 App path used by default:

@@ -51,6 +51,9 @@ CONFIG = {
     ).strip(),
     "api_timeout_seconds": int(os.getenv("DDO_API_TIMEOUT_SECONDS", "30")),
     "api_max_retries": int(os.getenv("DDO_API_MAX_RETRIES", "3")),
+    # Keep each POST under reverse-proxy body limits (HTTP 413 Payload Too Large).
+    "api_chunk_size": int(os.getenv("DDO_API_CHUNK_SIZE", "100")),
+    "api_max_body_bytes": int(os.getenv("DDO_API_MAX_BODY_BYTES", "90000")),
     "inbox_dir": os.getenv("INBOX_DIR", str(REPO_ROOT / "inbox")).strip(),
     "attendance_dir": os.getenv("ATTENDANCE_DIR", r"D:\Attendance").strip(),
     "processed_dir": str(REPO_ROOT / "processed"),
@@ -474,6 +477,8 @@ def send_attendance_to_ddo_api(batch):
     location_code = validate_location(batch.location or get_location_from_config())
     timeout = CONFIG["api_timeout_seconds"]
     max_retries = max(1, CONFIG["api_max_retries"])
+    chunk_size = max(1, CONFIG.get("api_chunk_size", 100))
+    max_body_bytes = max(20_000, CONFIG.get("api_max_body_bytes", 90_000))
 
     if not endpoint:
         raise RuntimeError("DDO_API_ENDPOINT is not configured")
@@ -491,6 +496,69 @@ def send_attendance_to_ddo_api(batch):
     if not location_code:
         raise RuntimeError("LOCATION_CODE is not configured")
 
+    all_records = [_row_to_api_dict(row) for row in batch.attendance_rows]
+    if not all_records:
+        # Still notify API with empty records (server may reject; keep previous behavior).
+        chunks = [[]]
+    else:
+        chunks = _split_records_for_api(all_records, chunk_size, max_body_bytes, location_code, batch)
+
+    LOGGER.info(
+        "POST %s location_code=%s batch_id=%s records=%s chunks=%s",
+        endpoint,
+        location_code,
+        batch.id,
+        len(all_records),
+        len(chunks),
+    )
+
+    chunk_results = []
+    for chunk_index, records in enumerate(chunks, start=1):
+        chunk_id = batch.id if len(chunks) == 1 else f"{batch.id}-p{chunk_index}"
+        result = _post_attendance_chunk(
+            endpoint=endpoint,
+            token=token,
+            location_code=location_code,
+            batch=batch,
+            records=records,
+            chunk_id=chunk_id,
+            chunk_index=chunk_index,
+            chunk_total=len(chunks),
+            timeout=timeout,
+            max_retries=max_retries,
+            max_body_bytes=max_body_bytes,
+        )
+        chunk_results.append(result)
+
+    batch.api_result = {
+        "ok": True,
+        "chunks": len(chunks),
+        "records": len(all_records),
+        "responses": chunk_results,
+    }
+    _write_batch_outputs(batch)
+    return batch.api_result
+
+
+def _split_records_for_api(records, chunk_size, max_body_bytes, location_code, batch):
+    """Split records so each JSON body stays under the proxy body limit."""
+    chunks = []
+    current = []
+    for record in records:
+        candidate = current + [record]
+        if len(candidate) > chunk_size or (
+            current and _payload_size(location_code, batch, candidate) > max_body_bytes
+        ):
+            chunks.append(current)
+            current = [record]
+        else:
+            current = candidate
+    if current or not chunks:
+        chunks.append(current)
+    return chunks
+
+
+def _payload_size(location_code, batch, records):
     payload = {
         "location_code": location_code,
         "report_from": batch.period.get("from") or batch.period.get("start"),
@@ -498,16 +566,82 @@ def send_attendance_to_ddo_api(batch):
         "source_file": batch.file_name,
         "file_hash": batch.file_hash,
         "batch_id": batch.id,
-        "records": [_row_to_api_dict(row) for row in batch.attendance_rows],
+        "records": records,
     }
+    return len(json.dumps(payload).encode("utf-8"))
 
+
+def _post_attendance_chunk(
+    endpoint,
+    token,
+    location_code,
+    batch,
+    records,
+    chunk_id,
+    chunk_index,
+    chunk_total,
+    timeout,
+    max_retries,
+    max_body_bytes,
+):
+    # If a single chunk is still too large, keep splitting until it fits or one record left.
+    working = list(records)
+    while len(working) > 1 and _payload_size(location_code, batch, working) > max_body_bytes:
+        mid = max(1, len(working) // 2)
+        LOGGER.warning(
+            "Chunk %s/%s still too large (%s bytes); splitting %s -> %s + %s",
+            chunk_index,
+            chunk_total,
+            _payload_size(location_code, batch, working),
+            len(working),
+            mid,
+            len(working) - mid,
+        )
+        first = _post_attendance_chunk(
+            endpoint,
+            token,
+            location_code,
+            batch,
+            working[:mid],
+            f"{chunk_id}a",
+            chunk_index,
+            chunk_total,
+            timeout,
+            max_retries,
+            max_body_bytes,
+        )
+        second = _post_attendance_chunk(
+            endpoint,
+            token,
+            location_code,
+            batch,
+            working[mid:],
+            f"{chunk_id}b",
+            chunk_index,
+            chunk_total,
+            timeout,
+            max_retries,
+            max_body_bytes,
+        )
+        return {"ok": True, "split": True, "parts": [first, second]}
+
+    payload = {
+        "location_code": location_code,
+        "report_from": batch.period.get("from") or batch.period.get("start"),
+        "report_to": batch.period.get("to") or batch.period.get("end"),
+        "source_file": batch.file_name,
+        "file_hash": batch.file_hash,
+        "batch_id": chunk_id,
+        "records": working,
+    }
     body = json.dumps(payload).encode("utf-8")
     LOGGER.info(
-        "POST %s location_code=%s batch_id=%s records=%s",
-        endpoint,
-        location_code,
-        batch.id,
-        len(payload["records"]),
+        "POST chunk %s/%s batch_id=%s records=%s bytes=%s",
+        chunk_index,
+        chunk_total,
+        chunk_id,
+        len(working),
+        len(body),
     )
 
     last_error = None
@@ -516,64 +650,94 @@ def send_attendance_to_ddo_api(batch):
             status_code, response_text = _post_json(endpoint, token, location_code, body, timeout)
             parsed = _parse_api_response(response_text)
             if 200 <= status_code < 300:
-                batch.api_result = {
-                    "ok": True,
-                    "status_code": status_code,
-                    "attempt": attempt,
-                    "response": parsed,
-                }
                 LOGGER.info(
-                    "DDO++ API accepted batch %s (HTTP %s, attempt %s/%s)",
-                    batch.id,
+                    "DDO++ API accepted chunk %s/%s (HTTP %s, attempt %s/%s)",
+                    chunk_index,
+                    chunk_total,
                     status_code,
                     attempt,
                     max_retries,
                 )
-                _write_batch_outputs(batch)
-                return batch.api_result
+                return {
+                    "ok": True,
+                    "status_code": status_code,
+                    "attempt": attempt,
+                    "batch_id": chunk_id,
+                    "records": len(working),
+                    "response": parsed,
+                }
 
             last_error = f"HTTP {status_code}: {_clip(response_text)}"
             LOGGER.error(
-                "DDO++ API rejected batch %s (HTTP %s, attempt %s/%s): %s",
-                batch.id,
+                "DDO++ API rejected chunk %s/%s (HTTP %s, attempt %s/%s): %s",
+                chunk_index,
+                chunk_total,
                 status_code,
                 attempt,
                 max_retries,
                 _clip(response_text),
             )
+            # 413: shrink chunk and retry immediately instead of giving up.
+            if status_code == 413 and len(working) > 1:
+                mid = max(1, len(working) // 2)
+                LOGGER.warning("HTTP 413 — retrying as two smaller chunks (%s + %s)", mid, len(working) - mid)
+                first = _post_attendance_chunk(
+                    endpoint, token, location_code, batch, working[:mid], f"{chunk_id}a",
+                    chunk_index, chunk_total, timeout, max_retries, max_body_bytes,
+                )
+                second = _post_attendance_chunk(
+                    endpoint, token, location_code, batch, working[mid:], f"{chunk_id}b",
+                    chunk_index, chunk_total, timeout, max_retries, max_body_bytes,
+                )
+                return {"ok": True, "split_after_413": True, "parts": [first, second]}
             if status_code < 500 and status_code != 429:
                 break
         except urllib.error.HTTPError as exc:
             response_text = _read_http_error_body(exc)
             last_error = f"HTTP {exc.code}: {_clip(response_text)}"
             LOGGER.error(
-                "DDO++ API HTTP error for batch %s (HTTP %s, attempt %s/%s): %s",
-                batch.id,
+                "DDO++ API HTTP error for chunk %s/%s (HTTP %s, attempt %s/%s): %s",
+                chunk_index,
+                chunk_total,
                 exc.code,
                 attempt,
                 max_retries,
                 _clip(response_text),
             )
+            if exc.code == 413 and len(working) > 1:
+                mid = max(1, len(working) // 2)
+                LOGGER.warning("HTTP 413 — retrying as two smaller chunks (%s + %s)", mid, len(working) - mid)
+                first = _post_attendance_chunk(
+                    endpoint, token, location_code, batch, working[:mid], f"{chunk_id}a",
+                    chunk_index, chunk_total, timeout, max_retries, max_body_bytes,
+                )
+                second = _post_attendance_chunk(
+                    endpoint, token, location_code, batch, working[mid:], f"{chunk_id}b",
+                    chunk_index, chunk_total, timeout, max_retries, max_body_bytes,
+                )
+                return {"ok": True, "split_after_413": True, "parts": [first, second]}
             if exc.code < 500 and exc.code != 429:
                 break
         except urllib.error.URLError as exc:
             last_error = f"Network error: {exc.reason}"
             LOGGER.error(
-                "DDO++ API network error for batch %s (attempt %s/%s): %s",
-                batch.id,
+                "DDO++ API network error for chunk %s/%s (attempt %s/%s): %s",
+                chunk_index,
+                chunk_total,
                 attempt,
                 max_retries,
                 exc.reason,
             )
         except ssl.SSLError as exc:
             last_error = f"TLS error: {exc}"
-            LOGGER.error("DDO++ API TLS error for batch %s: %s", batch.id, exc)
+            LOGGER.error("DDO++ API TLS error for chunk %s/%s: %s", chunk_index, chunk_total, exc)
             break
-        except TimeoutError as exc:
-            last_error = f"Timeout: {exc}"
+        except TimeoutError:
+            last_error = "Timeout"
             LOGGER.error(
-                "DDO++ API timeout for batch %s (attempt %s/%s)",
-                batch.id,
+                "DDO++ API timeout for chunk %s/%s (attempt %s/%s)",
+                chunk_index,
+                chunk_total,
                 attempt,
                 max_retries,
             )
@@ -583,7 +747,7 @@ def send_attendance_to_ddo_api(batch):
             LOGGER.info("Retrying DDO++ API POST in %s seconds", delay)
             time.sleep(delay)
 
-    batch.api_result = {"ok": False, "error": last_error}
+    batch.api_result = {"ok": False, "error": last_error, "failed_chunk": chunk_id}
     _write_batch_outputs(batch)
     raise RuntimeError(f"Failed to send attendance JSON to DDO++ API: {last_error}")
 

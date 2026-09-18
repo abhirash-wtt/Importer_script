@@ -21,6 +21,7 @@ Examples:
   python scripts/essl_export.py --select-only
   python scripts/essl_export.py --sync-only
   python scripts/essl_export.py --skip-sync
+  python scripts/essl_export.py --report monthly-basic
   python scripts/essl_export.py --report detailed
   python scripts/essl_export.py
 """
@@ -33,8 +34,9 @@ import os
 import re
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
+import shutil
 
 try:
     from pywinauto import Application, Desktop, mouse
@@ -58,7 +60,7 @@ DEFAULT_EXPORT_DIR = Path(os.getenv("ATTENDANCE_DIR", r"D:\Attendance"))
 DEFAULT_DEVICES_CSV = "LGF OUT,LGF IN,UGF OUT"
 DEFAULT_SKIP_CSV = "USB,UGF IN 1"
 # Office request: Daily -> Detailed Attendance Report
-DEFAULT_REPORT = os.getenv("ESSL_REPORT", "detailed").strip().lower()
+DEFAULT_REPORT = os.getenv("ESSL_REPORT", "monthly-basic").strip().lower()
 
 LOCATION_EXPORT_NAMES = {
     "AGRA": "Agra",
@@ -893,7 +895,9 @@ def open_report(main, report: str) -> None:
             "Detailed Attendance Report",
         )
     elif report in ("monthly-basic", "monthly", "monthly_basic"):
-        LOGGER.info("Opening Attendance Reports -> Monthly Reports -> Monthly Basic Report")
+        LOGGER.info(
+            "Opening Attendance Reports -> Monthly Reports -> Monthly Basic/Status Report"
+        )
         menu_click(
             main,
             "Attendance Reports",
@@ -913,10 +917,353 @@ def open_report(main, report: str) -> None:
     time.sleep(1.5)
 
 
-def generate_report(main, timeout: float = 30.0) -> None:
+def _select_combo_value(win, wanted: str) -> bool:
+    """Select an item in a WinForms ComboBox (Report Type, etc.)."""
+    wanted_norm = re.sub(r"\s+", " ", wanted.strip().lower())
+    combos = list(win.descendants(control_type="ComboBox"))
+    for cb in combos:
+        try:
+            current = (cb.window_text() or "").strip()
+        except Exception:
+            current = ""
+        if re.sub(r"\s+", " ", current.lower()) == wanted_norm:
+            LOGGER.info("Report Type already set: %s", current)
+            return True
+        try:
+            cb.select(wanted)
+            time.sleep(0.4)
+            LOGGER.info("Selected ComboBox value: %s", wanted)
+            return True
+        except Exception:
+            pass
+        try:
+            cb.click_input()
+            time.sleep(0.35)
+            # Prefer exact list item click when exposed
+            items = [
+                i
+                for i in win.descendants(control_type="ListItem")
+                if re.sub(r"\s+", " ", (i.window_text() or "").strip().lower()) == wanted_norm
+            ]
+            if items:
+                items[0].click_input()
+                time.sleep(0.35)
+                LOGGER.info("Clicked list item: %s", wanted)
+                return True
+            send_keys("^a")
+            time.sleep(0.1)
+            send_keys(wanted, with_spaces=True)
+            time.sleep(0.2)
+            send_keys("{ENTER}")
+            time.sleep(0.4)
+            LOGGER.info("Typed ComboBox value: %s", wanted)
+            return True
+        except Exception as exc:
+            LOGGER.warning("ComboBox select failed: %s", exc)
+    return False
+
+
+def select_monthly_basic_work_duration(win) -> None:
+    """On Monthly Status Report filter, set Report Type = Basic Work Duration (In/Out grid)."""
+    title = (win.window_text() or "")
+    LOGGER.info("Configuring monthly report filter: %s", title)
+    # Prefer Basic Work Duration (Status + InTime + OutTime + Total) over plain Basic Report.
+    report_type_ok = (
+        _select_combo_value(win, "Basic Work Duration")
+        or _select_combo_value(win, "Basic Report")
+    )
+    if not report_type_ok:
+        main = find_main_window(timeout=5)
+        if main is not None:
+            report_type_ok = (
+                _select_combo_value(main, "Basic Work Duration")
+                or _select_combo_value(main, "Basic Report")
+            )
+        if report_type_ok:
+            LOGGER.info("Set Report Type via main window")
+        else:
+            LOGGER.warning(
+                "Could not set Report Type to Basic Work Duration — Generate may use current type"
+            )
+    for c in win.descendants(control_type="CheckBox"):
+        name = (c.window_text() or "").strip().lower()
+        if "recalculate" in name:
+            try:
+                LOGGER.info("Recalculate checkbox present: %s", c.window_text())
+            except Exception:
+                pass
+            break
+
+
+def _format_essl_date(day) -> str:
+    """eSSL date pickers show values like '18 Sep 2026' / '01 Sep 2026'."""
+    return day.strftime("%d %b %Y")
+
+
+def set_report_date_range(win, from_day=None, to_day=None) -> None:
+    """
+    Set From Date = yesterday, To Date = today so In/Out punches across
+    the overnight boundary are included correctly.
+    """
+    today = datetime.now().date()
+    to_day = to_day or today
+    from_day = from_day or (today - timedelta(days=1))
+    from_text = _format_essl_date(from_day)
+    to_text = _format_essl_date(to_day)
+    LOGGER.info("Setting report dates: From=%s To=%s", from_text, to_text)
+
+    # Collect editable date fields (DateTimePicker / Edit / ComboBox near date labels)
+    candidates = []
+    for ctype in ("Edit", "ComboBox", "Spinner", "Pane"):
+        for c in win.descendants(control_type=ctype):
+            try:
+                name = (c.window_text() or "").strip()
+                auto = ""
+                try:
+                    auto = (c.element_info.automation_id or "") + " " + (c.element_info.name or "")
+                except Exception:
+                    pass
+                hay = f"{name} {auto}".lower()
+                # Likely a date value already (contains month abbr) or empty editable near dates
+                if any(m in hay for m in (
+                    "jan", "feb", "mar", "apr", "may", "jun",
+                    "jul", "aug", "sep", "oct", "nov", "dec",
+                )) or (ctype == "Edit" and name):
+                    r = c.rectangle()
+                    candidates.append((r.top, r.left, c, name, ctype))
+            except Exception:
+                continue
+
+    candidates.sort()  # top-to-bottom, then left-to-right
+    # Prefer the two topmost date-looking fields (From then To on the same row)
+    date_fields = []
+    for top, left, ctrl, name, ctype in candidates:
+        if any(m in name.lower() for m in (
+            "jan", "feb", "mar", "apr", "may", "jun",
+            "jul", "aug", "sep", "oct", "nov", "dec",
+        )):
+            date_fields.append((top, left, ctrl, name, ctype))
+    date_fields.sort(key=lambda x: (x[0], x[1]))
+
+    if len(date_fields) < 2:
+        # Fallback: click labels then type
+        LOGGER.warning("Could not find two date fields by value — trying label-relative Edits")
+        date_fields = []
+        for c in win.descendants(control_type="Text"):
+            label = (c.window_text() or "").strip().lower()
+            if label not in {"from date", "to date", "from", "to"}:
+                continue
+            try:
+                lr = c.rectangle()
+            except Exception:
+                continue
+            # Nearest Edit/Combo to the right of the label
+            best = None
+            best_dist = 10_000
+            for ctype in ("Edit", "ComboBox"):
+                for e in win.descendants(control_type=ctype):
+                    try:
+                        er = e.rectangle()
+                    except Exception:
+                        continue
+                    if er.left < lr.left:
+                        continue
+                    if abs(er.top - lr.top) > 20:
+                        continue
+                    dist = er.left - lr.left
+                    if dist < best_dist:
+                        best_dist = dist
+                        best = (er.top, er.left, e, e.window_text() or "", ctype)
+            if best:
+                date_fields.append(best)
+        date_fields.sort(key=lambda x: (0 if "from" in str(x) else 1, x[0], x[1]))
+
+    if len(date_fields) < 2:
+        LOGGER.warning("Date fields not found — leaving From/To as shown in dialog")
+        return
+
+    # First = From (left), second = To (right) on the top row
+    top_row = sorted(date_fields[:4], key=lambda x: (x[0], x[1]))
+    from_ctrl = top_row[0][2]
+    to_ctrl = top_row[1][2] if len(top_row) > 1 else top_row[0][2]
+
+    def _set_date_ctrl(ctrl, value: str, label: str) -> bool:
+        try:
+            ctrl.set_focus()
+            time.sleep(0.15)
+            # Many DateTimePickers expose an Edit child
+            try:
+                ctrl.set_edit_text(value)
+                LOGGER.info("Set %s via set_edit_text -> %s", label, value)
+                return True
+            except Exception:
+                pass
+            send_keys("^a")
+            time.sleep(0.05)
+            send_keys(value, with_spaces=True)
+            send_keys("{ENTER}")
+            time.sleep(0.2)
+            LOGGER.info("Set %s via keyboard -> %s", label, value)
+            return True
+        except Exception as exc:
+            LOGGER.warning("Failed to set %s to %s: %s", label, value, exc)
+            return False
+
+    _set_date_ctrl(from_ctrl, from_text, "From Date")
+    time.sleep(0.25)
+    _set_date_ctrl(to_ctrl, to_text, "To Date")
+    time.sleep(0.25)
+
+
+def dismiss_info_dialogs(timeout: float = 5.0) -> None:
+    """Close eSSL Info / warning popups (e.g. Please select Atleast One Company)."""
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        closed = False
+        try:
+            for w in Desktop(backend="uia").windows():
+                title = (w.window_text() or "").strip()
+                # Only touch small eSSL message boxes — never Cursor/IDE windows.
+                if title not in {"Info", "Warning", "Error", "Message"}:
+                    continue
+                try:
+                    w.set_focus()
+                    for b in w.descendants(control_type="Button"):
+                        if (b.window_text() or "").strip() in {"OK", "Ok", "Close"}:
+                            b.click_input()
+                            LOGGER.info("Dismissed dialog: %s", title or "Info")
+                            closed = True
+                            time.sleep(0.4)
+                            break
+                except Exception:
+                    pass
+        except Exception:
+            pass
+        if not closed:
+            break
+
+
+def select_walking_tree_company(win) -> None:
+    """
+    On Monthly Status Report filter:
+      Filter Company → Deselect All → select WalkingTree
+    so the Excel only contains Walking Tree employees (smaller payload).
+    """
+    company_name = os.getenv("ESSL_COMPANY", "WalkingTree").strip() or "WalkingTree"
+    # Accept "Walking Tree" or "WalkingTree"
+    company_key = company_name.replace(" ", "").lower()
+    LOGGER.info("Filtering company to: %s", company_name)
+
+    # 1) Enable Filter Company
+    for c in win.descendants(control_type="CheckBox"):
+        name = (c.window_text() or "").strip().lower()
+        if "filter company" in name:
+            try:
+                if c.get_toggle_state() == 0:
+                    c.click_input()
+                    time.sleep(0.4)
+                    LOGGER.info("Enabled Filter Company")
+            except Exception as exc:
+                LOGGER.warning("Could not toggle Filter Company: %s", exc)
+            break
+
+    # 2) Deselect All on the COMPANY list only (left list, not Department)
+    company_list = None
+    for lst in win.descendants(control_type="List"):
+        try:
+            items = [i.window_text() or "" for i in lst.descendants(control_type="ListItem")]
+        except Exception:
+            continue
+        joined = " ".join(items).lower().replace(" ", "")
+        if "walkingtree" in joined or "contractor" in joined:
+            company_list = lst
+            break
+
+    deselected = False
+    if company_list is not None:
+        try:
+            list_rect = company_list.rectangle()
+        except Exception:
+            list_rect = None
+        for c in win.descendants(control_type="RadioButton"):
+            name = (c.window_text() or "").strip().lower()
+            if name != "deselect all":
+                continue
+            try:
+                r = c.rectangle()
+                # Company Deselect All sits under the company list (x near list left)
+                if list_rect is not None and abs(r.left - list_rect.left) > 80:
+                    continue
+                c.click_input()
+                time.sleep(0.4)
+                LOGGER.info("Clicked company Deselect All")
+                deselected = True
+                break
+            except Exception as exc:
+                LOGGER.warning("Deselect All click failed: %s", exc)
+    if not deselected:
+        # Fallback: first enabled Deselect All
+        for c in win.descendants(control_type="RadioButton"):
+            if (c.window_text() or "").strip().lower() != "deselect all":
+                continue
+            try:
+                c.click_input()
+                time.sleep(0.4)
+                LOGGER.info("Clicked Deselect All (fallback)")
+                deselected = True
+                break
+            except Exception:
+                pass
+    if not deselected:
+        LOGGER.warning("Deselect All radio not found")
+
+    # 3) Select WalkingTree in the company list
+    selected = False
+    search_roots = [company_list] if company_list is not None else [win]
+    for root in search_roots:
+        if root is None:
+            continue
+        for c in root.descendants(control_type="ListItem"):
+            name = (c.window_text() or "").strip()
+            if name.replace(" ", "").lower() != company_key:
+                continue
+            try:
+                c.click_input()
+                time.sleep(0.4)
+                LOGGER.info("Selected company: %s", name)
+                selected = True
+                break
+            except Exception as exc:
+                LOGGER.warning("Could not click company %s: %s", name, exc)
+        if selected:
+            break
+
+    if not selected:
+        # Last resort: any ListItem matching across the dialog
+        for c in win.descendants(control_type="ListItem"):
+            name = (c.window_text() or "").strip()
+            if name.replace(" ", "").lower() == company_key:
+                try:
+                    c.click_input()
+                    time.sleep(0.4)
+                    LOGGER.info("Selected company (global): %s", name)
+                    selected = True
+                    break
+                except Exception as exc:
+                    LOGGER.warning("Could not click company %s: %s", name, exc)
+
+    if not selected:
+        raise RuntimeError(
+            f"Company '{company_name}' not found/selected in Filter Company list. "
+            "Refusing to Generate (would show 'Please select Atleast One Company')."
+        )
+
+
+def generate_report(main, report: str | None = None, timeout: float = 30.0) -> None:
+    report = (report or DEFAULT_REPORT).lower()
     LOGGER.info("Waiting for report filter / Generate")
     deadline = time.time() + timeout
-    report = None
+    report_win = None
     while time.time() < deadline:
         for c in main.descendants(control_type="Window"):
             title = c.window_text() or ""
@@ -927,17 +1274,27 @@ def generate_report(main, timeout: float = 30.0) -> None:
                     for b in c.descendants(control_type="Button")
                 )
                 if has_gen:
-                    report = as_window(c)
+                    report_win = as_window(c)
                     break
-        if report:
+        if report_win:
             break
         time.sleep(0.5)
-    if report is None:
+    if report_win is None:
         raise TimeoutError("Report filter window with Generate did not open.")
 
-    win = report
+    win = report_win
     win.set_focus()
     time.sleep(0.5)
+
+    if report in ("monthly-basic", "monthly", "monthly_basic"):
+        select_monthly_basic_work_duration(win)
+        time.sleep(0.3)
+        set_report_date_range(win)  # From=yesterday, To=today
+        time.sleep(0.3)
+        select_walking_tree_company(win)
+        time.sleep(0.3)
+
+    dismiss_info_dialogs(timeout=2.0)
 
     btn = first_by_title(win, "Generate", "Button") or first_by_title(main, "Generate", "Button")
     if btn is not None:
@@ -947,7 +1304,10 @@ def generate_report(main, timeout: float = 30.0) -> None:
         send_keys("%g")
         LOGGER.warning("Generate button not found - sent Alt+G.")
 
-    deadline = time.time() + 90
+    time.sleep(0.8)
+    dismiss_info_dialogs(timeout=3.0)
+
+    deadline = time.time() + 120
     while time.time() < deadline:
         main_now = find_main_window(timeout=5)
         for c in main_now.descendants(control_type="MenuItem"):
@@ -965,10 +1325,78 @@ def generate_report(main, timeout: float = 30.0) -> None:
     time.sleep(2)
 
 
+def archive_existing_export(target: Path) -> Path | None:
+    """Move previous Excel aside so Save As does not block on Confirm Replace."""
+    if not target.exists():
+        return None
+    archive_dir = target.parent / "previous"
+    archive_dir.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    dest = archive_dir / f"{target.stem}_{stamp}{target.suffix}"
+    try:
+        shutil.move(str(target), str(dest))
+        LOGGER.info("Archived previous export -> %s", dest)
+        return dest
+    except Exception as exc:
+        LOGGER.warning("Could not archive %s (%s) — will confirm replace on Save As", target, exc)
+        try:
+            target.unlink()
+            LOGGER.info("Deleted previous export %s so new save can proceed", target)
+        except Exception as exc2:
+            LOGGER.warning("Could not delete previous export: %s", exc2)
+        return None
+
+
+def confirm_replace_if_prompted(timeout: float = 8.0) -> bool:
+    """Click Yes on Windows 'Confirm Save As' / already-exists prompt."""
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        for backend in ("uia", "win32"):
+            try:
+                windows = Desktop(backend=backend).windows()
+            except Exception:
+                continue
+            for w in windows:
+                title = (w.window_text() or "").strip()
+                title_l = title.lower()
+                if "confirm save as" not in title_l and title_l != "confirm":
+                    # Also detect by body text
+                    try:
+                        body = " ".join((c.window_text() or "") for c in w.descendants())
+                    except Exception:
+                        body = ""
+                    if "already exists" not in body.lower() and "do you want to replace" not in body.lower():
+                        continue
+                try:
+                    w.set_focus()
+                except Exception:
+                    pass
+                # Prefer clicking Yes button
+                try:
+                    for b in w.descendants(control_type="Button"):
+                        name = (b.window_text() or "").strip().lower()
+                        if name in {"yes", "&yes"}:
+                            b.click_input()
+                            LOGGER.info("Confirmed replace (clicked Yes)")
+                            time.sleep(0.8)
+                            return True
+                except Exception:
+                    pass
+                send_keys("%y")
+                LOGGER.info("Confirmed replace (Alt+Y)")
+                time.sleep(0.8)
+                return True
+        time.sleep(0.3)
+    return False
+
+
 def export_excel(main, export_dir: Path, export_name: str) -> Path:
     export_dir.mkdir(parents=True, exist_ok=True)
     target = export_dir / export_name
     LOGGER.info("Exporting Excel to %s", target)
+
+    # Move yesterday's / previous file out of the way before Save As.
+    archive_existing_export(target)
 
     main.set_focus()
     time.sleep(0.3)
@@ -1114,7 +1542,9 @@ def export_excel(main, export_dir: Path, export_name: str) -> Path:
             LOGGER.info("Set File name to %s", export_name)
 
         send_keys("%s")  # Save
-        time.sleep(1.5)
+        time.sleep(0.6)
+        confirm_replace_if_prompted(timeout=6.0)
+        time.sleep(0.8)
     except Exception as exc:
         LOGGER.warning("Structured Save As failed (%s) — keyboard fallback", exc)
         filled = False
@@ -1131,20 +1561,12 @@ def export_excel(main, export_dir: Path, export_name: str) -> Path:
         send_keys("^a")
         send_keys(export_name, with_spaces=True)
         send_keys("%s")
-        time.sleep(1.5)
+        time.sleep(0.6)
+        confirm_replace_if_prompted(timeout=6.0)
+        time.sleep(0.8)
 
-    for w in Desktop(backend="uia").windows():
-        title = (w.window_text() or "").lower()
-        if "confirm" in title or "already exists" in title:
-            send_keys("%y")
-            time.sleep(0.8)
-            break
-    for w in Desktop(backend="win32").windows():
-        title = (w.window_text() or "").lower()
-        if "confirm" in title:
-            send_keys("%y")
-            time.sleep(0.8)
-            break
+    # Extra pass in case prompt appeared late
+    confirm_replace_if_prompted(timeout=3.0)
 
     # If still no file, last-resort: put full path in filename box (works on this dialog)
     if not (target.exists() and target.stat().st_size > 0):
@@ -1163,12 +1585,9 @@ def export_excel(main, export_dir: Path, export_name: str) -> Path:
                     edit.set_edit_text(str(target))
                     break
             send_keys("%s")
-            time.sleep(1.5)
-            for w in Desktop(backend="win32").windows():
-                if "confirm" in (w.window_text() or "").lower():
-                    send_keys("%y")
-                    time.sleep(0.8)
-                    break
+            time.sleep(0.6)
+            confirm_replace_if_prompted(timeout=6.0)
+            time.sleep(0.8)
 
     deadline = time.time() + 60
     while time.time() < deadline:
@@ -1256,7 +1675,7 @@ def run(args: argparse.Namespace) -> int:
     # Always return to plain desktop before opening the attendance report menu
     main = ensure_plain_ui(main)
     open_report(main, report)
-    generate_report(main)
+    generate_report(main, report=report)
     main = find_main_window(timeout=15)
 
     export_name = args.export_name or default_export_name(report)
@@ -1288,7 +1707,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--report",
         default=DEFAULT_REPORT,
         choices=["detailed", "basic", "monthly-basic"],
-        help="Report type (default detailed = Daily Attendance Reports -> Detailed)",
+        help="Report type (default monthly-basic = Monthly Status / Basic Work Duration)",
     )
     p.add_argument("--keep-open", action="store_true", help="Do not Log Off after closing dialogs")
     p.add_argument("--logout", action="store_true", help="(deprecated) Log Off is default now")
