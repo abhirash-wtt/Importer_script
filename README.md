@@ -29,8 +29,9 @@ scripts\essl_export.py     e.g. Sep Agra.xls           scripts\importer_script.p
 ```
 Importer_script/
   README.md                 <-- this guide + Python package list
-  Install.bat               <-- one-click setup (double-click)
-  install.ps1               <-- same setup from PowerShell
+  Setup.bat                 <-- double-click install package
+  Uninstall.bat             <-- remove schedulers + Start Menu shortcuts
+  install.ps1               <-- setup engine used by Setup.bat
   .env.example              <-- copy to .env (never commit .env)
   scripts/
     essl_export.py          <-- automate eSSL -> Excel
@@ -43,7 +44,7 @@ Importer_script/
 
 ### Python packages
 
-`Install.bat` / `install.ps1` install these from this README (no separate `requirements.txt`):
+`Setup.bat` installs these from this README (no separate `requirements.txt`):
 
 ```pip-requirements
 xlrd>=2.0.1
@@ -65,37 +66,36 @@ comtypes>=1.4.0
 | Git | To clone and commit |
 | eTimeTrackLite | Only if you use auto-export from eSSL |
 
-### 2. One-click install
+### 2. One-click install package
 
 ```powershell
 git clone <repo-url>
 cd Importer_script
 ```
 
-Then **double-click `Install.bat`** (or run):
+Then **double-click `Setup.bat`**.
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
-```
+That install package will:
 
-That will:
-
-1. Find Python  
+1. Find Python, or install Python 3.12 with winget if missing  
 2. Create runtime folders  
 3. Create `.env` from `.env.example` if missing  
 4. `pip install` the packages listed under **Python packages** above  
-
-5. Create the attendance drop folder (`D:\Attendance` by default)  
-6. Open Notepad so you can set `LOCATION_CODE` and the API token  
-7. **Register both Task Scheduler jobs** (Mon–Fri 13:00):
+5. Verify packages import  
+6. Create the attendance drop folder (`D:\Attendance` by default)  
+7. Open Notepad so you can set `LOCATION_CODE` and the API token  
+8. **Register both Task Scheduler jobs** (Mon–Fri 13:00):
    - `DDO-Attendance-Importer`
    - `DDO-eSSL-Export`
+9. Add **Start Menu** shortcuts under `DDO++ Attendance Agent`
 
 Skip scheduler registration if you only want packages/config:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -SkipSchedulers
 ```
+
+To remove schedulers and Start Menu shortcuts later, double-click **`Uninstall.bat`** (keeps this folder and `.env`).
 
 ### 3. Edit `.env` (required)
 
@@ -152,7 +152,7 @@ Notes:
 
 ### 4. Create the drop folder
 
-`Install.bat` creates `ATTENDANCE_DIR` for you. To create it manually:
+`Setup.bat` creates `ATTENDANCE_DIR` for you. To create it manually:
 
 ```powershell
 mkdir D:\Attendance
@@ -288,7 +288,7 @@ App path used by default:
 
 **Do commit**
 
-- `scripts/`, `README.md`, `.env.example`, `Install.bat`, `install.ps1`
+- `scripts/`, `README.md`, `.env.example`, `Setup.bat`, `Uninstall.bat`, `install.ps1`
 - Folder placeholders (`.gitkeep` under `logs/`, `processed/`, etc.)
 - Non-secret code
 
@@ -306,7 +306,7 @@ Typical commit:
 
 ```powershell
 git status
-git add README.md .env.example Install.bat install.ps1 scripts .gitignore
+git add README.md .env.example Setup.bat Uninstall.bat install.ps1 scripts .gitignore
 git commit -m "Describe why you changed something, not only what files moved."
 ```
 
@@ -318,7 +318,8 @@ Never put real tokens in `.env.example` or in commit messages.
 
 | Problem | Fix |
 |---------|-----|
-| `xlrd` / `pywinauto` missing | Re-run `Install.bat`, or `python -m pip install xlrd openpyxl pywinauto comtypes` with the same `python` you run scripts with |
+| `xlrd` / `pywinauto` missing | Re-run `Setup.bat`, or `python -m pip install xlrd openpyxl pywinauto comtypes` with the same `python` you run scripts with |
+| Python missing on a new PC | Run `Setup.bat` (uses winget), or install from https://www.python.org/downloads/ with PATH checked |
 | Importer finds no files | Check `ATTENDANCE_DIR` exists and has `.xls`/`.xlsx`; check `LOCATION_CODE` |
 | Wrong export name (e.g. `Sep Noida.xls` on Agra PC) | Set `LOCATION_CODE=AGRA` in `.env` and re-run; do not use a UTF-8 BOM-only broken `.env` |
 | API / auth errors | Confirm token and `DDO_API_ENDPOINT` in `.env` |
