@@ -39,8 +39,7 @@ Importer_script/
     scheduler.ps1           <-- Task Scheduler wrapper for importer
     install_daily_scheduler.ps1
     install_essl_export_scheduler.ps1
-  inbox/ processed/ failed/ logs/ output/   <-- runtime (local only)
-  archive/                  <-- old samples; not required to run
+  processed/ failed/ logs/ output/   <-- runtime (local only)
 ```
 
 ---
@@ -157,7 +156,7 @@ Then put `.xls` / `.xlsx` files **directly** in that folder.
 ### Import Excel already in the drop folder
 
 ```powershell
-python scripts\importer_script.py --inbox
+python scripts\importer_script.py
 ```
 
 One file:
@@ -180,7 +179,7 @@ On **Monthly Status Report** filter dialog, before Generate:
    - Archived name looks like `Sep Agra_20260918_121824.xls`
    - The number is a timestamp: **`YYYYMMDD_HHMMSS`** when it was replaced  
      (e.g. `20260918_121824` = 18 Sep 2026 at 12:18:24). Not an employee/device ID.
-8. Run importer: `python scripts\importer_script.py --inbox`
+8. Run importer: `python scripts\importer_script.py`
 
 Filtering to Walking Tree keeps the file smaller and avoids API payload limits.
 
@@ -192,7 +191,7 @@ Full flow (device sync + monthly basic export + save to `D:\Attendance` + logout
 
 ```powershell
 python scripts\essl_export.py
-python scripts\importer_script.py --inbox
+python scripts\importer_script.py
 ```
 
 Saves as **`{Month} {Location}.xls`** in `ATTENDANCE_DIR` (old same-name file goes to `previous\`):
@@ -279,7 +278,7 @@ App path used by default:
 **Do commit**
 
 - `scripts/`, `README.md`, `.env.example`, `requirements.txt`, `Install.bat`, `install.ps1`
-- Folder placeholders (`.gitkeep` under `inbox/`, `logs/`, etc.)
+- Folder placeholders (`.gitkeep` under `logs/`, `processed/`, etc.)
 - Non-secret code
 
 **Do not commit** (already ignored)
@@ -287,6 +286,10 @@ App path used by default:
 - `.env` (tokens and office location)
 - Excel files (`*.xls`, `*.xlsx`)
 - `logs/`, `output/` run data, `processed/`, `failed/`
+
+`output/` keeps runtime state (`last_run.json`, `processed_hashes.json`, logs) plus the **newest 10** `batch_*` import JSON pairs. Older batches and leftover handoff/sample files are deleted automatically after each import. Override with `OUTPUT_BATCH_KEEP` in `.env` if needed.
+
+`processed/` and `failed/` each keep only the **newest 15** Excel files (override with `ARCHIVE_KEEP`).
 
 Typical commit:
 
@@ -319,9 +322,3 @@ Debug UI dump (eSSL):
 ```powershell
 python scripts\essl_export.py --dump-ui
 ```
-
----
-
-## Archive
-
-`archive/samples/` and `archive/unused/` are old samples and experiments. You do not need them to set up or run the agent.

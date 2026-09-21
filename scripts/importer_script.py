@@ -55,12 +55,13 @@ CONFIG = {
     "api_chunk_size": int(os.getenv("DDO_API_CHUNK_SIZE", "50")),
     "api_chunk_delay_seconds": float(os.getenv("DDO_API_CHUNK_DELAY_SECONDS", "2")),
     "api_max_body_bytes": int(os.getenv("DDO_API_MAX_BODY_BYTES", "90000")),
-    "inbox_dir": os.getenv("INBOX_DIR", str(REPO_ROOT / "inbox")).strip(),
     "attendance_dir": os.getenv("ATTENDANCE_DIR", r"D:\Attendance").strip(),
     "processed_dir": str(REPO_ROOT / "processed"),
     "failed_dir": str(REPO_ROOT / "failed"),
     "output_dir": str(REPO_ROOT / "output"),
-    "stable_seconds": int(os.getenv("INBOX_STABLE_SECONDS", "15")),
+    "output_batch_keep": int(os.getenv("OUTPUT_BATCH_KEEP", "10")),
+    "archive_keep": int(os.getenv("ARCHIVE_KEEP", "15")),
+    "stable_seconds": int(os.getenv("DROP_STABLE_SECONDS", "15")),
 }
 
 ALLOWED_LOCATIONS = {
@@ -452,6 +453,98 @@ def _write_batch_outputs(batch):
         "Wrote attendance JSON to %s",
         output_dir / f"batch_{batch.id}_attendance.json",
     )
+    _prune_output_dir(output_dir)
+
+
+# Runtime files that must stay in output/
+_OUTPUT_KEEP_NAMES = {
+    ".gitkeep",
+    "processed_hashes.json",
+    "importer.lock",
+    "importer.log",
+    "last_run.json",
+    "last_run.txt",
+    "scheduler_runs.log",
+}
+
+# One-off handoff / sample junk left from earlier debugging (safe to delete)
+_OUTPUT_JUNK_PREFIXES = (
+    "API_HANDOFF_",
+    "WTT_ATTENDANCE_",
+    "wtt_attendance_",
+    "sample_",
+)
+_BATCH_FILE_RE = re.compile(r"^batch_([0-9a-fA-F]+)_((?:attendance)|(?:summary))\.json$")
+
+
+def _prune_output_dir(output_dir: Path | None = None, keep: int | None = None) -> None:
+    """
+    Keep only the newest `keep` import batches in output/, and delete leftover
+    handoff/sample files that are not needed at runtime.
+    """
+    output_dir = Path(output_dir or CONFIG["output_dir"])
+    keep = int(CONFIG.get("output_batch_keep", 10) if keep is None else keep)
+    if keep < 1 or not output_dir.is_dir():
+        return
+
+    # 1) Drop unused handoff / sample artifacts
+    junk_names = {
+        "API_HANDOFF_IMPORTER_TO_RECEIVER.txt",
+        "WTT_ATTENDANCE_INSERT_PROMPT.txt",
+        "wtt_attendance_handoff_sample.json",
+    }
+    for path in list(output_dir.iterdir()):
+        if not path.is_file():
+            continue
+        name = path.name
+        if name in _OUTPUT_KEEP_NAMES or _BATCH_FILE_RE.match(name):
+            continue
+        is_junk = (
+            name in junk_names
+            or name.startswith(_OUTPUT_JUNK_PREFIXES)
+            or (name.lower().endswith(".sql") and name.lower().startswith("sample_"))
+        )
+        if not is_junk:
+            continue
+        try:
+            path.unlink()
+            LOGGER.info("Removed unused output file: %s", name)
+        except Exception as exc:
+            LOGGER.warning("Could not remove %s: %s", path, exc)
+
+    # 2) Keep newest N batch ids (by attendance.json mtime, else summary)
+    batches: dict[str, dict] = {}
+    for path in output_dir.iterdir():
+        if not path.is_file():
+            continue
+        match = _BATCH_FILE_RE.match(path.name)
+        if not match:
+            continue
+        batch_id, kind = match.group(1), match.group(2)
+        info = batches.setdefault(batch_id, {"files": [], "mtime": 0.0})
+        info["files"].append(path)
+        try:
+            mtime = path.stat().st_mtime
+        except OSError:
+            continue
+        # Prefer attendance.json mtime as the batch timestamp when present.
+        if kind == "attendance":
+            info["mtime"] = mtime
+            info["has_attendance"] = True
+        elif not info.get("has_attendance"):
+            info["mtime"] = max(info["mtime"], mtime)
+
+    if len(batches) <= keep:
+        return
+
+    ordered = sorted(batches.items(), key=lambda item: item[1]["mtime"], reverse=True)
+    for batch_id, info in ordered[keep:]:
+        for path in info["files"]:
+            try:
+                path.unlink()
+                LOGGER.info("Pruned old batch output (keep %s): %s", keep, path.name)
+            except Exception as exc:
+                LOGGER.warning("Could not prune %s: %s", path, exc)
 
 
 def _row_to_api_dict(row) -> dict:
@@ -878,10 +971,30 @@ def _clip(text, limit=500):
 
 def move_to_processed(file):
     _move_file(file, CONFIG["processed_dir"])
+    _prune_folder_keep_newest(CONFIG["processed_dir"], CONFIG.get("archive_keep", 15))
 
 
 def move_to_failed(file):
     _move_file(file, CONFIG["failed_dir"])
+    _prune_folder_keep_newest(CONFIG["failed_dir"], CONFIG.get("archive_keep", 15))
+
+
+def _prune_folder_keep_newest(folder, keep: int = 15) -> None:
+    """Keep only the newest `keep` files in processed/ or failed/."""
+    path = Path(folder)
+    keep = int(keep)
+    if keep < 1 or not path.is_dir():
+        return
+    files = [p for p in path.iterdir() if p.is_file() and p.name != ".gitkeep"]
+    if len(files) <= keep:
+        return
+    files.sort(key=lambda p: (p.stat().st_mtime, p.name), reverse=True)
+    for old in files[keep:]:
+        try:
+            old.unlink()
+            LOGGER.info("Pruned old archive (keep %s) in %s: %s", keep, path.name, old.name)
+        except Exception as exc:
+            LOGGER.warning("Could not prune %s: %s", old, exc)
 
 
 def _row_label(row):
@@ -1245,13 +1358,6 @@ def infer_location(file_path, explicit=None):
     return None
 
 
-def _inbox_root():
-    """Legacy inbox path (optional). Primary drop folder is ATTENDANCE_DIR."""
-    path = Path(CONFIG["inbox_dir"])
-    path.mkdir(parents=True, exist_ok=True)
-    return path
-
-
 def _office_drop_dir() -> Path | None:
     """Single per-PC folder where HR drops Excel. Location comes from LOCATION_CODE."""
     raw = (CONFIG.get("attendance_dir") or "").strip()
@@ -1410,31 +1516,19 @@ def _scan_flat_drop(root: Path, office_location: str, seen: set) -> list:
     return found
 
 
-def _discover_inbox_files(inbox: Path) -> list:
-    """
-    One-folder office flow:
-      ATTENDANCE_DIR (e.g. D:\\Attendance) + LOCATION_CODE from .env
-    Optional legacy: also scan INBOX_DIR if it has Excel files.
-    """
+def _discover_drop_files() -> list:
+    """Scan ATTENDANCE_DIR only (LOCATION_CODE from .env)."""
     found = []
     seen = set()
     office_location = normalize_location(validate_location(get_location_from_config()))
 
     drop = _office_drop_dir()
-    if drop is not None:
-        LOGGER.info("Scanning drop folder %s as %s", drop, office_location)
-        found.extend(_scan_flat_drop(drop, office_location, seen))
+    if drop is None:
+        LOGGER.warning("ATTENDANCE_DIR is not set; nothing to scan")
+        return found
 
-    # Optional legacy repo inbox (flat only — no AGRA/NOIDA/HYD subfolders required)
-    try:
-        if inbox.exists() and (drop is None or inbox.resolve() != drop.resolve()):
-            legacy = _scan_flat_drop(inbox, office_location, seen)
-            if legacy:
-                LOGGER.info("Also found %s file(s) under %s", len(legacy), inbox)
-                found.extend(legacy)
-    except OSError as exc:
-        LOGGER.warning("Could not scan inbox %s: %s", inbox, exc)
-
+    LOGGER.info("Scanning drop folder %s as %s", drop, office_location)
+    found.extend(_scan_flat_drop(drop, office_location, seen))
     return found
 
 
@@ -1488,9 +1582,8 @@ def _write_last_run(summary: dict) -> Path:
     return path
 
 
-def process_inbox(explicit_location=None) -> dict:
+def process_drop_folder(explicit_location=None) -> dict:
     _configure_logging()
-    inbox = _inbox_root()
     Path(CONFIG["processed_dir"]).mkdir(parents=True, exist_ok=True)
     Path(CONFIG["failed_dir"]).mkdir(parents=True, exist_ok=True)
 
@@ -1509,7 +1602,7 @@ def process_inbox(explicit_location=None) -> dict:
         return summary
 
     try:
-        candidates = _discover_inbox_files(inbox)
+        candidates = _discover_drop_files()
         known_hashes = _load_processed_hashes()
         processed = 0
         failed = 0
@@ -1582,13 +1675,19 @@ def process_inbox(explicit_location=None) -> dict:
         }
         _write_last_run(summary)
         LOGGER.info(
-            "Inbox run complete: processed=%s failed=%s skipped=%s",
+            "Drop-folder run complete: processed=%s failed=%s skipped=%s",
             processed,
             failed,
             skipped,
         )
         return summary
     finally:
+        try:
+            _prune_output_dir()
+            _prune_folder_keep_newest(CONFIG["processed_dir"], CONFIG.get("archive_keep", 15))
+            _prune_folder_keep_newest(CONFIG["failed_dir"], CONFIG.get("archive_keep", 15))
+        except Exception as exc:
+            LOGGER.warning("archive prune failed: %s", exc)
         lock.release()
 
 
@@ -1599,12 +1698,7 @@ def _parse_args(argv=None):
     parser.add_argument(
         "files",
         nargs="*",
-        help="Attendance .xls/.xlsx files. If omitted with --inbox, scans inbox plus D:\\Attendance.",
-    )
-    parser.add_argument(
-        "--inbox",
-        action="store_true",
-        help="Process every ready Excel file in inbox and D:\\Attendance.",
+        help="Attendance .xls/.xlsx files. If omitted, scans ATTENDANCE_DIR.",
     )
     parser.add_argument(
         "--location",
@@ -1618,22 +1712,13 @@ if __name__ == "__main__":
     args = _parse_args()
     location = normalize_location(args.location) if args.location else None
 
-    if args.inbox:
-        summary = process_inbox(explicit_location=location)
-        print(
-            "DDO importer: processed={processed} failed={failed} skipped={skipped} empty={empty}".format(
-                **summary
-            )
-        )
-        sys.exit(0 if summary.get("ok") else 1)
-
     files = [Path(item) for item in args.files] if args.files else []
     if not files:
         default_file = _default_input_file()
         if default_file is not None:
             files = [default_file]
         else:
-            summary = process_inbox(explicit_location=location)
+            summary = process_drop_folder(explicit_location=location)
             print(
                 "DDO importer: processed={processed} failed={failed} skipped={skipped} empty={empty}".format(
                     **summary
@@ -1644,8 +1729,17 @@ if __name__ == "__main__":
     missing = [path for path in files if not path.exists()]
     if missing:
         LOGGER.error("Input file not found: %s", missing[0])
-        sys.exit("Usage: python scripts/importer_script.py --inbox | python scripts/importer_script.py <attendance.xls>")
+        sys.exit(
+            "Usage: python scripts/importer_script.py | "
+            "python scripts/importer_script.py <attendance.xls>"
+        )
 
     for path in files:
         file_location = location or infer_location(path) or get_location_from_config()
         process_file(str(path), location=file_location)
+    try:
+        _prune_output_dir()
+        _prune_folder_keep_newest(CONFIG["processed_dir"], CONFIG.get("archive_keep", 15))
+        _prune_folder_keep_newest(CONFIG["failed_dir"], CONFIG.get("archive_keep", 15))
+    except Exception as exc:
+        LOGGER.warning("archive prune failed: %s", exc)

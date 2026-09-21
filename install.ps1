@@ -71,7 +71,7 @@ Write-Host "Using: $Python"
 & $Python --version
 
 Write-Step "Creating runtime folders"
-foreach ($dir in @("inbox", "processed", "failed", "logs", "output")) {
+foreach ($dir in @("processed", "failed", "logs", "output")) {
     New-Item -ItemType Directory -Force -Path (Join-Path $Root $dir) | Out-Null
 }
 
@@ -146,7 +146,7 @@ Write-Host "  1. Confirm .env has LOCATION_CODE and ATTENDANCE_INTEGRATION_TOKEN
 Write-Host "  2. Drop Excel into: $attendanceDir"
 Write-Host "  3. Keep Windows logged on and unlocked for eSSL export (monitor off is OK)"
 Write-Host "  4. Test import:"
-Write-Host ('       "{0}" scripts\importer_script.py --inbox' -f $Python)
+Write-Host ('       "{0}" scripts\importer_script.py' -f $Python)
 Write-Host "  5. Test eSSL export (monthly basic):"
 Write-Host ('       "{0}" scripts\essl_export.py --skip-sync' -f $Python)
 if ($SkipSchedulers) {

@@ -1739,7 +1739,7 @@ def run(args: argparse.Namespace) -> int:
         close_login_or_app()
 
     LOGGER.info("DONE. File ready for importer: %s", path)
-    LOGGER.info("Next: python scripts/importer_script.py --inbox")
+    LOGGER.info("Next: python scripts/importer_script.py")
     return 0
 
 

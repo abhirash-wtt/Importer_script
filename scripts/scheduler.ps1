@@ -72,7 +72,7 @@ try {
         throw "importer_script.py was not found in $Root\scripts"
     }
 
-    $pythonArgs = $python.Args + @($importer, "--inbox")
+    $pythonArgs = $python.Args + @($importer)
     $importOut = & $python.File @pythonArgs 2>&1 | Out-String
     $exitCode = $LASTEXITCODE
     if ($importOut.Trim()) {

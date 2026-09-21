@@ -17,14 +17,6 @@ processed/*
 !processed/.gitkeep
 failed/*
 !failed/.gitkeep
-inbox/**/*
-!inbox/.gitkeep
-!inbox/AGRA/
-!inbox/NOIDA/
-!inbox/HYD/
-!inbox/AGRA/.gitkeep
-!inbox/NOIDA/.gitkeep
-!inbox/HYD/.gitkeep
 
 # Python bytecode
 __pycache__/
