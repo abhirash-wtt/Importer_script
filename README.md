@@ -28,11 +28,10 @@ scripts\essl_export.py     e.g. Sep Agra.xls           scripts\importer_script.p
 
 ```
 Importer_script/
-  README.md                 <-- this guide (only docs you need)
+  README.md                 <-- this guide + Python package list
   Install.bat               <-- one-click setup (double-click)
   install.ps1               <-- same setup from PowerShell
   .env.example              <-- copy to .env (never commit .env)
-  requirements.txt          <-- Python packages
   scripts/
     essl_export.py          <-- automate eSSL -> Excel
     importer_script.py      <-- Excel -> JSON -> API
@@ -40,6 +39,17 @@ Importer_script/
     install_daily_scheduler.ps1
     install_essl_export_scheduler.ps1
   processed/ failed/ logs/ output/   <-- runtime (local only)
+```
+
+### Python packages
+
+`Install.bat` / `install.ps1` install these from this README (no separate `requirements.txt`):
+
+```pip-requirements
+xlrd>=2.0.1
+openpyxl>=3.1.0
+pywinauto>=0.6.8
+comtypes>=1.4.0
 ```
 
 ---
@@ -73,7 +83,8 @@ That will:
 1. Find Python  
 2. Create runtime folders  
 3. Create `.env` from `.env.example` if missing  
-4. `pip install -r requirements.txt`  
+4. `pip install` the packages listed under **Python packages** above  
+
 5. Create the attendance drop folder (`D:\Attendance` by default)  
 6. Open Notepad so you can set `LOCATION_CODE` and the API token  
 7. **Register both Task Scheduler jobs** (Mon–Fri 13:00):
@@ -277,7 +288,7 @@ App path used by default:
 
 **Do commit**
 
-- `scripts/`, `README.md`, `.env.example`, `requirements.txt`, `Install.bat`, `install.ps1`
+- `scripts/`, `README.md`, `.env.example`, `Install.bat`, `install.ps1`
 - Folder placeholders (`.gitkeep` under `logs/`, `processed/`, etc.)
 - Non-secret code
 
@@ -295,7 +306,7 @@ Typical commit:
 
 ```powershell
 git status
-git add README.md .env.example requirements.txt Install.bat install.ps1 scripts .gitignore
+git add README.md .env.example Install.bat install.ps1 scripts .gitignore
 git commit -m "Describe why you changed something, not only what files moved."
 ```
 
@@ -307,7 +318,7 @@ Never put real tokens in `.env.example` or in commit messages.
 
 | Problem | Fix |
 |---------|-----|
-| `xlrd` / `pywinauto` missing | `python -m pip install -r requirements.txt` using the same `python` you run scripts with |
+| `xlrd` / `pywinauto` missing | Re-run `Install.bat`, or `python -m pip install xlrd openpyxl pywinauto comtypes` with the same `python` you run scripts with |
 | Importer finds no files | Check `ATTENDANCE_DIR` exists and has `.xls`/`.xlsx`; check `LOCATION_CODE` |
 | Wrong export name (e.g. `Sep Noida.xls` on Agra PC) | Set `LOCATION_CODE=AGRA` in `.env` and re-run; do not use a UTF-8 BOM-only broken `.env` |
 | API / auth errors | Confirm token and `DDO_API_ENDPOINT` in `.env` |

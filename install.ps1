@@ -90,11 +90,30 @@ if (-not (Test-Path $envPath)) {
     Write-Host ".env already exists (left unchanged)"
 }
 
-Write-Step "Installing Python packages"
+Write-Step "Installing Python packages (from README.md)"
+$readmePath = Join-Path $Root "README.md"
+if (-not (Test-Path $readmePath)) {
+    throw "README.md is missing from the repo."
+}
+$readmeText = Get-Content -Path $readmePath -Raw
+if ($readmeText -notmatch '(?s)```pip-requirements\r?\n(.*?)```') {
+    throw "Could not find ```pip-requirements block in README.md"
+}
+$packages = @()
+foreach ($line in ($Matches[1] -split '\r?\n')) {
+    $pkg = $line.Trim()
+    if ($pkg -and -not $pkg.StartsWith("#")) {
+        $packages += $pkg
+    }
+}
+if ($packages.Count -eq 0) {
+    throw "pip-requirements block in README.md is empty"
+}
+Write-Host ("Packages: " + ($packages -join ", "))
 & $Python -m pip install --upgrade pip
 if ($LASTEXITCODE -ne 0) { throw "pip upgrade failed" }
-& $Python -m pip install -r (Join-Path $Root "requirements.txt")
-if ($LASTEXITCODE -ne 0) { throw "pip install -r requirements.txt failed" }
+& $Python -m pip install @packages
+if ($LASTEXITCODE -ne 0) { throw "pip install from README.md failed" }
 
 Write-Step "Creating attendance drop folder"
 $attendanceDir = "D:\Attendance"
