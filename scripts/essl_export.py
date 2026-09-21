@@ -1000,21 +1000,39 @@ def _format_essl_date(day) -> str:
     return day.strftime("%d %b %Y")
 
 
+def previous_weekday(from_date=None):
+    """
+    Last Mon–Fri before `from_date` (default: today).
+
+    Office export only runs on weekdays; calendar “yesterday” on Monday is Sunday
+    (WO) and would skip Friday attendance. Examples (run day → export day):
+      Mon → Fri, Tue → Mon, Wed → Tue, …, Fri → Thu
+    """
+    day = (from_date or datetime.now().date()) - timedelta(days=1)
+    # Saturday=5, Sunday=6
+    while day.weekday() >= 5:
+        day -= timedelta(days=1)
+    return day
+
+
 def set_report_date_range(win, from_day=None, to_day=None) -> None:
     """
-    Set From Date = To Date = yesterday.
+    Set From Date = To Date = previous weekday (Mon–Fri).
 
-    Daily 1 PM runs must not include "today" (often In-only, incomplete).
-    Using only yesterday avoids overlapping the same calendar day on consecutive
-    runs (which would otherwise upsert/duplicate partial then full records).
+    Daily weekday runs must not include "today" (often In-only, incomplete).
+    Using the last working day (not calendar yesterday) so Monday exports Friday
+    instead of Sunday and weekend WO days are skipped.
     """
-    today = datetime.now().date()
-    yesterday = today - timedelta(days=1)
-    from_day = from_day or yesterday
-    to_day = to_day or yesterday
+    target = previous_weekday()
+    from_day = from_day or target
+    to_day = to_day or target
     from_text = _format_essl_date(from_day)
     to_text = _format_essl_date(to_day)
-    LOGGER.info("Setting report dates: From=%s To=%s (yesterday only)", from_text, to_text)
+    LOGGER.info(
+        "Setting report dates: From=%s To=%s (previous weekday, not weekend)",
+        from_text,
+        to_text,
+    )
 
     # Collect editable date fields (DateTimePicker / Edit / ComboBox near date labels)
     candidates = []
@@ -1293,7 +1311,7 @@ def generate_report(main, report: str | None = None, timeout: float = 30.0) -> N
     if report in ("monthly-basic", "monthly", "monthly_basic"):
         select_monthly_basic_work_duration(win)
         time.sleep(0.3)
-        set_report_date_range(win)  # From=To=yesterday (one complete day)
+        set_report_date_range(win)  # From=To=previous weekday (skip Sat/Sun)
         time.sleep(0.3)
         select_walking_tree_company(win)
         time.sleep(0.3)
@@ -1329,8 +1347,32 @@ def generate_report(main, report: str | None = None, timeout: float = 30.0) -> N
     time.sleep(2)
 
 
+PREVIOUS_FOLDER_MAX_FILES = 5
+
+
+def _prune_previous_folder(archive_dir: Path, keep: int = PREVIOUS_FOLDER_MAX_FILES) -> None:
+    """Keep only the newest `keep` files in previous\\; delete older ones."""
+    if keep < 1 or not archive_dir.is_dir():
+        return
+    files = [p for p in archive_dir.iterdir() if p.is_file()]
+    if len(files) <= keep:
+        return
+    # Newest first by mtime, then name for stable ties.
+    files.sort(key=lambda p: (p.stat().st_mtime, p.name), reverse=True)
+    for old in files[keep:]:
+        try:
+            old.unlink()
+            LOGGER.info("Pruned old archive (keep %s): %s", keep, old.name)
+        except Exception as exc:
+            LOGGER.warning("Could not prune %s: %s", old, exc)
+
+
 def archive_existing_export(target: Path) -> Path | None:
-    """Move previous Excel aside so Save As does not block on Confirm Replace."""
+    """Move previous Excel aside so Save As does not block on Confirm Replace.
+
+    Archived copies live in ATTENDANCE_DIR\\previous\\ and are capped at
+    PREVIOUS_FOLDER_MAX_FILES (newest kept).
+    """
     if not target.exists():
         return None
     archive_dir = target.parent / "previous"
@@ -1340,6 +1382,7 @@ def archive_existing_export(target: Path) -> Path | None:
     try:
         shutil.move(str(target), str(dest))
         LOGGER.info("Archived previous export -> %s", dest)
+        _prune_previous_folder(archive_dir)
         return dest
     except Exception as exc:
         LOGGER.warning("Could not archive %s (%s) — will confirm replace on Save As", target, exc)

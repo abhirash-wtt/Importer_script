@@ -661,7 +661,7 @@ def _post_attendance_chunk(
         try:
             status_code, response_text = _post_json(endpoint, token, location_code, body, timeout)
             parsed = _parse_api_response(response_text)
-            if 200 <= status_code < 300:
+            if 200 <= status_code < 300 and _api_accepted_business(parsed):
                 LOGGER.info(
                     "DDO++ API accepted chunk %s/%s (HTTP %s, attempt %s/%s)",
                     chunk_index,
@@ -679,7 +679,8 @@ def _post_attendance_chunk(
                     "response": parsed,
                 }
 
-            last_error = f"HTTP {status_code}: {_clip(response_text)}"
+            # HTTP 207 PARTIAL / body status FAILED|PARTIAL / other non-success
+            last_error = _format_api_failure(parsed, status_code, response_text)
             LOGGER.error(
                 "DDO++ API rejected chunk %s/%s (HTTP %s, attempt %s/%s): %s",
                 chunk_index,
@@ -687,7 +688,7 @@ def _post_attendance_chunk(
                 status_code,
                 attempt,
                 max_retries,
-                _clip(response_text),
+                last_error,
             )
             # 413: shrink chunk and retry immediately instead of giving up.
             if status_code == 413 and len(working) > 1:
@@ -702,11 +703,13 @@ def _post_attendance_chunk(
                     chunk_index, chunk_total, timeout, max_retries, max_body_bytes,
                 )
                 return {"ok": True, "split_after_413": True, "parts": [first, second]}
+            # Business outcomes (PARTIAL/FAILED) and other 4xx: do not retry.
             if status_code < 500 and status_code != 429:
                 break
         except urllib.error.HTTPError as exc:
             response_text = _read_http_error_body(exc)
-            last_error = f"HTTP {exc.code}: {_clip(response_text)}"
+            parsed = _parse_api_response(response_text)
+            last_error = _format_api_failure(parsed, exc.code, response_text)
             LOGGER.error(
                 "DDO++ API HTTP error for chunk %s/%s (HTTP %s, attempt %s/%s): %s",
                 chunk_index,
@@ -714,7 +717,7 @@ def _post_attendance_chunk(
                 exc.code,
                 attempt,
                 max_retries,
-                _clip(response_text),
+                last_error,
             )
             if exc.code == 413 and len(working) > 1:
                 mid = max(1, len(working) // 2)
@@ -817,6 +820,53 @@ def _parse_api_response(response_text):
         return json.loads(response_text)
     except json.JSONDecodeError:
         return {"raw": _clip(response_text)}
+
+
+def _api_business_status(parsed) -> str:
+    """Normalize API body status (SUCCESS / PARTIAL / FAILED / ...)."""
+    if not isinstance(parsed, dict):
+        return ""
+    return str(parsed.get("status") or "").strip().upper()
+
+
+def _api_accepted_business(parsed) -> bool:
+    """
+    True only when the API fully accepted the chunk.
+
+    HTTP 2xx alone is not enough: PARTIAL (HTTP 207) and FAILED (HTTP 422)
+    mean some/all rows did not land — treat as import failure for the office agent.
+    """
+    if isinstance(parsed, dict) and parsed.get("ok") is False:
+        return False
+    status = _api_business_status(parsed)
+    if status in {"FAILED", "PARTIAL"}:
+        return False
+    return True
+
+
+def _format_api_failure(parsed, status_code, response_text) -> str:
+    status = _api_business_status(parsed) or f"HTTP_{status_code}"
+    parts = [f"status={status}", f"http={status_code}"]
+    if isinstance(parsed, dict):
+        for key in ("failed", "inserted", "updated", "processed", "batch_id"):
+            if key in parsed and parsed[key] is not None:
+                parts.append(f"{key}={parsed[key]}")
+        details = parsed.get("failed_details") or parsed.get("failures") or []
+        if isinstance(details, list) and details:
+            samples = []
+            for row in details[:5]:
+                if isinstance(row, dict):
+                    code = row.get("employee_code") or "?"
+                    err = row.get("error") or row.get("reason") or row
+                    samples.append(f"{code}: {err}")
+                else:
+                    samples.append(str(row))
+            parts.append("examples=[" + "; ".join(samples) + "]")
+            if len(details) > 5:
+                parts.append(f"(+{len(details) - 5} more)")
+    else:
+        parts.append(_clip(response_text))
+    return " | ".join(parts)
 
 
 def _clip(text, limit=500):
