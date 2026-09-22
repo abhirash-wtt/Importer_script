@@ -28,18 +28,20 @@ scripts\essl_export.py     e.g. Sep Agra.xls           scripts\importer_script.p
 
 ```
 Importer_script/
-  README.md                 <-- this guide + Python package list
+  README.md                 <-- this guide + packages + .env template
   Setup.bat                 <-- double-click install package
   Uninstall.bat             <-- remove schedulers + Start Menu shortcuts
   install.ps1               <-- setup engine used by Setup.bat
-  .env.example              <-- copy to .env (never commit .env)
   scripts/
     essl_export.py          <-- automate eSSL -> Excel
     importer_script.py      <-- Excel -> JSON -> API
     scheduler.ps1           <-- Task Scheduler wrapper for importer
     install_daily_scheduler.ps1
     install_essl_export_scheduler.ps1
-  processed/ failed/ logs/ output/   <-- runtime (local only)
+
+  (created by Setup.bat, not in the clone)
+  .env
+  processed/ failed/ logs/ output/
 ```
 
 ### Python packages
@@ -51,6 +53,59 @@ xlrd>=2.0.1
 openpyxl>=3.1.0
 pywinauto>=0.6.8
 comtypes>=1.4.0
+```
+
+### .env template
+
+`Setup.bat` creates `.env` from this block if `.env` is missing (never commit the real `.env`):
+
+```env-example
+# Created by Setup.bat from README.md — edit LOCATION_CODE and token per office.
+# Never commit the real .env file.
+
+# REQUIRED per office: AGRA | NOIDA | HYD
+# This PC's location — every Excel dropped locally is tagged with this code.
+LOCATION_CODE=NOIDA
+
+# Same API URL for every office unless the server team says otherwise
+DDO_API_ENDPOINT=https://ddoplusnodeapi.walkingtree.tech/api/attendance/import
+
+# REQUIRED: import token from the server team
+ATTENDANCE_INTEGRATION_TOKEN=
+
+# Optional fallback token name (used only if ATTENDANCE_INTEGRATION_TOKEN is empty)
+DDO_API_TOKEN=
+
+DDO_API_TIMEOUT_SECONDS=30
+DDO_API_MAX_RETRIES=3
+# POST at most 50 attendance rows per request, with a pause between chunks.
+DDO_API_CHUNK_SIZE=50
+DDO_API_CHUNK_DELAY_SECONDS=2
+
+# SINGLE drop folder for this PC — HR / anyone puts .xls/.xlsx here.
+# No AGRA/NOIDA/HYD subfolders needed; location comes from LOCATION_CODE above.
+ATTENDANCE_DIR=D:\Attendance
+
+# Optional: wait this many seconds after Excel last-write before importing
+DROP_STABLE_SECONDS=15
+
+# Optional webhook when an import batch fails
+DDO_ALERT_WEBHOOK_URL=
+
+# Keep newest N batch_* JSON pairs under output/ (older ones auto-deleted)
+OUTPUT_BATCH_KEEP=10
+# Keep newest N Excel files under processed/ and failed/
+ARCHIVE_KEEP=15
+
+# Optional eSSL eTimeTrackLite automation (scripts/essl_export.py)
+# ESSL_USER=essl
+# ESSL_PASSWORD=essl
+# Device Name values must match eSSL Device Management exactly (per office / floor).
+# This office example (LGF=Lower ground, UGF=Upper ground); other branches change these:
+# ESSL_DEVICES=LGF OUT,LGF IN,UGF OUT
+# ESSL_SKIP_DEVICES=USB,UGF IN 1
+# ESSL_REPORT=monthly-basic
+# ESSL_COMPANY=WalkingTree
 ```
 
 ---
@@ -78,8 +133,8 @@ Then **double-click `Setup.bat`**.
 That install package will:
 
 1. Find Python, or install Python 3.12 with winget if missing  
-2. Create runtime folders  
-3. Create `.env` from `.env.example` if missing  
+2. Create runtime folders (`processed/`, `failed/`, `logs/`, `output/`)  
+3. Create `.env` from the **.env template** above if missing  
 4. `pip install` the packages listed under **Python packages** above  
 5. Verify packages import  
 6. Create the attendance drop folder (`D:\Attendance` by default)  
@@ -106,28 +161,17 @@ To remove schedulers and Start Menu shortcuts later, double-click **`Uninstall.b
 | `ATTENDANCE_INTEGRATION_TOKEN` | Shared import token from the server team |
 | `ATTENDANCE_DIR` | Drop folder, usually `D:\Attendance` |
 
-Example:
+Full defaults live in the **.env template** above (Setup writes that into `.env`).
 
-```env
-LOCATION_CODE=HYD
-DDO_API_ENDPOINT=https://ddoplusnodeapi.walkingtree.tech/api/attendance/import
-ATTENDANCE_INTEGRATION_TOKEN=your-token-here
-ATTENDANCE_DIR=D:\Attendance
-```
+Optional eSSL settings (uncomment / set in `.env`; defaults match **this** office’s Device Management names):
 
-Optional eSSL settings (defaults match **this** office’s Device Management names):
-
-```env
-ESSL_USER=essl
-ESSL_PASSWORD=essl
-# Exact names from Device Management → Device Name column (comma-separated)
-ESSL_DEVICES=LGF OUT,LGF IN,UGF OUT
-# Always skip USB; also skip broken devices until fixed
-ESSL_SKIP_DEVICES=USB,UGF IN 1
-ESSL_REPORT=monthly-basic
-# Company filter on Monthly Status Report (Deselect All, then this name)
-ESSL_COMPANY=WalkingTree
-```
+| Variable | Example |
+|----------|---------|
+| `ESSL_USER` / `ESSL_PASSWORD` | `essl` / `essl` |
+| `ESSL_DEVICES` | `LGF OUT,LGF IN,UGF OUT` |
+| `ESSL_SKIP_DEVICES` | `USB,UGF IN 1` |
+| `ESSL_REPORT` | `monthly-basic` |
+| `ESSL_COMPANY` | `WalkingTree` |
 
 **Per-branch devices:** each office edits `.env` only — do not hard-code other floors in the script.
 
@@ -288,15 +332,14 @@ App path used by default:
 
 **Do commit**
 
-- `scripts/`, `README.md`, `.env.example`, `Setup.bat`, `Uninstall.bat`, `install.ps1`
-- Folder placeholders (`.gitkeep` under `logs/`, `processed/`, etc.)
+- `scripts/`, `README.md`, `Setup.bat`, `Uninstall.bat`, `install.ps1`, `.gitignore`
 - Non-secret code
 
 **Do not commit** (already ignored)
 
-- `.env` (tokens and office location)
+- `.env` (tokens and office location; created by Setup from the README template)
 - Excel files (`*.xls`, `*.xlsx`)
-- `logs/`, `output/` run data, `processed/`, `failed/`
+- Runtime folders created by Setup: `logs/`, `output/`, `processed/`, `failed/`
 
 `output/` keeps runtime state (`last_run.json`, `processed_hashes.json`, logs) plus the **newest 10** `batch_*` import JSON pairs. Older batches and leftover handoff/sample files are deleted automatically after each import. Override with `OUTPUT_BATCH_KEEP` in `.env` if needed.
 
@@ -306,11 +349,11 @@ Typical commit:
 
 ```powershell
 git status
-git add README.md .env.example Setup.bat Uninstall.bat install.ps1 scripts .gitignore
+git add README.md Setup.bat Uninstall.bat install.ps1 scripts .gitignore
 git commit -m "Describe why you changed something, not only what files moved."
 ```
 
-Never put real tokens in `.env.example` or in commit messages.
+Never put real tokens in the README `.env` template or in commit messages.
 
 ---
 

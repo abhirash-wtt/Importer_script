@@ -1,22 +1,16 @@
 .env
 
-# Logs
-*.log
-logs/*
-!logs/.gitkeep
+# Runtime folders created by Setup.bat (not in the clone)
+logs/
+output/
+processed/
+failed/
 
 # Temp and machine-local importer state
 *.lock
 *.tmp
 *.temp
-output/*
-!output/.gitkeep
-
-# Runtime folders (Excel moves here; keep folder placeholders)
-processed/*
-!processed/.gitkeep
-failed/*
-!failed/.gitkeep
+*.log
 
 # Python bytecode
 __pycache__/

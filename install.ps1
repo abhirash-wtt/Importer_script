@@ -6,7 +6,7 @@
 # What it does:
 #   1. Finds or installs Python 3.10+ (winget)
 #   2. Creates runtime folders
-#   3. Creates .env from .env.example
+#   3. Creates .env from README.md (```env-example)
 #   4. pip installs packages listed in README.md (```pip-requirements)
 #   5. Creates ATTENDANCE_DIR drop folder
 #   6. Opens Notepad for LOCATION_CODE + token when needed
@@ -109,11 +109,7 @@ function Install-PythonWithWinget {
 }
 
 function Get-PackagesFromReadme {
-    $readmePath = Join-Path $Root "README.md"
-    if (-not (Test-Path $readmePath)) {
-        throw "README.md is missing from the repo."
-    }
-    $readmeText = Get-Content -Path $readmePath -Raw
+    $readmeText = Get-ReadmeText
     if ($readmeText -notmatch '(?s)```pip-requirements\r?\n(.*?)```') {
         throw "Could not find ```pip-requirements block in README.md"
     }
@@ -128,6 +124,26 @@ function Get-PackagesFromReadme {
         throw "pip-requirements block in README.md is empty"
     }
     return $packages
+}
+
+function Get-ReadmeText {
+    $readmePath = Join-Path $Root "README.md"
+    if (-not (Test-Path $readmePath)) {
+        throw "README.md is missing from the repo."
+    }
+    return Get-Content -Path $readmePath -Raw
+}
+
+function Get-EnvExampleFromReadme {
+    $readmeText = Get-ReadmeText
+    if ($readmeText -notmatch '(?s)```env-example\r?\n(.*?)```') {
+        throw "Could not find ```env-example block in README.md"
+    }
+    $body = $Matches[1] -replace '(\r?\n)+$', ''
+    if (-not $body.Trim()) {
+        throw "env-example block in README.md is empty"
+    }
+    return ($body + "`r`n")
 }
 
 function Get-AttendanceDir([string]$EnvPath) {
@@ -214,15 +230,13 @@ foreach ($dir in @("processed", "failed", "logs", "output")) {
 # --- 3. .env ---
 Write-Step "3/8 Preparing .env"
 $envPath = Join-Path $Root ".env"
-$examplePath = Join-Path $Root ".env.example"
-if (-not (Test-Path $examplePath)) {
-    throw ".env.example is missing from the repo."
-}
 $createdEnv = $false
 if (-not (Test-Path $envPath)) {
-    Copy-Item $examplePath $envPath
+    $envTemplate = Get-EnvExampleFromReadme
+    $utf8NoBom = New-Object System.Text.UTF8Encoding $false
+    [System.IO.File]::WriteAllText($envPath, $envTemplate, $utf8NoBom)
     $createdEnv = $true
-    Write-Host "Created .env from .env.example"
+    Write-Host "Created .env from README.md env-example template"
 } else {
     Write-Host ".env already exists (left unchanged)"
 }
