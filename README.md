@@ -139,9 +139,9 @@ That install package will:
 5. Verify packages import  
 6. Create the attendance drop folder (`D:\Attendance` by default)  
 7. Open Notepad so you can set `LOCATION_CODE` and the API token  
-8. **Register both Task Scheduler jobs** (Mon–Fri 13:00):
-   - `DDO-Attendance-Importer`
-   - `DDO-eSSL-Export`
+8. **Register both Task Scheduler jobs** (Mon–Fri):
+   - `DDO-eSSL-Export` at **13:00** (1:00 PM)
+   - `DDO-Attendance-Importer` at **13:10** (1:10 PM, after export finishes)
 9. Add **Start Menu** shortcuts under `DDO++ Attendance Agent`
 
 Skip scheduler registration if you only want packages/config:
@@ -284,13 +284,13 @@ python scripts\essl_export.py --export-name "Custom Name.xls"   # override defau
 
 ### Schedule (optional)
 
-Importer (default Mon–Fri at 13:00 / 1 PM):
+Importer (default Mon–Fri at **13:10 / 1:10 PM**, 10 minutes after eSSL export):
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1
 ```
 
-eSSL export (default Mon–Fri at 13:00 / 1 PM — session logged on + unlocked; monitor may be off):
+eSSL export (default Mon–Fri at **13:00 / 1:00 PM** — session logged on + unlocked; monitor may be off):
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_essl_export_scheduler.ps1

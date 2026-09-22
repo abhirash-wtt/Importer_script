@@ -10,7 +10,7 @@
 #   4. pip installs packages listed in README.md (```pip-requirements)
 #   5. Creates ATTENDANCE_DIR drop folder
 #   6. Opens Notepad for LOCATION_CODE + token when needed
-#   7. Registers Task Scheduler jobs (Mon-Fri 13:00)
+#   7. Registers Task Scheduler jobs (eSSL 13:00, importer 13:10 Mon-Fri)
 #   8. Adds Start Menu shortcuts
 #
 # Options:
@@ -284,12 +284,12 @@ if (-not $SkipEnvEdit -and ($createdEnv -or $tokenMissing -or -not $locationOk))
 
 # --- 7. Schedulers ---
 if (-not $SkipSchedulers) {
-    Write-Step "7/8 Registering Windows Task Scheduler jobs (Mon-Fri 13:00)"
+    Write-Step "7/8 Registering Windows Task Scheduler jobs (eSSL 13:00, importer 13:10)"
     & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root "scripts\install_daily_scheduler.ps1")
     if ($LASTEXITCODE -ne 0) { throw "Failed to register DDO-Attendance-Importer" }
     & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root "scripts\install_essl_export_scheduler.ps1")
     if ($LASTEXITCODE -ne 0) { throw "Failed to register DDO-eSSL-Export" }
-    Write-Host "Registered: DDO-Attendance-Importer + DDO-eSSL-Export"
+    Write-Host "Registered: DDO-eSSL-Export (13:00) + DDO-Attendance-Importer (13:10)"
 } else {
     Write-Step "7/8 Skipped Task Scheduler registration (-SkipSchedulers)"
 }

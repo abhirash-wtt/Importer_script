@@ -14,7 +14,7 @@ echo    - Install Python 3 if missing (via winget)
 echo    - Install required Python packages
 echo    - Create folders and .env
 echo    - Create the attendance drop folder
-echo    - Register Mon-Fri 13:00 Task Scheduler jobs
+echo    - Register Task Scheduler: eSSL 13:00, importer 13:10 (Mon-Fri)
 echo    - Add Start Menu shortcuts
 echo.
 echo  Right-click -^> Run as administrator if Task Scheduler fails.

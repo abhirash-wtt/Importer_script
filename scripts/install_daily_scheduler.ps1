@@ -1,10 +1,10 @@
 # Registers a Windows Task Scheduler job that runs scripts\scheduler.ps1.
 #
-# Default: Monday-Friday at 13:00 (1 PM)
+# Default: Monday-Friday at 13:10 (1:10 PM) — 10 minutes after eSSL export (13:00)
 #   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1
 #
 # Custom times (still Mon-Fri):
-#   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1 -DailyTimes 09:00,13:00
+#   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1 -DailyTimes 09:10,13:10
 #
 # Office cadence (from the first DailyTimes value, Mon-Fri):
 #   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1 -EveryMinutes 10
@@ -14,7 +14,7 @@
 
 param(
     [string]$TaskName = "DDO-Attendance-Importer",
-    [string[]]$DailyTimes = @("13:00"),
+    [string[]]$DailyTimes = @("13:10"),
     [int]$EveryMinutes = 0,
     [switch]$Unregister
 )
