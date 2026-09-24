@@ -1291,22 +1291,23 @@ def _infer_year_month(file_name, report_text=""):
 
 
 def _map_headers_to_dates(day_headers, year, month):
+    """Map eSSL day headers like '23 T' to calendar dates in (year, month).
+
+    Older logic did ``month - 1`` when the first day number was > 20 (meant for
+    rare cross-month payroll grids). That broke daily single-column exports:
+    September 23 became August 23. We now keep the inferred report month and
+    only roll forward when day numbers decrease (e.g. 30 then 1).
+    """
     parsed = [_parse_day_header(header) for header in day_headers]
     parsed = [item for item in parsed if item]
     if not parsed:
         return []
 
-    start_month = month - 1 if parsed[0][0] > 20 else month
-    start_year = year
-    if start_month < 1:
-        start_month = 12
-        start_year -= 1
-
     dates = []
-    current_year, current_month = start_year, start_month
-    last_day = parsed[0][0]
+    current_year, current_month = year, month
+    last_day = None
     for day_number, _weekday in parsed:
-        if dates and day_number < last_day:
+        if last_day is not None and day_number < last_day:
             current_month += 1
             if current_month > 12:
                 current_month = 1
