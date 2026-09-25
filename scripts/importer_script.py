@@ -610,6 +610,7 @@ def send_attendance_to_ddo_api(batch):
     )
 
     chunk_results = []
+    hard_error = None
     for chunk_index, records in enumerate(chunks, start=1):
         if chunk_index > 1 and chunk_delay > 0:
             LOGGER.info(
@@ -620,29 +621,126 @@ def send_attendance_to_ddo_api(batch):
             )
             time.sleep(chunk_delay)
         chunk_id = batch.id if len(chunks) == 1 else f"{batch.id}-p{chunk_index}"
-        result = _post_attendance_chunk(
-            endpoint=endpoint,
-            token=token,
-            location_code=location_code,
-            batch=batch,
-            records=records,
-            chunk_id=chunk_id,
-            chunk_index=chunk_index,
-            chunk_total=len(chunks),
-            timeout=timeout,
-            max_retries=max_retries,
-            max_body_bytes=max_body_bytes,
+        try:
+            result = _post_attendance_chunk(
+                endpoint=endpoint,
+                token=token,
+                location_code=location_code,
+                batch=batch,
+                records=records,
+                chunk_id=chunk_id,
+                chunk_index=chunk_index,
+                chunk_total=len(chunks),
+                timeout=timeout,
+                max_retries=max_retries,
+                max_body_bytes=max_body_bytes,
+            )
+            chunk_results.append(result)
+        except RuntimeError as exc:
+            # Catastrophic (5xx / network / timeout after retries): stop remaining chunks.
+            hard_error = str(exc)
+            chunk_results.append(
+                {
+                    "ok": False,
+                    "outcome": "ERROR",
+                    "batch_id": chunk_id,
+                    "records": len(records),
+                    "error": hard_error,
+                }
+            )
+            LOGGER.error(
+                "Stopping chunk upload after catastrophic failure on chunk %s/%s: %s",
+                chunk_index,
+                len(chunks),
+                hard_error,
+            )
+            break
+
+    flat = _flatten_chunk_results(chunk_results)
+    outcomes = [str(item.get("outcome") or "").upper() for item in flat]
+    partial_count = sum(1 for o in outcomes if o == "PARTIAL")
+    failed_count = sum(1 for o in outcomes if o == "FAILED")
+    success_count = sum(1 for o in outcomes if o == "SUCCESS")
+    error_count = sum(1 for o in outcomes if o == "ERROR")
+
+    if hard_error or error_count:
+        batch.api_result = {
+            "ok": False,
+            "chunks": len(chunks),
+            "records": len(all_records),
+            "responses": chunk_results,
+            "summary": {
+                "success": success_count,
+                "partial": partial_count,
+                "failed": failed_count,
+                "error": error_count,
+            },
+            "error": hard_error or "One or more chunks failed catastrophically",
+        }
+        _write_batch_outputs(batch)
+        raise RuntimeError(batch.api_result["error"])
+
+    # All chunks attempted: fail the file only if every chunk was a hard business FAILED.
+    if flat and failed_count == len(flat):
+        msg = (
+            f"All {failed_count} API chunk(s) returned FAILED; "
+            "no attendance rows were accepted"
         )
-        chunk_results.append(result)
+        batch.api_result = {
+            "ok": False,
+            "chunks": len(chunks),
+            "records": len(all_records),
+            "responses": chunk_results,
+            "summary": {
+                "success": success_count,
+                "partial": partial_count,
+                "failed": failed_count,
+                "error": error_count,
+            },
+            "error": msg,
+        }
+        _write_batch_outputs(batch)
+        raise RuntimeError(msg)
+
+    overall_ok = True
+    if partial_count or failed_count:
+        LOGGER.warning(
+            "Chunk upload finished with partial/row failures: "
+            "success=%s partial=%s failed=%s (remaining chunks were still sent)",
+            success_count,
+            partial_count,
+            failed_count,
+        )
 
     batch.api_result = {
-        "ok": True,
+        "ok": overall_ok,
+        "partial": partial_count > 0 or failed_count > 0,
         "chunks": len(chunks),
         "records": len(all_records),
         "responses": chunk_results,
+        "summary": {
+            "success": success_count,
+            "partial": partial_count,
+            "failed": failed_count,
+            "error": error_count,
+        },
     }
     _write_batch_outputs(batch)
     return batch.api_result
+
+
+def _flatten_chunk_results(results):
+    """Flatten nested split-chunk responses into leaf chunk results."""
+    flat = []
+    for item in results or []:
+        if not isinstance(item, dict):
+            continue
+        parts = item.get("parts")
+        if parts:
+            flat.extend(_flatten_chunk_results(parts))
+        else:
+            flat.append(item)
+    return flat
 
 
 def _split_records_for_api(records, chunk_size, max_body_bytes, location_code, batch):
@@ -750,10 +848,15 @@ def _post_attendance_chunk(
     )
 
     last_error = None
+    last_status_code = None
+    last_parsed = {}
     for attempt in range(1, max_retries + 1):
         try:
             status_code, response_text = _post_json(endpoint, token, location_code, body, timeout)
             parsed = _parse_api_response(response_text)
+            last_status_code = status_code
+            last_parsed = parsed
+
             if 200 <= status_code < 300 and _api_accepted_business(parsed):
                 LOGGER.info(
                     "DDO++ API accepted chunk %s/%s (HTTP %s, attempt %s/%s)",
@@ -765,6 +868,7 @@ def _post_attendance_chunk(
                 )
                 return {
                     "ok": True,
+                    "outcome": "SUCCESS",
                     "status_code": status_code,
                     "attempt": attempt,
                     "batch_id": chunk_id,
@@ -772,7 +876,50 @@ def _post_attendance_chunk(
                     "response": parsed,
                 }
 
-            # HTTP 207 PARTIAL / body status FAILED|PARTIAL / other non-success
+            # HTTP 207 / body status PARTIAL: valid rows already saved — continue upload loop.
+            if _api_is_partial(parsed, status_code):
+                detail = _format_api_failure(parsed, status_code, response_text)
+                LOGGER.warning(
+                    "DDO++ API partial success for chunk %s/%s (HTTP %s): %s "
+                    "(continuing remaining chunks)",
+                    chunk_index,
+                    chunk_total,
+                    status_code,
+                    detail,
+                )
+                return {
+                    "ok": True,
+                    "outcome": "PARTIAL",
+                    "status_code": status_code,
+                    "attempt": attempt,
+                    "batch_id": chunk_id,
+                    "records": len(working),
+                    "response": parsed,
+                    "warning": detail,
+                }
+
+            # Business FAILED (typically HTTP 422): do not retry; return so caller can continue.
+            if _api_is_business_failed(parsed, status_code):
+                last_error = _format_api_failure(parsed, status_code, response_text)
+                LOGGER.error(
+                    "DDO++ API business FAILED for chunk %s/%s (HTTP %s): %s "
+                    "(continuing remaining chunks)",
+                    chunk_index,
+                    chunk_total,
+                    status_code,
+                    last_error,
+                )
+                return {
+                    "ok": False,
+                    "outcome": "FAILED",
+                    "status_code": status_code,
+                    "attempt": attempt,
+                    "batch_id": chunk_id,
+                    "records": len(working),
+                    "response": parsed,
+                    "error": last_error,
+                }
+
             last_error = _format_api_failure(parsed, status_code, response_text)
             LOGGER.error(
                 "DDO++ API rejected chunk %s/%s (HTTP %s, attempt %s/%s): %s",
@@ -796,13 +943,56 @@ def _post_attendance_chunk(
                     chunk_index, chunk_total, timeout, max_retries, max_body_bytes,
                 )
                 return {"ok": True, "split_after_413": True, "parts": [first, second]}
-            # Business outcomes (PARTIAL/FAILED) and other 4xx: do not retry.
+            # Other 4xx (auth, validation): do not retry; treat as catastrophic below.
             if status_code < 500 and status_code != 429:
                 break
         except urllib.error.HTTPError as exc:
             response_text = _read_http_error_body(exc)
             parsed = _parse_api_response(response_text)
+            last_status_code = exc.code
+            last_parsed = parsed
             last_error = _format_api_failure(parsed, exc.code, response_text)
+
+            if _api_is_partial(parsed, exc.code):
+                LOGGER.warning(
+                    "DDO++ API partial success for chunk %s/%s (HTTP %s): %s "
+                    "(continuing remaining chunks)",
+                    chunk_index,
+                    chunk_total,
+                    exc.code,
+                    last_error,
+                )
+                return {
+                    "ok": True,
+                    "outcome": "PARTIAL",
+                    "status_code": exc.code,
+                    "attempt": attempt,
+                    "batch_id": chunk_id,
+                    "records": len(working),
+                    "response": parsed,
+                    "warning": last_error,
+                }
+
+            if _api_is_business_failed(parsed, exc.code):
+                LOGGER.error(
+                    "DDO++ API business FAILED for chunk %s/%s (HTTP %s): %s "
+                    "(continuing remaining chunks)",
+                    chunk_index,
+                    chunk_total,
+                    exc.code,
+                    last_error,
+                )
+                return {
+                    "ok": False,
+                    "outcome": "FAILED",
+                    "status_code": exc.code,
+                    "attempt": attempt,
+                    "batch_id": chunk_id,
+                    "records": len(working),
+                    "response": parsed,
+                    "error": last_error,
+                }
+
             LOGGER.error(
                 "DDO++ API HTTP error for chunk %s/%s (HTTP %s, attempt %s/%s): %s",
                 chunk_index,
@@ -855,7 +1045,13 @@ def _post_attendance_chunk(
             LOGGER.info("Retrying DDO++ API POST in %s seconds", delay)
             time.sleep(delay)
 
-    batch.api_result = {"ok": False, "error": last_error, "failed_chunk": chunk_id}
+    batch.api_result = {
+        "ok": False,
+        "error": last_error,
+        "failed_chunk": chunk_id,
+        "status_code": last_status_code,
+        "response": last_parsed,
+    }
     _write_batch_outputs(batch)
     raise RuntimeError(f"Failed to send attendance JSON to DDO++ API: {last_error}")
 
@@ -924,10 +1120,10 @@ def _api_business_status(parsed) -> str:
 
 def _api_accepted_business(parsed) -> bool:
     """
-    True only when the API fully accepted the chunk.
+    True only when the API fully accepted the chunk (SUCCESS).
 
-    HTTP 2xx alone is not enough: PARTIAL (HTTP 207) and FAILED (HTTP 422)
-    mean some/all rows did not land — treat as import failure for the office agent.
+    PARTIAL (HTTP 207) and FAILED (HTTP 422) are handled separately so the
+    upload loop can continue sending remaining chunks.
     """
     if isinstance(parsed, dict) and parsed.get("ok") is False:
         return False
@@ -935,6 +1131,20 @@ def _api_accepted_business(parsed) -> bool:
     if status in {"FAILED", "PARTIAL"}:
         return False
     return True
+
+
+def _api_is_partial(parsed, status_code=None) -> bool:
+    """True for HTTP 207 Multi-Status or body status PARTIAL (valid rows saved)."""
+    if status_code == 207:
+        return True
+    return _api_business_status(parsed) == "PARTIAL"
+
+
+def _api_is_business_failed(parsed, status_code=None) -> bool:
+    """True for body status FAILED or HTTP 422 Unprocessable Entity."""
+    if status_code == 422:
+        return True
+    return _api_business_status(parsed) == "FAILED"
 
 
 def _format_api_failure(parsed, status_code, response_text) -> str:
@@ -1663,7 +1873,8 @@ def process_drop_folder(explicit_location=None) -> dict:
             _remember_processed_hash(file_hash, path.name, location)
             known_hashes[file_hash] = True
             processed += 1
-            results.append({"file": path.name, "location": location, "status": "SUCCESS"})
+            file_status = "PARTIAL" if (batch.api_result or {}).get("partial") else "SUCCESS"
+            results.append({"file": path.name, "location": location, "status": file_status})
 
         summary = {
             "ok": failed == 0,

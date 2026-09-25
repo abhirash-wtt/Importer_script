@@ -1000,16 +1000,32 @@ def _format_essl_date(day) -> str:
     return day.strftime("%d %b %Y")
 
 
-def previous_weekday(from_date=None):
+def report_export_date(from_date=None):
     """
-    Last Mon–Fri before `from_date` (default: today).
+    Calendar day used for From Date = To Date on the eSSL filter.
 
-    Office export only runs on weekdays; calendar “yesterday” on Monday is Sunday
-    (WO) and would skip Friday attendance. Examples (run day → export day):
-      Mon → Fri, Tue → Mon, Wed → Tue, …, Fri → Thu
+    Agreed office policy: use **today** (local PC date) for both the 1 AM and
+    1 PM runs so the API gets the current day's punches (1 PM upserts over 1 AM).
+
+    Overrides (edge cases / testing):
+      - Explicit ``from_date`` argument
+      - Env ``ESSL_REPORT_DATE=YYYY-MM-DD`` (single day, From=To)
     """
+    override = (os.getenv("ESSL_REPORT_DATE") or "").strip()
+    if override:
+        try:
+            return datetime.strptime(override, "%Y-%m-%d").date()
+        except ValueError:
+            LOGGER.warning(
+                "Invalid ESSL_REPORT_DATE=%r (expected YYYY-MM-DD); using today",
+                override,
+            )
+    return from_date or datetime.now().date()
+
+
+def previous_weekday(from_date=None):
+    """Deprecated: kept for manual/debug calls. Prefer report_export_date()."""
     day = (from_date or datetime.now().date()) - timedelta(days=1)
-    # Saturday=5, Sunday=6
     while day.weekday() >= 5:
         day -= timedelta(days=1)
     return day
@@ -1017,19 +1033,25 @@ def previous_weekday(from_date=None):
 
 def set_report_date_range(win, from_day=None, to_day=None) -> None:
     """
-    Set From Date = To Date = previous weekday (Mon–Fri).
+    Set From Date = To Date = today (local date), unless overridden.
 
-    Daily weekday runs must not include "today" (often In-only, incomplete).
-    Using the last working day (not calendar yesterday) so Monday exports Friday
-    instead of Sunday and weekend WO days are skipped.
+    1 AM and 1 PM schedules both export the same calendar day; the API upserts
+    so the afternoon run refreshes incomplete morning punches.
     """
-    target = previous_weekday()
+    target = report_export_date()
     from_day = from_day or target
-    to_day = to_day or target
+    to_day = to_day or from_day
+    if to_day < from_day:
+        LOGGER.warning(
+            "To Date %s is before From Date %s — swapping to keep a valid range",
+            to_day,
+            from_day,
+        )
+        from_day, to_day = to_day, from_day
     from_text = _format_essl_date(from_day)
     to_text = _format_essl_date(to_day)
     LOGGER.info(
-        "Setting report dates: From=%s To=%s (previous weekday, not weekend)",
+        "Setting report dates: From=%s To=%s (today / report day)",
         from_text,
         to_text,
     )
@@ -1311,7 +1333,7 @@ def generate_report(main, report: str | None = None, timeout: float = 30.0) -> N
     if report in ("monthly-basic", "monthly", "monthly_basic"):
         select_monthly_basic_work_duration(win)
         time.sleep(0.3)
-        set_report_date_range(win)  # From=To=previous weekday (skip Sat/Sun)
+        set_report_date_range(win)  # From=To=today (1 AM & 1 PM runs)
         time.sleep(0.3)
         select_walking_tree_company(win)
         time.sleep(0.3)

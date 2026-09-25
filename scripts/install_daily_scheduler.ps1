@@ -1,20 +1,17 @@
 # Registers a Windows Task Scheduler job that runs scripts\scheduler.ps1.
 #
-# Default: Monday-Friday at 13:10 (1:10 PM) — 10 minutes after eSSL export (13:00)
+# Default: every day at 01:10 and 13:10 (10 minutes after eSSL export at 01:00 / 13:00)
 #   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1
 #
-# Custom times (still Mon-Fri):
-#   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1 -DailyTimes 09:10,13:10
-#
-# Office cadence (from the first DailyTimes value, Mon-Fri):
-#   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1 -EveryMinutes 10
+# Custom times:
+#   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1 -DailyTimes 01:10,13:10
 #
 # Remove the task:
 #   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1 -Unregister
 
 param(
     [string]$TaskName = "DDO-Attendance-Importer",
-    [string[]]$DailyTimes = @("13:10"),
+    [string[]]$DailyTimes = @("01:10", "13:10"),
     [int]$EveryMinutes = 0,
     [switch]$Unregister
 )
@@ -37,27 +34,25 @@ if ($Unregister) {
 $action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$Scheduler`"" -WorkingDirectory $Root
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable -MultipleInstances IgnoreNew
 
-$weekdays = @([DayOfWeek]::Monday, [DayOfWeek]::Tuesday, [DayOfWeek]::Wednesday, [DayOfWeek]::Thursday, [DayOfWeek]::Friday)
-
 if ($EveryMinutes -gt 0) {
     $startTime = $DailyTimes[0]
-    $trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Monday, Tuesday, Wednesday, Thursday, Friday -At $startTime
+    $trigger = New-ScheduledTaskTrigger -Daily -At $startTime
     $trigger.RepetitionInterval = [TimeSpan]::FromMinutes($EveryMinutes)
     $trigger.RepetitionDuration = [TimeSpan]::FromHours(12)
-    $description = "Import attendance every $EveryMinutes minutes from $startTime (Mon-Fri)."
+    $description = "Import attendance every $EveryMinutes minutes from $startTime (daily)."
 } else {
     $trigger = foreach ($time in $DailyTimes) {
-        New-ScheduledTaskTrigger -Weekly -DaysOfWeek Monday, Tuesday, Wednesday, Thursday, Friday -At $time
+        New-ScheduledTaskTrigger -Daily -At $time
     }
     $timesLabel = $DailyTimes -join " and "
-    $description = "Import attendance Mon-Fri at $timesLabel."
+    $description = "Import attendance daily at $timesLabel (after eSSL export)."
 }
 
 Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger -Settings $settings -Description $description -Force | Out-Null
 Write-Host "Registered '$TaskName'."
 Write-Host $description
 Write-Host "Drop Excel files directly into:"
-Write-Host "  $((Get-Content (Join-Path $Root '.env') | Where-Object { $_ -match '^ATTENDANCE_DIR=' }) -replace '^ATTENDANCE_DIR=','' -replace '\"','')"
+Write-Host "  $((Get-Content (Join-Path $Root '.env') -ErrorAction SilentlyContinue | Where-Object { $_ -match '^ATTENDANCE_DIR=' }) -replace '^ATTENDANCE_DIR=','' -replace '\"','')"
 Write-Host "  (default D:\Attendance - set ATTENDANCE_DIR in .env)"
 Write-Host "Location for this PC comes from LOCATION_CODE in .env (no subfolders needed)."
 Write-Host "Test now: powershell -NoProfile -ExecutionPolicy Bypass -File `"$Scheduler`""

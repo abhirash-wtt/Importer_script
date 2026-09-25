@@ -139,9 +139,9 @@ That install package will:
 5. Verify packages import  
 6. Create the attendance drop folder (`D:\Attendance` by default)  
 7. Open Notepad so you can set `LOCATION_CODE` and the API token  
-8. **Register both Task Scheduler jobs** (Mon–Fri):
-   - `DDO-eSSL-Export` at **13:00** (1:00 PM)
-   - `DDO-Attendance-Importer` at **13:10** (1:10 PM, after export finishes)
+8. **Register both Task Scheduler jobs** (every day):
+   - `DDO-eSSL-Export` at **01:00** (1:00 AM) and **13:00** (1:00 PM)
+   - `DDO-Attendance-Importer` at **01:10** and **13:10** (10 minutes after each export)
 9. Add **Start Menu** shortcuts under `DDO++ Attendance Agent`
 
 Skip scheduler registration if you only want packages/config:
@@ -225,7 +225,7 @@ python scripts\importer_script.py --location NOIDA "C:\path\to\report.xls"
 On **Monthly Status Report** filter dialog, before Generate:
 
 1. Report Type = **Basic Work Duration**
-2. **From Date** = **To Date** = previous weekday (Mon–Fri only — Monday exports Friday, not Sunday; avoids weekend WO and overlapping “today’s In-only”)
+2. **From Date** = **To Date** = **today** (local PC date; both 1 AM and 1 PM runs use the same calendar day so afternoon upserts refresh morning punches)
 3. Tick **Filter Company**
 4. Click **Deselect All**
 5. Click **WalkingTree** only
@@ -240,7 +240,7 @@ Filtering to Walking Tree keeps the file smaller and avoids API payload limits.
 
 ### Export from eSSL, then import (automated)
 
-Default report is **Monthly Status → Basic Work Duration**, with **From=To=previous weekday** (skips Sat/Sun so Monday picks up Friday), **Filter Company → WalkingTree**, then Generate. Previous Excel of the same name is moved to `ATTENDANCE_DIR\previous\` before save (and Confirm Save As → Yes is clicked if Windows still asks).
+Default report is **Monthly Status → Basic Work Duration**, with **From=To=today**, **Filter Company → WalkingTree**, then Generate. Previous Excel of the same name is moved to `ATTENDANCE_DIR\previous\` before save (and Confirm Save As → Yes is clicked if Windows still asks). Optional override: `ESSL_REPORT_DATE=YYYY-MM-DD` in `.env`.
 
 Full flow (device sync + monthly basic export + save to `D:\Attendance` + logout + Close):
 
@@ -284,13 +284,13 @@ python scripts\essl_export.py --export-name "Custom Name.xls"   # override defau
 
 ### Schedule (optional)
 
-Importer (default Mon–Fri at **13:10 / 1:10 PM**, 10 minutes after eSSL export):
+Importer (default **daily** at **01:10** and **13:10**, 10 minutes after eSSL export):
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1
 ```
 
-eSSL export (default Mon–Fri at **13:00 / 1:00 PM** — session logged on + unlocked; monitor may be off):
+eSSL export (default **daily** at **01:00** and **13:00** — session logged on + unlocked; monitor may be off):
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_essl_export_scheduler.ps1
@@ -317,7 +317,7 @@ After a scheduled run, check:
 2. Utilities → Device Management → select **LGF OUT / LGF IN / UGF OUT** (skip **USB** and **UGF IN 1**) → Start Download → wait  
 3. Close dialogs until the main window is plain  
 4. Attendance Reports → Monthly Reports → Monthly Status → **Report Type = Basic Work Duration**  
-   then set **From Date = To Date = previous weekday** (Mon–Fri; Monday → Friday)
+   then set **From Date = To Date = today** (local date; override with `ESSL_REPORT_DATE`)
    then **Filter Company → Deselect All → WalkingTree → Generate**  
 5. Export Excel into `ATTENDANCE_DIR` as `{Month} {Location}.xls` (previous file is moved to `ATTENDANCE_DIR\previous\`)  
 6. Close dialogs → Log Off (3rd toolbar icon) → Close on login dialog  
