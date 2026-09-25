@@ -44,6 +44,41 @@ try:
 except ImportError:
     sys.exit("Missing dependency: pywinauto. Install with: python -m pip install pywinauto")
 
+try:
+    import ctypes
+except ImportError:  # pragma: no cover
+    ctypes = None  # type: ignore
+
+
+def _force_foreground(handle_or_wrapper) -> None:
+    """Bring a window to the foreground (helps UltraViewer/RDP focus stalls)."""
+    if handle_or_wrapper is None:
+        return
+    hwnd = None
+    try:
+        hwnd = int(getattr(handle_or_wrapper, "handle", handle_or_wrapper))
+    except Exception:
+        try:
+            handle_or_wrapper.set_focus()
+        except Exception:
+            pass
+        return
+    try:
+        handle_or_wrapper.set_focus()
+    except Exception:
+        pass
+    if not ctypes or not hwnd:
+        return
+    try:
+        user32 = ctypes.windll.user32
+        # Allow focus steal from this process briefly
+        user32.AllowSetForegroundWindow(0xFFFFFFFF)  # ASFW_ANY
+        user32.ShowWindow(hwnd, 9)  # SW_RESTORE
+        user32.SetForegroundWindow(hwnd)
+        user32.BringWindowToTop(hwnd)
+    except Exception:
+        pass
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 LOG_DIR = REPO_ROOT / "logs"
 UI_DUMP_DIR = REPO_ROOT / "output" / "essl_ui"
@@ -1459,12 +1494,202 @@ def confirm_replace_if_prompted(timeout: float = 8.0) -> bool:
     return False
 
 
+def _find_save_as_dialog(timeout: float = 25.0):
+    """Return the Windows Save / Save As dialog if present."""
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        for backend in ("uia", "win32"):
+            try:
+                windows = Desktop(backend=backend).windows()
+            except Exception:
+                continue
+            for w in windows:
+                title = (w.window_text() or "").strip().lower()
+                if not title:
+                    continue
+                if title.startswith("save") or "save as" in title or title == "save as":
+                    return w
+        time.sleep(0.3)
+    return None
+
+
+def _find_export_flyout(export_rect, timeout: float = 4.0):
+    """
+    Find the Export dropdown/flyout near the toolbar control.
+
+    Agra eSSL 12.x often uses DevExpress class *20808*; Noida 11.x may use a
+    different popup class/position — match by proximity, not a single class.
+    """
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        for backend in ("win32", "uia"):
+            try:
+                windows = Desktop(backend=backend).windows()
+            except Exception:
+                continue
+            for w in windows:
+                try:
+                    cls = w.class_name() or ""
+                    title = w.window_text() or ""
+                    wr = w.rectangle()
+                except Exception:
+                    continue
+                area = wr.width() * wr.height()
+                if area < 80 or area > 80_000:
+                    continue
+                if wr.width() > 500 or wr.height() > 400:
+                    continue
+                # Must appear near / just under the Export control
+                if wr.bottom < export_rect.top - 20:
+                    continue
+                if wr.top > export_rect.bottom + 160:
+                    continue
+                if wr.right < export_rect.left - 80:
+                    continue
+                if wr.left > export_rect.right + 200:
+                    continue
+                cls_l = cls.lower()
+                title_l = title.lower()
+                looks_like_menu = (
+                    "20808" in cls_l
+                    or "dropdown" in cls_l
+                    or "popup" in cls_l
+                    or cls in {"#32768", "ToolbarWindow32"}
+                    or "excel" in title_l
+                    or "export" in title_l
+                    or (not title and wr.height() <= 120)
+                )
+                if looks_like_menu:
+                    return w
+        time.sleep(0.15)
+    return None
+
+
+def _click_flyout_excel_items(popup) -> bool:
+    """Click likely Excel / first rows inside an Export flyout."""
+    try:
+        wr = popup.rectangle()
+    except Exception:
+        return False
+    LOGGER.info("Clicking Export flyout at %s class=%s", wr, getattr(popup, "class_name", lambda: "?")())
+    # Prefer UIA/menu text if available
+    for backend in ("uia", "win32"):
+        try:
+            app_win = popup
+            for mi in app_win.descendants():
+                try:
+                    text = (mi.window_text() or "").strip().lower()
+                except Exception:
+                    continue
+                if not text:
+                    continue
+                if "excel" in text or text in {"export", "microsoft excel", "xls", "xlsx"}:
+                    try:
+                        mi.click_input()
+                        LOGGER.info("Clicked flyout item by text: %s", text)
+                        time.sleep(1.0)
+                        if _find_save_as_dialog(timeout=3):
+                            return True
+                    except Exception:
+                        pass
+        except Exception:
+            pass
+    # Geometric clicks: first few rows of the flyout
+    for dy in (8, 22, 36, 50, 64):
+        if wr.top + dy >= wr.bottom - 2:
+            break
+        mouse.click(coords=(wr.left + min(50, max(10, wr.width() // 2)), wr.top + dy))
+        time.sleep(0.7)
+        if _find_save_as_dialog(timeout=2.5):
+            return True
+    return False
+
+
+def _open_save_as_via_export(export_item) -> bool:
+    """Try several Export click patterns until Save As appears (11.x and 12.x)."""
+    rect = export_item.rectangle()
+    clicks = [
+        ("center", (rect.mid_point().x, rect.mid_point().y)),
+        ("chevron-right", (max(rect.left + 4, rect.right - 2), rect.mid_point().y)),
+        ("label-left", (rect.left + min(24, max(8, rect.width() // 3)), rect.mid_point().y)),
+    ]
+    for name, coords in clicks:
+        LOGGER.info("Export open attempt: %s click=%s", name, coords)
+        try:
+            _force_foreground(export_item)
+        except Exception:
+            pass
+        mouse.click(coords=coords)
+        time.sleep(0.6)
+
+        popup = _find_export_flyout(rect, timeout=3.5)
+        if popup is not None:
+            if _click_flyout_excel_items(popup):
+                return True
+        else:
+            LOGGER.info("No Export flyout after %s — checking Save As / Excel menu items", name)
+
+        # Some builds open Save As directly from Export (no flyout)
+        if _find_save_as_dialog(timeout=2):
+            LOGGER.info("Save As appeared directly after Export click (%s)", name)
+            return True
+
+        # Visible Excel menu items anywhere
+        for backend in ("uia", "win32"):
+            try:
+                for w in Desktop(backend=backend).windows():
+                    try:
+                        nodes = w.descendants()
+                    except Exception:
+                        continue
+                    for mi in nodes:
+                        try:
+                            text = (mi.window_text() or "").strip().lower()
+                        except Exception:
+                            continue
+                        if "excel" not in text:
+                            continue
+                        try:
+                            mi.click_input()
+                            LOGGER.info("Clicked on-screen Excel item: %s", text)
+                            time.sleep(1.0)
+                            if _find_save_as_dialog(timeout=3):
+                                return True
+                        except Exception:
+                            continue
+            except Exception:
+                continue
+
+        # Double-click Export as last try for this strategy
+        mouse.double_click(coords=coords)
+        time.sleep(0.8)
+        if _find_save_as_dialog(timeout=2.5):
+            return True
+
+    # Log nearby windows to help debug office-specific UI
+    try:
+        nearby = []
+        for w in Desktop(backend="win32").windows():
+            try:
+                wr = w.rectangle()
+                nearby.append(
+                    f"{w.class_name()!r} title={w.window_text()!r} "
+                    f"({wr.left},{wr.top},{wr.right},{wr.bottom})"
+                )
+            except Exception:
+                continue
+        LOGGER.warning("Export failed to open Save As. Nearby win32 windows: %s", " | ".join(nearby[:12]))
+    except Exception:
+        pass
+    return False
+
+
 def export_excel(main, export_dir: Path, export_name: str) -> Path:
     export_dir.mkdir(parents=True, exist_ok=True)
     target = export_dir / export_name
     LOGGER.info("Exporting Excel to %s", target)
 
-    # Move yesterday's / previous file out of the way before Save As.
+    # Move previous file out of the way before Save As.
     archive_existing_export(target)
 
     main.set_focus()
@@ -1498,101 +1723,70 @@ def export_excel(main, export_dir: Path, export_name: str) -> Path:
             pass
 
     export_item = None
-    for c in main.descendants(control_type="MenuItem"):
-        if (c.window_text() or "") == "Export":
+    # Prefer toolbar MenuItem "Export"; also accept Button on older eSSL builds.
+    candidates = []
+    for ctype in ("MenuItem", "Button", "SplitButton"):
+        try:
+            nodes = main.descendants(control_type=ctype)
+        except Exception:
+            continue
+        for c in nodes:
+            if (c.window_text() or "").strip() != "Export":
+                continue
             try:
                 r = c.rectangle()
             except Exception:
                 continue
-            if r.top < 160 and r.width() * r.height() > 200:
-                export_item = c
-                break
+            if r.top < 200 and r.width() * r.height() > 100:
+                candidates.append((r.top, r.left, c))
+    candidates.sort()
+    if candidates:
+        export_item = candidates[0][2]
     if export_item is None:
         raise RuntimeError("Report viewer Export control not found. Generate the report first.")
 
     LOGGER.info("Opening report Export (Save As)")
-    rect = export_item.rectangle()
-    mouse.click(coords=(rect.mid_point().x, rect.mid_point().y))
-    time.sleep(0.8)
+    if not _open_save_as_via_export(export_item):
+        raise TimeoutError(
+            "Save As dialog did not appear after export. "
+            "eSSL 11.x/12.x Export UI may differ — try once manually: Export → Excel, "
+            "or re-run with the report already open."
+        )
 
-    popup = None
-    deadline = time.time() + 5
-    while time.time() < deadline and popup is None:
-        for w in Desktop(backend="win32").windows():
-            try:
-                cls = w.class_name()
-                wr = w.rectangle()
-            except Exception:
-                continue
-            if "20808" in cls and wr.top >= 120 and wr.top <= 220 and wr.left >= 350:
-                popup = w
-                break
-        time.sleep(0.2)
-
-    if popup is not None:
-        wr = popup.rectangle()
-        LOGGER.info("Clicking Export flyout item at %s", wr)
-        mouse.click(coords=(wr.left + 40, wr.top + 10))
-        time.sleep(1.2)
-    else:
-        LOGGER.warning("Export flyout not found - trying right-edge click")
-        mouse.click(coords=(rect.right - 1, rect.mid_point().y))
-        time.sleep(1.2)
-
-    save = None
-    deadline = time.time() + 25
-    while time.time() < deadline:
-        for w in Desktop(backend="uia").windows():
-            if "save" in (w.window_text() or "").lower():
-                save = w
-                break
-        if save is None:
-            for w in Desktop(backend="win32").windows():
-                if (w.window_text() or "").startswith("Save"):
-                    save = w
-                    break
-        if save:
-            break
-        time.sleep(0.4)
+    save = _find_save_as_dialog(timeout=25)
     if save is None:
         raise TimeoutError("Save As dialog did not appear after export.")
 
     try:
-        save.set_focus()
+        _force_foreground(save)
     except Exception:
         pass
     time.sleep(0.4)
 
-    # Correct Save As usage:
-    # 1) Address / location bar = folder
-    # 2) File name box = filename only
-    LOGGER.info("Save As: folder=%s filename=%s", export_dir, export_name)
+    # Prefer putting the FULL path in "File name" — works on eSSL 11/12 Save As
+    # (address-bar Alt+D navigation often hangs or focuses the wrong control).
+    full_path = str(target)
+    LOGGER.info("Save As: writing full path into File name -> %s", full_path)
     filled = False
     try:
         dlg = Application(backend="win32").connect(handle=save.handle).window(handle=save.handle)
         dlg.set_focus()
         time.sleep(0.3)
 
-        # Navigate folder via address bar
-        send_keys("%d")
-        time.sleep(0.4)
-        send_keys("^a")
-        time.sleep(0.1)
-        send_keys(str(export_dir), with_spaces=True)
-        send_keys("{ENTER}")
-        time.sleep(1.2)
-
-        # Set filename only in the File name edit
         edits = list(dlg.descendants(class_name="Edit"))
         chosen = None
         for edit in edits:
             text = (edit.window_text() or "")
-            # Prefer the filename box (usually contains .xls / report), not toolbar path crumbs
-            if ".xls" in text.lower() or "report" in text.lower() or text.endswith(".xlsx"):
+            # eSSL defaults to BasicWorkDurationReport / *.xls in the filename box
+            if (
+                "report" in text.lower()
+                or ".xls" in text.lower()
+                or text.endswith(".xlsx")
+                or "basicwork" in text.lower().replace(" ", "")
+            ):
                 chosen = edit
                 break
         if chosen is None:
-            # Fall back to bottom-most edit (File name is usually lowest)
             ranked = []
             for edit in edits:
                 try:
@@ -1604,14 +1798,30 @@ def export_excel(main, export_dir: Path, export_name: str) -> Path:
                 chosen = ranked[0][1]
 
         if chosen is not None:
-            chosen.set_focus()
+            try:
+                chosen.set_focus()
+            except Exception:
+                pass
             time.sleep(0.2)
-            chosen.set_edit_text(export_name)
+            try:
+                chosen.set_edit_text(full_path)
+                filled = True
+                LOGGER.info("Set File name (set_edit_text) to full path")
+            except Exception as exc:
+                LOGGER.warning("set_edit_text failed (%s) — keyboard File name", exc)
+
+        if not filled:
+            # Alt+N = File name field on standard Windows Save As
+            send_keys("%n")
+            time.sleep(0.3)
+            send_keys("^a")
+            time.sleep(0.1)
+            send_keys(full_path, with_spaces=True)
             filled = True
-            LOGGER.info("Set File name to %s", export_name)
+            LOGGER.info("Set File name (keyboard) to full path")
 
         send_keys("%s")  # Save
-        time.sleep(0.6)
+        time.sleep(0.8)
         confirm_replace_if_prompted(timeout=6.0)
         time.sleep(0.8)
     except Exception as exc:
@@ -1619,40 +1829,35 @@ def export_excel(main, export_dir: Path, export_name: str) -> Path:
         filled = False
 
     if not filled:
-        send_keys("%d")
-        time.sleep(0.4)
-        send_keys("^a")
-        send_keys(str(export_dir), with_spaces=True)
-        send_keys("{ENTER}")
-        time.sleep(1.0)
+        try:
+            save.set_focus()
+        except Exception:
+            pass
         send_keys("%n")
         time.sleep(0.3)
         send_keys("^a")
-        send_keys(export_name, with_spaces=True)
+        send_keys(full_path, with_spaces=True)
         send_keys("%s")
-        time.sleep(0.6)
+        time.sleep(0.8)
         confirm_replace_if_prompted(timeout=6.0)
         time.sleep(0.8)
 
     # Extra pass in case prompt appeared late
     confirm_replace_if_prompted(timeout=3.0)
 
-    # If still no file, last-resort: put full path in filename box (works on this dialog)
+    # If still no file, one more full-path attempt on any remaining Save dialog
     if not (target.exists() and target.stat().st_size > 0):
-        still = None
-        for w in Desktop(backend="win32").windows():
-            if (w.window_text() or "").startswith("Save"):
-                still = w
-                break
+        still = _find_save_as_dialog(timeout=2)
         if still is not None:
             LOGGER.warning("Retry Save As using full path in File name as fallback")
-            dlg = Application(backend="win32").connect(handle=still.handle).window(handle=still.handle)
-            edits = list(dlg.descendants(class_name="Edit"))
-            for edit in edits:
-                text = edit.window_text() or ""
-                if ".xls" in text.lower() or "report" in text.lower() or edit == edits[0]:
-                    edit.set_edit_text(str(target))
-                    break
+            try:
+                still.set_focus()
+            except Exception:
+                pass
+            send_keys("%n")
+            time.sleep(0.3)
+            send_keys("^a")
+            send_keys(full_path, with_spaces=True)
             send_keys("%s")
             time.sleep(0.6)
             confirm_replace_if_prompted(timeout=6.0)
@@ -1685,7 +1890,11 @@ def configured_devices() -> list[str]:
 
 
 def configured_skip_devices() -> list[str]:
-    return [d.upper() for d in _csv_list(os.getenv("ESSL_SKIP_DEVICES", DEFAULT_SKIP_CSV))]
+    # None → Agra-style defaults. Explicit empty ESSL_SKIP_DEVICES= → no skips (Noida).
+    raw = os.getenv("ESSL_SKIP_DEVICES")
+    if raw is None:
+        raw = DEFAULT_SKIP_CSV
+    return [d.upper() for d in _csv_list(raw)]
 
 
 def default_export_name(report: str | None = None) -> str:
