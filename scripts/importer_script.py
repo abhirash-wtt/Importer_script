@@ -1068,10 +1068,35 @@ def _is_allowed_endpoint(endpoint):
 
 
 def _ssl_context():
+    """
+    TLS context for DDO++ API POSTs.
+
+    Office networks sometimes intercept HTTPS with a corporate/self-signed CA.
+    Prefer installing that CA via DDO_API_CA_FILE; only use
+    DDO_API_INSECURE_SSL=1 as a temporary workaround.
+    """
+    insecure = (os.getenv("DDO_API_INSECURE_SSL") or "").strip().lower() in {
+        "1",
+        "true",
+        "yes",
+        "on",
+    }
+    if insecure:
+        LOGGER.warning(
+            "DDO_API_INSECURE_SSL is enabled — TLS certificate verification is OFF "
+            "(use only on trusted office networks; prefer DDO_API_CA_FILE)"
+        )
+        context = ssl._create_unverified_context()
+        return context
+
     context = ssl.create_default_context()
     ca_file = os.getenv("DDO_API_CA_FILE", "").strip()
     if ca_file:
-        context.load_verify_locations(cafile=ca_file)
+        ca_path = Path(ca_file)
+        if not ca_path.is_file():
+            raise RuntimeError(f"DDO_API_CA_FILE not found: {ca_file}")
+        context.load_verify_locations(cafile=str(ca_path))
+        LOGGER.info("Using custom CA file for API TLS: %s", ca_path)
     return context
 
 

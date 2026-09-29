@@ -82,6 +82,10 @@ DDO_API_MAX_RETRIES=3
 DDO_API_CHUNK_SIZE=50
 DDO_API_CHUNK_DELAY_SECONDS=2
 
+# If this PC hits SSL CERTIFICATE_VERIFY_FAILED (corporate proxy / self-signed chain):
+# DDO_API_CA_FILE=C:\path\to\office-root-ca.pem
+# Temporary only (disables TLS verify): DDO_API_INSECURE_SSL=1
+
 # SINGLE drop folder for this PC — HR / anyone puts .xls/.xlsx here.
 # No AGRA/NOIDA/HYD subfolders needed; location comes from LOCATION_CODE above.
 ATTENDANCE_DIR=D:\Attendance
@@ -365,6 +369,7 @@ Never put real tokens in the README `.env` template or in commit messages.
 | Python missing on a new PC | Run `Setup.bat` (uses winget), or install from https://www.python.org/downloads/ with PATH checked |
 | Importer finds no files | Check `ATTENDANCE_DIR` exists and has `.xls`/`.xlsx`; check `LOCATION_CODE` |
 | Wrong export name (e.g. `Sep Noida.xls` on Agra PC) | Set `LOCATION_CODE=AGRA` in `.env` and re-run; do not use a UTF-8 BOM-only broken `.env` |
+| `CERTIFICATE_VERIFY_FAILED` / self-signed chain | Office proxy TLS inspect. Prefer `DDO_API_CA_FILE=` corporate root `.pem`; temporary: `DDO_API_INSECURE_SSL=1` then re-drop Excel and re-run importer |
 | API / auth errors | Confirm token and `DDO_API_ENDPOINT` in `.env` |
 | eSSL `Start Download` not found | Close other windows; leave eSSL visible; retry |
 | Export file missing | Ensure `D:\Attendance` exists and is writable |
