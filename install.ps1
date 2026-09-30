@@ -34,6 +34,8 @@ Set-Location $Root
 
 $ProductName = "DDO++ Attendance Agent"
 $StartMenuDir = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\$ProductName"
+$RunNowShortcutName = "Run Attendance Now"
+$DesktopRunNowLink = Join-Path ([Environment]::GetFolderPath("Desktop")) "$RunNowShortcutName.lnk"
 
 function Write-Banner {
     Write-Host ""
@@ -174,7 +176,13 @@ function Install-StartMenuShortcuts([string]$Python, [string]$AttendanceDir) {
     New-Shortcut (Join-Path $StartMenuDir "View last import log.lnk") "notepad.exe" (Join-Path $Root "output\last_run.txt") (Join-Path $Root "output") "Open last_run.txt"
     New-Shortcut (Join-Path $StartMenuDir "Run importer now.lnk") $Python (Join-Path $Root "scripts\importer_script.py") $Root "Run importer once"
     New-Shortcut (Join-Path $StartMenuDir "Uninstall schedulers.lnk") "powershell.exe" "-NoProfile -ExecutionPolicy Bypass -File `"$(Join-Path $Root 'install.ps1')`" -Uninstall" $Root "Remove Task Scheduler jobs and shortcuts"
+
+    $runNowArgs = "-NoProfile -ExecutionPolicy Bypass -File `"$(Join-Path $Root 'scripts\run_now.ps1')`""
+    $runNowDesc = "Export from eSSL, then upload to DDO++ (use if the scheduled run was missed)"
+    New-Shortcut (Join-Path $StartMenuDir "$RunNowShortcutName.lnk") "powershell.exe" $runNowArgs $Root $runNowDesc
+    New-Shortcut $DesktopRunNowLink "powershell.exe" $runNowArgs $Root $runNowDesc
     Write-Host "Start Menu: $StartMenuDir"
+    Write-Host "Desktop:    $DesktopRunNowLink"
 }
 
 function Uninstall-Agent {
@@ -189,6 +197,10 @@ function Uninstall-Agent {
         Write-Host "Removed: $StartMenuDir"
     } else {
         Write-Host "No Start Menu folder found."
+    }
+    if (Test-Path $DesktopRunNowLink) {
+        Remove-Item -Force $DesktopRunNowLink
+        Write-Host "Removed: $DesktopRunNowLink"
     }
 
     Write-Host ""

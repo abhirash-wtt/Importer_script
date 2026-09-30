@@ -36,6 +36,7 @@ Importer_script/
     essl_export.py          <-- automate eSSL -> Excel
     importer_script.py      <-- Excel -> JSON -> API
     scheduler.ps1           <-- Task Scheduler wrapper for importer
+    run_now.ps1             <-- manual "Run Attendance Now" button (export, then import)
     install_daily_scheduler.ps1
     install_essl_export_scheduler.ps1
 
@@ -146,7 +147,7 @@ That install package will:
 8. **Register both Task Scheduler jobs** (every day):
    - `DDO-eSSL-Export` at **01:00** (1:00 AM) and **13:00** (1:00 PM)
    - `DDO-Attendance-Importer` at **01:10** and **13:10** (10 minutes after each export)
-9. Add **Start Menu** shortcuts under `DDO++ Attendance Agent`
+9. Add **Start Menu** shortcuts under `DDO++ Attendance Agent`, plus a **`Run Attendance Now`** button on the Desktop
 
 Skip scheduler registration if you only want packages/config:
 
@@ -285,6 +286,16 @@ python scripts\essl_export.py --export-name "Custom Name.xls"   # override defau
 **Skipped:** `USB`, `UGF IN 1` (add `UGF IN 1` back in `.env` when the device is fixed)
 
 **Important:** eSSL automation needs an **unlocked** interactive desktop (monitor off is OK; Win+L lock is not). Keep the eSSL window visible while it runs.
+
+### Manual run (if the scheduled run was missed)
+
+HR double-clicks **`Run Attendance Now`** on the Desktop (also in Start Menu → `DDO++ Attendance Agent`). It:
+
+1. Runs the eSSL export and waits for it to finish
+2. Runs the importer only if the export succeeded
+3. Shows a green **Done** or red **FAILED** message and waits for Enter
+
+It refuses to start if a scheduled run is already in progress. Don't touch the mouse or keyboard while eSSL is being automated.
 
 ### Schedule (optional)
 
