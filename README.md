@@ -111,6 +111,8 @@ ARCHIVE_KEEP=15
 # ESSL_SKIP_DEVICES=USB,UGF IN 1
 # ESSL_REPORT=monthly-basic
 # ESSL_COMPANY=WalkingTree
+# Max seconds to wait for device download; on timeout or "Unable to connect" it continues to the report
+# ESSL_DOWNLOAD_TIMEOUT=300
 ```
 
 ---

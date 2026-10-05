@@ -33,6 +33,7 @@ import logging
 import os
 import re
 import sys
+import threading
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -130,6 +131,10 @@ DONE_STATUS_RE = re.compile(
 )
 BUSY_STATUS_RE = re.compile(
     r"download|connecting|progress|running|busy|please wait|in progress",
+    re.I,
+)
+FAIL_STATUS_RE = re.compile(
+    r"unable|fail|error|not connect|timed? ?out|offline|disconnect",
     re.I,
 )
 
@@ -882,35 +887,71 @@ def _connect_main_fast():
     return None
 
 
+def _click_stop_download() -> None:
+    try:
+        main = _connect_main_fast()
+        stop = first_by_title(main, "Stop Download", "Button") if main is not None else None
+        if stop is not None and stop.is_enabled():
+            stop.click_input()
+            time.sleep(1.5)
+            LOGGER.info("Clicked Stop Download")
+    except Exception as exc:
+        LOGGER.warning("Could not click Stop Download: %s", exc)
+    dismiss_info_dialogs(timeout=3.0)
+
+
+def _poll_download_state(poll_timeout: float):
+    """
+    One poll of (busy, statuses), run in a worker thread so a hung UIA call
+    (eSSL UI thread blocked on an offline device) cannot stall the wait loop.
+    Returns None if the poll did not finish within poll_timeout.
+    """
+    result: dict = {}
+
+    def worker():
+        try:
+            main = _connect_main_fast()
+            if main is None:
+                return
+            result["state"] = (_download_busy(main), _status_texts(main))
+        except Exception as exc:
+            result["error"] = exc
+
+    t = threading.Thread(target=worker, daemon=True)
+    t.start()
+    t.join(poll_timeout)
+    if t.is_alive() or "state" not in result:
+        return None
+    return result["state"]
+
+
 def wait_download(main, timeout_sec: int, poll_sec: int = 5) -> None:
-    """Wait until device download finishes (not just a fixed sleep)."""
+    """
+    Wait until device download finishes. Uses wall-clock time, so slow or hung
+    UIA calls cannot stretch the wait past timeout_sec. Devices reporting
+    "Unable to connect" etc. count as finished (nothing more will arrive).
+    Raises TimeoutError on timeout; the caller decides whether to continue.
+    """
     LOGGER.info("Waiting for device download to finish (timeout %ss)...", timeout_sec)
-    elapsed = 0
+    start = time.monotonic()
     saw_busy = False
     stable_done = 0
 
-    while elapsed < timeout_sec:
+    while True:
         time.sleep(poll_sec)
-        elapsed += poll_sec
+        elapsed = int(time.monotonic() - start)
+        if elapsed >= timeout_sec:
+            break
 
-        # During download, full Desktop UIA scans can hang — use process connect.
-        refreshed = _connect_main_fast()
-        if refreshed is not None:
-            main = refreshed
-        else:
-            LOGGER.info("...%ss (reconnect deferred — still waiting)", elapsed)
+        state = _poll_download_state(poll_timeout=max(10.0, poll_sec * 3))
+        if state is None:
+            LOGGER.info("...%ss (eSSL not responding — still waiting)", elapsed)
+            stable_done = 0
             continue
-
-        try:
-            main.set_focus()
-        except Exception:
-            pass
-
-        busy = _download_busy(main)
-        statuses = _status_texts(main)
-        status_blob = " | ".join(s for s in statuses if s)
-        if status_blob:
-            LOGGER.info("...%ss status=[%s] busy=%s", elapsed, status_blob, busy)
+        busy, statuses = state
+        useful = [s for s in statuses if s and not s.lower().startswith("status row")]
+        if useful:
+            LOGGER.info("...%ss status=[%s] busy=%s", elapsed, " | ".join(useful), busy)
         else:
             LOGGER.info("...%ss busy=%s", elapsed, busy)
 
@@ -919,18 +960,23 @@ def wait_download(main, timeout_sec: int, poll_sec: int = 5) -> None:
             stable_done = 0
             continue
 
-        useful = [s for s in statuses[1:] if s and not s.lower().startswith("status row")]
         if useful:
-            if any(BUSY_STATUS_RE.search(s) for s in useful):
+            failed = [s for s in useful if FAIL_STATUS_RE.search(s)]
+            pending = [
+                s for s in useful
+                if s not in failed and BUSY_STATUS_RE.search(s) and not DONE_STATUS_RE.search(s)
+            ]
+            if pending:
                 stable_done = 0
                 continue
-            if all(DONE_STATUS_RE.search(s) for s in useful) or all(s.strip() for s in useful):
-                stable_done += 1
-            else:
-                stable_done = 0
-        elif saw_busy and not busy:
             stable_done += 1
-        elif elapsed >= min(45, timeout_sec) and not busy:
+            if failed and stable_done >= 2:
+                LOGGER.warning(
+                    "Device download problem (%s) — skipping download, continuing to report",
+                    " | ".join(failed),
+                )
+                return
+        elif saw_busy or elapsed >= min(45, timeout_sec):
             # Devices may finish with empty Status cells; require idle for a while
             stable_done += 1
         else:
@@ -1262,109 +1308,90 @@ def select_walking_tree_company(win) -> None:
     company_key = company_name.replace(" ", "").lower()
     LOGGER.info("Filtering company to: %s", company_name)
 
-    # 1) Enable Filter Company
-    for c in win.descendants(control_type="CheckBox"):
-        name = (c.window_text() or "").strip().lower()
-        if "filter company" in name:
-            try:
-                if c.get_toggle_state() == 0:
-                    c.click_input()
-                    time.sleep(0.4)
-                    LOGGER.info("Enabled Filter Company")
-            except Exception as exc:
-                LOGGER.warning("Could not toggle Filter Company: %s", exc)
-            break
+    def find_checkbox(label: str):
+        for c in win.descendants(control_type="CheckBox"):
+            if label in (c.window_text() or "").strip().lower():
+                return c
+        return None
 
-    # 2) Deselect All on the COMPANY list only (left list, not Department)
-    company_list = None
-    for lst in win.descendants(control_type="List"):
+    def toggle_state(c):
         try:
-            items = [i.window_text() or "" for i in lst.descendants(control_type="ListItem")]
+            return c.get_toggle_state()
         except Exception:
-            continue
-        joined = " ".join(items).lower().replace(" ", "")
-        if "walkingtree" in joined or "contractor" in joined:
-            company_list = lst
-            break
+            return None
 
-    deselected = False
-    if company_list is not None:
+    def set_checkbox(c, want: bool, label: str) -> None:
+        if c is None:
+            return
+        state = toggle_state(c)
+        if state is None or bool(state) == want:
+            return
+        c.click_input()
+        time.sleep(0.4)
+        LOGGER.info("%s %s", "Enabled" if want else "Disabled", label)
+
+    company_cb = find_checkbox("filter company")
+    dept_cb = find_checkbox("filter department")
+    if company_cb is None:
+        raise RuntimeError("Filter Company checkbox not found on the report filter")
+
+    # Department filter must stay off, otherwise eSSL demands at least one department.
+    set_checkbox(dept_cb, False, "Filter Department")
+    set_checkbox(company_cb, True, "Filter Company")
+
+    # The company list and its Select/Deselect All radios sit in the column under
+    # "Filter Company", left of "Filter Department". Match by position, never by order.
+    cb_rect = company_cb.rectangle()
+    col_left = cb_rect.left - 30
+    col_right = dept_cb.rectangle().left - 10 if dept_cb is not None else cb_rect.left + 250
+
+    def in_company_column(ctrl) -> bool:
         try:
-            list_rect = company_list.rectangle()
+            r = ctrl.rectangle()
         except Exception:
-            list_rect = None
-        for c in win.descendants(control_type="RadioButton"):
-            name = (c.window_text() or "").strip().lower()
-            if name != "deselect all":
-                continue
-            try:
-                r = c.rectangle()
-                # Company Deselect All sits under the company list (x near list left)
-                if list_rect is not None and abs(r.left - list_rect.left) > 80:
-                    continue
-                c.click_input()
-                time.sleep(0.4)
-                LOGGER.info("Clicked company Deselect All")
-                deselected = True
-                break
-            except Exception as exc:
-                LOGGER.warning("Deselect All click failed: %s", exc)
-    if not deselected:
-        # Fallback: first enabled Deselect All
-        for c in win.descendants(control_type="RadioButton"):
-            if (c.window_text() or "").strip().lower() != "deselect all":
-                continue
-            try:
-                c.click_input()
-                time.sleep(0.4)
-                LOGGER.info("Clicked Deselect All (fallback)")
-                deselected = True
-                break
-            except Exception:
-                pass
-    if not deselected:
-        LOGGER.warning("Deselect All radio not found")
+            return False
+        return col_left <= r.left < col_right and r.top > cb_rect.top
 
-    # 3) Select WalkingTree in the company list
-    selected = False
-    search_roots = [company_list] if company_list is not None else [win]
-    for root in search_roots:
-        if root is None:
-            continue
-        for c in root.descendants(control_type="ListItem"):
-            name = (c.window_text() or "").strip()
-            if name.replace(" ", "").lower() != company_key:
-                continue
-            try:
-                c.click_input()
-                time.sleep(0.4)
-                LOGGER.info("Selected company: %s", name)
-                selected = True
-                break
-            except Exception as exc:
-                LOGGER.warning("Could not click company %s: %s", name, exc)
-        if selected:
-            break
+    deselect = [
+        c for c in win.descendants(control_type="RadioButton")
+        if (c.window_text() or "").strip().lower() == "deselect all" and in_company_column(c)
+    ]
+    if not deselect:
+        raise RuntimeError("Company 'Deselect All' not found under Filter Company")
+    deselect[0].click_input()
+    time.sleep(0.4)
+    LOGGER.info("Clicked company Deselect All")
 
-    if not selected:
-        # Last resort: any ListItem matching across the dialog
-        for c in win.descendants(control_type="ListItem"):
-            name = (c.window_text() or "").strip()
-            if name.replace(" ", "").lower() == company_key:
-                try:
-                    c.click_input()
-                    time.sleep(0.4)
-                    LOGGER.info("Selected company (global): %s", name)
-                    selected = True
-                    break
-                except Exception as exc:
-                    LOGGER.warning("Could not click company %s: %s", name, exc)
-
-    if not selected:
+    items = [c for c in win.descendants(control_type="ListItem") if in_company_column(c)]
+    LOGGER.info("Company list: %s", [(c.window_text() or "").strip() for c in items])
+    target = next(
+        (c for c in items if (c.window_text() or "").strip().replace(" ", "").lower() == company_key),
+        None,
+    )
+    if target is None:
         raise RuntimeError(
-            f"Company '{company_name}' not found/selected in Filter Company list. "
-            "Refusing to Generate (would show 'Please select Atleast One Company')."
+            f"Company '{company_name}' not found in Filter Company list. "
+            "Set ESSL_COMPANY in .env to the exact company name."
         )
+
+    def is_selected(c):
+        try:
+            return bool(c.is_selected())
+        except Exception:
+            return None
+
+    if is_selected(target) is not True:
+        target.click_input()
+        time.sleep(0.4)
+    if is_selected(target) is False:
+        raise RuntimeError(f"Could not select company '{company_name}' in Filter Company list")
+    LOGGER.info("Selected company: %s", (target.window_text() or "").strip())
+
+    # Radio clicks can re-enable the department filter on some builds; check again.
+    dept_cb = find_checkbox("filter department")
+    set_checkbox(dept_cb, False, "Filter Department")
+    if dept_cb is not None and toggle_state(dept_cb) == 1:
+        raise RuntimeError("Filter Department is still ticked; refusing to Generate")
 
 
 def generate_report(main, report: str | None = None, timeout: float = 30.0) -> None:
@@ -1967,9 +1994,13 @@ def run(args: argparse.Namespace) -> int:
         if args.select_only:
             LOGGER.info("Select-only mode complete - inspect device checkboxes, then run without --select-only.")
             return 0
-        # Always Start Download after selection, then wait until finished
-        click_start_download(main)
-        wait_download(main, args.download_timeout)
+        # Device download is best-effort: on any problem, still export what eSSL already has.
+        try:
+            click_start_download(main)
+            wait_download(main, args.download_timeout)
+        except Exception as exc:
+            LOGGER.warning("Device download skipped (%s) — continuing to report", exc)
+            _click_stop_download()
         if args.sync_only:
             LOGGER.info("Sync-only mode complete.")
             main = ensure_plain_ui(main)
@@ -2023,11 +2054,17 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--export-dir", default=None, help="Excel output folder")
     p.add_argument("--export-name", default=None, help="Output file name only (not full path)")
     p.add_argument("--devices", nargs="+", default=None, help="Device names to keep selected")
-    p.add_argument("--download-timeout", type=int, default=600, help="Max seconds to wait for device download")
+    p.add_argument(
+        "--download-timeout",
+        type=int,
+        default=int(os.getenv("ESSL_DOWNLOAD_TIMEOUT", "300")),
+        help="Max seconds to wait for device download before continuing to the report",
+    )
     return p
 
 
 def main() -> int:
+    load_dotenv()
     args = build_parser().parse_args()
     try:
         return run(args)
