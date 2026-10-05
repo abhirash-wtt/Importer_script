@@ -660,17 +660,7 @@ def first_by_title(parent, title: str, control_type: str):
     return matches[0]
 
 
-def _row_device_name(main, idx: int) -> str:
-    """Read Device Name cell value for row idx (UIA name is only a label)."""
-    cells = [
-        c
-        for c in main.descendants(control_type="DataItem")
-        if (c.window_text() or "") == f"Device Name Row {idx}"
-    ]
-    if not cells:
-        known = ["USB", "LGF OUT", "LGF IN", "UGF OUT", "UGF IN 1"]
-        return known[idx] if 0 <= idx < len(known) else ""
-    cell = cells[0]
+def _cell_value(cell) -> str:
     try:
         if hasattr(cell, "iface_value") and cell.iface_value is not None:
             value = str(cell.iface_value.CurrentValue or "").strip()
@@ -685,8 +675,42 @@ def _row_device_name(main, idx: int) -> str:
             return value
     except Exception:
         pass
-    known = ["USB", "LGF OUT", "LGF IN", "UGF OUT", "UGF IN 1"]
-    return known[idx] if 0 <= idx < len(known) else ""
+    return ""
+
+
+def _row_device_name(main, idx: int) -> str:
+    """Read Device Name cell value for row idx (UIA name is only a label)."""
+    cells = [
+        c
+        for c in main.descendants(control_type="DataItem")
+        if (c.window_text() or "") == f"Device Name Row {idx}"
+    ]
+    if not cells:
+        return ""
+    return _cell_value(cells[0])
+
+
+def _row_checked(main, idx: int) -> bool | None:
+    """Checkbox state of Device List row idx, or None if it cannot be read."""
+    cells = [
+        c
+        for c in main.descendants(control_type="DataItem")
+        if (c.window_text() or "") == f" Row {idx}"
+    ]
+    if not cells:
+        return None
+    cells.sort(key=lambda c: c.rectangle().left)
+    cell = cells[0]
+    value = _cell_value(cell).upper()
+    if value in {"TRUE", "CHECKED", "1"}:
+        return True
+    if value in {"FALSE", "UNCHECKED", "0"}:
+        return False
+    try:
+        state = int((cell.legacy_properties() or {}).get("State") or 0)
+        return bool(state & 0x10)  # STATE_SYSTEM_CHECKED
+    except Exception:
+        return None
 
 
 def _click_row_checkbox(main, idx: int) -> bool:
@@ -712,66 +736,71 @@ def _click_row_checkbox(main, idx: int) -> bool:
             return False
 
 
+def _scan_device_rows(main) -> list[tuple[int, str, bool | None]]:
+    rows = []
+    for idx in range(0, 30):
+        main = _connect_main_fast() or main
+        has_row = any(
+            (c.window_text() or "") == f" Row {idx}"
+            for c in main.descendants(control_type="DataItem")
+        )
+        if not has_row:
+            break
+        rows.append((idx, _row_device_name(main, idx), _row_checked(main, idx)))
+    return rows
+
+
 def select_devices(main, wanted: list[str], skip: list[str]) -> None:
     """
-    Select-all via header checkbox, then uncheck skipped devices (USB, UGF IN 1, ...).
-    Confirmed office layout: USB, LGF OUT, LGF IN, UGF OUT, UGF IN 1.
+    Make the Device List checkboxes match .env exactly, whatever eSSL remembered
+    from the last session: ESSL_DEVICES ticked, everything else unticked.
+    ESSL_SKIP_DEVICES always wins. With no ESSL_DEVICES, every row not skipped is ticked.
+    Raises if the final state cannot be confirmed, so we never download from wrong devices.
     """
+    wanted_upper = {w.strip().upper() for w in wanted if w.strip()}
     skip_upper = {s.strip().upper() for s in skip if s.strip()}
-    LOGGER.info("Selecting devices (wanted=%s skip=%s)", wanted, sorted(skip_upper))
+    LOGGER.info("Selecting devices (wanted=%s skip=%s)", sorted(wanted_upper), sorted(skip_upper))
     main = _connect_main_fast() or main
     main.set_focus()
     time.sleep(0.5)
 
-    header = None
-    for c in main.descendants(control_type="CheckBox"):
-        name = _device_name(c)
-        try:
-            r = c.rectangle()
-        except Exception:
-            continue
-        # Header select-all is the tiny unnamed checkbox above the grid
-        if not name and r.top < 140 and r.left < 40 and r.width() <= 24:
-            header = c
-            break
+    def should_check(name: str) -> bool:
+        key = name.strip().upper()
+        if not key or key in skip_upper:
+            return False
+        return key in wanted_upper if wanted_upper else True
 
-    if header is not None:
-        LOGGER.info("Clicking header select-all checkbox")
-        header.click_input()
-        time.sleep(0.8)
-    else:
-        LOGGER.warning("Header checkbox not found")
+    rows = _scan_device_rows(main)
+    if not rows:
+        raise RuntimeError("No device rows found in Device Management")
 
-    # Reconnect after select-all — UIA tree goes stale and row DataItems disappear otherwise
-    main = _connect_main_fast() or main
+    for idx, name, checked in rows:
+        target = should_check(name)
+        LOGGER.info("Row %s device=%r checked=%s target=%s", idx, name, checked, target)
+        if checked is None:
+            raise RuntimeError(f"Cannot read checkbox state for row {idx} ({name!r})")
+        if checked != target:
+            if not _click_row_checkbox(main, idx):
+                raise RuntimeError(f"Failed to click checkbox for row {idx} ({name!r})")
+            time.sleep(0.45)
+            main = _connect_main_fast() or main
+
     time.sleep(0.4)
-
-    unchecked = []
-    for idx in range(0, 12):
-        main = _connect_main_fast() or main
-        cells = [
-            c
-            for c in main.descendants(control_type="DataItem")
-            if (c.window_text() or "") == f" Row {idx}"
-        ]
-        if not cells:
-            if idx == 0:
-                LOGGER.warning("No device rows found after select-all")
-            break
-        device = _row_device_name(main, idx)
-        LOGGER.info("Row %s device=%r", idx, device)
-        if device.upper() in skip_upper:
-            if _click_row_checkbox(main, idx):
-                LOGGER.info("Unchecked row %s (%s)", idx, device)
-                unchecked.append(device)
-                time.sleep(0.45)
-            else:
-                LOGGER.warning("Failed to uncheck row %s (%s)", idx, device)
-
-    if not unchecked and skip_upper:
-        LOGGER.warning("No skip devices were unchecked (expected %s)", sorted(skip_upper))
-    else:
-        LOGGER.info("Skip devices unchecked: %s", unchecked)
+    main = _connect_main_fast() or main
+    final = _scan_device_rows(main)
+    wrong = [(name, checked) for _, name, checked in final if checked != should_check(name)]
+    ticked = [name for _, name, checked in final if checked]
+    LOGGER.info("Devices ticked after selection: %s", ticked)
+    if wrong:
+        raise RuntimeError(f"Device selection does not match .env: {wrong}")
+    if wanted_upper and not ticked:
+        raise RuntimeError(
+            f"None of ESSL_DEVICES {sorted(wanted_upper)} were found in Device Management "
+            f"(rows: {[name for _, name, _ in final]})"
+        )
+    missing = wanted_upper - {name.strip().upper() for name in ticked}
+    if missing:
+        LOGGER.warning("ESSL_DEVICES not found in Device Management: %s", sorted(missing))
 
     if first_by_title(main, "Start Download", "Button") is not None:
         LOGGER.info("Device Management ready (Start Download visible)")
