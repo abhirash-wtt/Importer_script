@@ -74,11 +74,31 @@ def _force_foreground(handle_or_wrapper) -> None:
         user32 = ctypes.windll.user32
         # Allow focus steal from this process briefly
         user32.AllowSetForegroundWindow(0xFFFFFFFF)  # ASFW_ANY
-        user32.ShowWindow(hwnd, 9)  # SW_RESTORE
+        # SW_RESTORE un-maximizes the window back to a small saved size.
+        if user32.IsIconic(hwnd):
+            user32.ShowWindow(hwnd, 9)  # SW_RESTORE
+        else:
+            user32.ShowWindow(hwnd, 5)  # SW_SHOW
         user32.SetForegroundWindow(hwnd)
         user32.BringWindowToTop(hwnd)
     except Exception:
         pass
+
+
+def _maximize_main(main) -> None:
+    """Open eTimeTrackLite full-screen. A restored window is the wrong size."""
+    if main is None or not ctypes:
+        return
+    try:
+        hwnd = int(getattr(main, "handle", main))
+        user32 = ctypes.windll.user32
+        if user32.IsIconic(hwnd):
+            user32.ShowWindow(hwnd, 9)
+        if not user32.IsZoomed(hwnd):
+            user32.ShowWindow(hwnd, 3)  # SW_MAXIMIZE
+            LOGGER.info("Maximized eTimeTrackLite window")
+    except Exception as exc:
+        LOGGER.warning("Could not maximize eTimeTrackLite: %s", exc)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 LOG_DIR = REPO_ROOT / "logs"
@@ -356,11 +376,28 @@ def ensure_plain_ui(main, max_rounds: int = 12):
         if _click_dialog_close_buttons(main):
             continue
 
-        # 2) Close MDI report viewers / Device Management tabs
+        # 2) Close MDI report viewers / Device Management tabs.
+        # Ctrl+F4 only works when eSSL has the keyboard, so scheduled runs
+        # since 10 Oct left Device Management open and the report never opened.
         if "[" in title:
-            LOGGER.info("Closing MDI child via Ctrl+F4: %s", title)
-            send_keys("^{F4}")
-            time.sleep(0.5)
+            closed = False
+            try:
+                close_all = [
+                    c
+                    for c in main.descendants(control_type="MenuItem")
+                    if (c.window_text() or "").strip() == "Close All"
+                ]
+                if close_all:
+                    close_all[0].invoke()
+                    LOGGER.info("Closed open pages via Windows -> Close All")
+                    time.sleep(0.6)
+                    closed = True
+            except Exception as exc:
+                LOGGER.warning("Close All failed (%s) — trying Ctrl+F4", exc)
+            if not closed:
+                LOGGER.info("Closing MDI child via Ctrl+F4: %s", title)
+                send_keys("^{F4}")
+                time.sleep(0.5)
             continue
 
         # 3) Any leftover named child windows?
@@ -1981,8 +2018,8 @@ def run(args: argparse.Namespace) -> int:
     do_login(user, password)
 
     main = find_main_window(timeout=30)
-    main.set_focus()
-    time.sleep(0.5)
+    _maximize_main(main)
+    time.sleep(0.3)
 
     if args.login_only:
         LOGGER.info("Login-only mode complete.")
