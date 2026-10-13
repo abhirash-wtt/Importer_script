@@ -1,15 +1,28 @@
-﻿# Manual "Run attendance now" button for HR (use when the scheduled run was missed).
+﻿# Export from eSSL, then upload to DDO++.
 #
 # Step 1: eSSL export (scripts\essl_export.py) -> D:\Attendance\{Month} {Location}.xls
-# Step 2: importer (scripts\scheduler.ps1) -> DDO++ API, only if step 1 succeeded
+# Step 2: importer (scripts\scheduler.ps1) -> DDO++ API
 #
-# Started from the "Run Attendance Now" Desktop / Start Menu shortcut created by Setup.bat.
+# Manual (HR "Run Attendance Now" shortcut):
+#   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run_now.ps1
+#   Skips step 2 if step 1 failed, waits for Enter at the end.
+#
+# Scheduled (DDO-eSSL-Export task action, including catch-up after a missed start):
+#   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run_now.ps1 -Scheduled
+#   No prompts; always runs step 2 so files HR dropped manually still upload.
+
+param(
+    [switch]$Scheduled,
+    [switch]$SkipSync
+)
 
 $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Root = Split-Path -Parent $ScriptDir
 Set-Location $Root
-$Host.UI.RawUI.WindowTitle = "DDO++ Attendance - Run Now"
+if (-not $Scheduled) {
+    $Host.UI.RawUI.WindowTitle = "DDO++ Attendance - Run Now"
+}
 
 function Write-Banner([string]$Text, [string]$Color = "Cyan") {
     Write-Host ""
@@ -43,21 +56,25 @@ function Test-TaskRunning([string]$TaskName) {
 }
 
 function Wait-AndExit([int]$Code) {
-    Write-Host ""
-    Read-Host "Press Enter to close this window"
+    if (-not $Scheduled) {
+        Write-Host ""
+        Read-Host "Press Enter to close this window"
+    }
     exit $Code
 }
 
-Write-Banner "DDO++ Attendance - Run Now"
+Write-Banner "DDO++ Attendance - $(if ($Scheduled) { 'Scheduled run' } else { 'Run Now' })"
 Write-Host " Step 1: Export attendance from eSSL"
 Write-Host " Step 2: Upload it to DDO++"
 Write-Host ""
 Write-Host " Do not use the mouse/keyboard while eSSL is being automated." -ForegroundColor Yellow
 
-foreach ($taskName in @("DDO-eSSL-Export", "DDO-Attendance-Importer")) {
-    if (Test-TaskRunning $taskName) {
-        Write-Banner "The scheduled run ($taskName) is already running. Try again in 15 minutes." "Yellow"
-        Wait-AndExit 2
+if (-not $Scheduled) {
+    foreach ($taskName in @("DDO-eSSL-Export", "DDO-Attendance-Importer")) {
+        if (Test-TaskRunning $taskName) {
+            Write-Banner "The scheduled run ($taskName) is already running. Try again in 15 minutes." "Yellow"
+            Wait-AndExit 2
+        }
     }
 }
 
@@ -69,13 +86,18 @@ try {
 }
 
 Write-Banner "Step 1/2: eSSL export (this can take several minutes)"
-& $python (Join-Path $Root "scripts\essl_export.py")
+$exportArgs = @((Join-Path $Root "scripts\essl_export.py"))
+if ($SkipSync) { $exportArgs += "--skip-sync" }
+& $python @exportArgs
 $exportCode = $LASTEXITCODE
 if ($exportCode -ne 0) {
-    Write-Banner "Step 1 FAILED (exit code $exportCode). Upload was NOT started." "Red"
+    Write-Banner "Step 1 FAILED (exit code $exportCode)." "Red"
     Write-Host " Log: $(Join-Path $Root 'logs\essl_export.log')"
-    Write-Host " Please inform the dev team."
-    Wait-AndExit $exportCode
+    if (-not $Scheduled) {
+        Write-Host " Upload was NOT started. Please inform the dev team."
+        Wait-AndExit $exportCode
+    }
+    Write-Host " Continuing to upload any Excel already in the drop folder."
 }
 
 Write-Banner "Step 2/2: Uploading attendance to DDO++"
@@ -88,5 +110,8 @@ if ($importCode -ne 0) {
     Wait-AndExit $importCode
 }
 
+if ($exportCode -ne 0) {
+    Wait-AndExit $exportCode
+}
 Write-Banner "Done. Attendance exported and uploaded successfully." "Green"
 Wait-AndExit 0

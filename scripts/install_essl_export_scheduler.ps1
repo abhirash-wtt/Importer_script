@@ -19,7 +19,7 @@ $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Root = Split-Path -Parent $ScriptDir
 $Script = Join-Path $Root "scripts\essl_export.py"
-$Python = (Get-Command python -ErrorAction Stop).Source
+$Chain = Join-Path $Root "scripts\run_now.ps1"
 
 if ($Unregister) {
     Unregister-ScheduledTask -TaskName $TaskName -Confirm:$false -ErrorAction SilentlyContinue
@@ -30,17 +30,22 @@ if ($Unregister) {
 if (-not (Test-Path $Script)) {
     throw "essl_export.py not found in $Root\scripts"
 }
+if (-not (Test-Path $Chain)) {
+    throw "run_now.ps1 not found in $Root\scripts"
+}
 
 if ($At) {
     $DailyTimes = @($At)
 }
 
-$argsList = @($Script)
-if ($SkipSync) { $argsList += "--skip-sync" }
+# Export then import in one task, so a catch-up run after a missed start
+# (power cut, PC off) uploads straight after the export instead of racing it.
+$argsList = "-NoProfile -ExecutionPolicy Bypass -File `"$Chain`" -Scheduled"
+if ($SkipSync) { $argsList += " -SkipSync" }
 
 $action = New-ScheduledTaskAction `
-    -Execute $Python `
-    -Argument ($argsList -join " ") `
+    -Execute "powershell.exe" `
+    -Argument $argsList `
     -WorkingDirectory $Root
 
 $trigger = foreach ($time in $DailyTimes) {
@@ -55,7 +60,7 @@ $settings = New-ScheduledTaskSettingsSet `
 $principal = New-ScheduledTaskPrincipal -UserId $env:USERNAME -LogonType Interactive -RunLevel Limited
 
 $timesLabel = $DailyTimes -join " and "
-$description = "Export attendance Excel from eSSL eTimeTrackLite into D:\Attendance daily at $timesLabel (From=To=today)."
+$description = "Export attendance from eSSL into D:\Attendance, then upload to DDO++, daily at $timesLabel (catches up after a missed start)."
 
 Register-ScheduledTask `
     -TaskName $TaskName `
@@ -66,9 +71,8 @@ Register-ScheduledTask `
     -Description $description `
     -Force | Out-Null
 
-Write-Host "Registered $TaskName daily at $timesLabel"
-Write-Host "  python: $Python"
-Write-Host "  script: $Script"
+Write-Host "Registered $TaskName daily at $timesLabel (export, then import)"
+Write-Host "  action: powershell.exe $argsList"
 Write-Host "  dates: From=To=today (local PC date); override with ESSL_REPORT_DATE=YYYY-MM-DD"
 Write-Host "Run once now:"
 Write-Host "  python scripts\essl_export.py --login-only"

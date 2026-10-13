@@ -32,7 +32,9 @@ if ($Unregister) {
 }
 
 $action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$Scheduler`"" -WorkingDirectory $Root
-$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable -MultipleInstances IgnoreNew
+# No StartWhenAvailable: catch-up after a missed start is done by DDO-eSSL-Export,
+# which runs the import right after its export. Catching up here too would race the export.
+$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -MultipleInstances IgnoreNew
 
 if ($EveryMinutes -gt 0) {
     $startTime = $DailyTimes[0]
