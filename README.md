@@ -237,12 +237,13 @@ On **Monthly Status Report** filter dialog, before Generate:
 3. Tick **Filter Company**
 4. Click **Deselect All**
 5. Click **WalkingTree** only
-6. Click **Generate**
-7. Export / Save As Excel into `D:\Attendance` (old file of the same name is moved to `D:\Attendance\previous\`)
+6. Tick **Recalculate Attendance** (otherwise eSSL can report stale status / in-out times)
+7. Click **Generate**
+8. Export / Save As Excel into `D:\Attendance` (old file of the same name is moved to `D:\Attendance\previous\`)
    - Archived name looks like `Sep Agra_20260918_121824.xls`
    - The number is a timestamp: **`YYYYMMDD_HHMMSS`** when it was replaced  
      (e.g. `20260918_121824` = 18 Sep 2026 at 12:18:24). Not an employee/device ID.
-8. Run importer: `python scripts\importer_script.py`
+9. Run importer: `python scripts\importer_script.py`
 
 Filtering to Walking Tree keeps the file smaller and avoids API payload limits.
 
@@ -336,7 +337,7 @@ After a scheduled run, check:
 3. Close dialogs until the main window is plain  
 4. Attendance Reports → Monthly Reports → Monthly Status → **Report Type = Basic Work Duration**  
    then set **From Date = To Date = today** (local date; override with `ESSL_REPORT_DATE`)
-   then **Filter Company → Deselect All → WalkingTree → Generate**  
+   then **Filter Company → Deselect All → WalkingTree → tick Recalculate Attendance → Generate**  
 5. Export Excel into `ATTENDANCE_DIR` as `{Month} {Location}.xls` (previous file is moved to `ATTENDANCE_DIR\previous\`)  
 6. Close dialogs → Log Off (3rd toolbar icon) → Close on login dialog  
 

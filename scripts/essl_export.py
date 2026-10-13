@@ -1132,14 +1132,36 @@ def select_monthly_basic_work_duration(win) -> None:
             LOGGER.warning(
                 "Could not set Report Type to Basic Work Duration — Generate may use current type"
             )
-    for c in win.descendants(control_type="CheckBox"):
-        name = (c.window_text() or "").strip().lower()
-        if "recalculate" in name:
-            try:
-                LOGGER.info("Recalculate checkbox present: %s", c.window_text())
-            except Exception:
-                pass
-            break
+
+
+def ensure_recalculate_attendance(win) -> None:
+    """
+    Tick "Recalculate Attendance" before Generate. Without it eSSL can report stale
+    status/in/out values for punches downloaded since the last recalculation.
+    """
+    box = next(
+        (
+            c for c in win.descendants(control_type="CheckBox")
+            if "recalculate" in (c.window_text() or "").strip().lower()
+        ),
+        None,
+    )
+    if box is None:
+        raise RuntimeError("Recalculate Attendance checkbox not found; refusing to Generate")
+    try:
+        state = box.get_toggle_state()
+    except Exception:
+        state = None
+    if state != 1:
+        box.click_input()
+        time.sleep(0.4)
+        try:
+            state = box.get_toggle_state()
+        except Exception:
+            state = None
+    if state != 1:
+        raise RuntimeError("Could not tick Recalculate Attendance; refusing to Generate")
+    LOGGER.info("Recalculate Attendance is ticked")
 
 
 def _format_essl_date(day) -> str:
@@ -1464,6 +1486,8 @@ def generate_report(main, report: str | None = None, timeout: float = 30.0) -> N
         set_report_date_range(win)  # From=To=today (1 AM & 1 PM runs)
         time.sleep(0.3)
         select_walking_tree_company(win)
+        time.sleep(0.3)
+        ensure_recalculate_attendance(win)
         time.sleep(0.3)
 
     dismiss_info_dialogs(timeout=2.0)
