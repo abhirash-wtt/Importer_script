@@ -1246,8 +1246,36 @@ def _clip(text, limit=500):
 
 
 def move_to_processed(file):
+    # Keep a stamped copy in ATTENDANCE_DIR\previous\ so HR can always find
+    # today's file in the drop-folder area (eSSL also uses this folder for its
+    # own backups, so both systems share the same history location).
+    _copy_to_attendance_previous(file)
     _move_file(file, CONFIG["processed_dir"])
     _prune_folder_keep_newest(CONFIG["processed_dir"], CONFIG.get("archive_keep", 15))
+
+
+def _copy_to_attendance_previous(file: str) -> None:
+    """Copy the processed Excel to ATTENDANCE_DIR\\previous\\ with a timestamp.
+
+    This mirrors what essl_export.py does before overwriting the drop file,
+    so the previous\\ folder always has a complete per-run history regardless
+    of whether eSSL or the importer ran last.
+    """
+    attendance_dir = (CONFIG.get("attendance_dir") or "").strip()
+    if not attendance_dir:
+        return
+    source = Path(file)
+    previous_dir = Path(attendance_dir) / "previous"
+    try:
+        previous_dir.mkdir(parents=True, exist_ok=True)
+        stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        dest = previous_dir / f"{source.stem}_{stamp}{source.suffix}"
+        shutil.copy2(str(source), str(dest))
+        LOGGER.info("Archived processed copy -> %s", dest)
+        # Keep the same 5-file cap that essl_export.py uses for this folder
+        _prune_folder_keep_newest(str(previous_dir), int(os.getenv("PREVIOUS_FOLDER_MAX_FILES", "5")))
+    except Exception as exc:
+        LOGGER.warning("Could not archive to previous\\: %s", exc)
 
 
 def move_to_failed(file):
