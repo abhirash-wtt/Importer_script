@@ -1,17 +1,17 @@
 # Registers a Windows Task Scheduler job that runs scripts\scheduler.ps1.
 #
-# Default: every day at 01:10 and 13:10 (10 minutes after eSSL export at 01:00 / 13:00)
+# Default: every day at 12:00 (noon) and 00:00 (midnight) — 10 minutes after eSSL export at 11:50 / 23:50
 #   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1
 #
 # Custom times:
-#   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1 -DailyTimes 01:10,13:10
+#   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1 -DailyTimes 12:00,00:00
 #
 # Remove the task:
 #   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1 -Unregister
 
 param(
     [string]$TaskName = "DDO-Attendance-Importer",
-    [string[]]$DailyTimes = @("01:10", "13:10"),
+    [string[]]$DailyTimes = @("12:00", "00:00"),
     [int]$EveryMinutes = 0,
     [switch]$Unregister
 )
@@ -32,9 +32,9 @@ if ($Unregister) {
 }
 
 $action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$Scheduler`"" -WorkingDirectory $Root
-# No StartWhenAvailable: catch-up after a missed start is done by DDO-eSSL-Export,
-# which runs the import right after its export. Catching up here too would race the export.
-$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -MultipleInstances IgnoreNew
+# StartWhenAvailable: catch up after a missed start (power cut). scheduler.ps1 waits for
+# DDO-eSSL-Export first if it is running or has not yet run for its slot.
+$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable -MultipleInstances IgnoreNew
 
 if ($EveryMinutes -gt 0) {
     $startTime = $DailyTimes[0]

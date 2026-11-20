@@ -5,6 +5,18 @@
 #   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\scheduler.ps1
 #
 # Every run appends to output\scheduler_runs.log (works even when Task Scheduler History is off).
+#
+# Before importing it waits for the DDO-eSSL-Export task if that task is running or has not
+# run yet for its latest scheduled slot (e.g. both tasks catching up after a power cut),
+# so the import never runs ahead of the new Excel. -NoWait skips this (Run Attendance Now
+# has already run its own export).
+
+param(
+    [switch]$NoWait,
+    [string]$ExportTaskName = "DDO-eSSL-Export",
+    [int]$MaxWaitMinutes = 30,
+    [int]$PollSeconds = 15
+)
 
 $ErrorActionPreference = "Stop"
 
@@ -21,7 +33,50 @@ function Write-RunLog([string]$Message) {
     Add-Content -Path $runLog -Value $Message -Encoding UTF8
 }
 
+function Get-LatestSlot($Task, [datetime]$Now) {
+    $latest = $null
+    foreach ($trigger in $Task.Triggers) {
+        if (-not $trigger.StartBoundary) { continue }
+        $time = ([datetime]$trigger.StartBoundary).TimeOfDay
+        $slot = $Now.Date + $time
+        if ($slot -gt $Now) { $slot = $slot.AddDays(-1) }
+        if (-not $latest -or $slot -gt $latest) { $latest = $slot }
+    }
+    return $latest
+}
+
+function Test-ExportPending([string]$TaskName) {
+    $task = Get-ScheduledTask -TaskName $TaskName -ErrorAction SilentlyContinue
+    if (-not $task) { return $false }
+    if ($task.State -eq "Running") { return $true }
+    $slot = Get-LatestSlot $task (Get-Date)
+    if (-not $slot) { return $false }
+    $lastRun = (Get-ScheduledTaskInfo -TaskName $TaskName).LastRunTime
+    return (-not $lastRun -or $lastRun -lt $slot)
+}
+
+function Wait-ForExport([string]$TaskName, [int]$MaxMinutes, [int]$Poll) {
+    if (-not (Test-ExportPending $TaskName)) { return }
+    Write-RunLog "Waiting for $TaskName (running or not yet run for its latest slot), max $MaxMinutes min"
+    $deadline = (Get-Date).AddMinutes($MaxMinutes)
+    while ((Get-Date) -lt $deadline) {
+        Start-Sleep -Seconds $Poll
+        if (-not (Test-ExportPending $TaskName)) {
+            Write-RunLog "$TaskName finished; continuing with import"
+            return
+        }
+    }
+    Write-RunLog "Gave up waiting for $TaskName after $MaxMinutes min; importing what is in the drop folder"
+}
+
 Write-RunLog "===== START $started pid=$PID ====="
+if (-not $NoWait) {
+    try {
+        Wait-ForExport $ExportTaskName $MaxWaitMinutes $PollSeconds
+    } catch {
+        Write-RunLog ("Export wait check failed (continuing): " + $_.Exception.Message)
+    }
+}
 
 try {
     function Find-Python {

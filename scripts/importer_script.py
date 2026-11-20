@@ -87,6 +87,36 @@ STATUS_MAP = {
     "EFH": "WORK_FROM_HOME",
 }
 
+# ---------------------------------------------------------------------------
+# Raw-status cleaning for the DDO++ API
+# ---------------------------------------------------------------------------
+# eSSL exports sometimes prepend a garbage byte (╜ = U+255C, from a split
+# Windows-1252 / OLE multi-byte sequence) to status cells like "CLP", "CL",
+# "ELP".  The API rejects "╜CLP" but accepts "CLP".
+#
+# NOTE: We deliberately do NOT remap unknown codes (FBL, H, WOP, ML, etc.)
+# here.  Those are eSSL status codes that must be mapped/supported on the
+# DDO++ API (receiving) side.  This function only strips encoding artefacts.
+
+
+def _clean_raw_status_for_api(raw: str) -> str:
+    """Strip OLE/Windows-1252 encoding garbage from an eSSL status cell value.
+
+    eSSL .xls files occasionally prepend a non-alphabetic byte (╜, ½, BOM,
+    etc.) to status codes like 'CLP' or 'EL', producing '╜CLP'.  The DDO++
+    API rejects those values.  This function strips any leading non-alpha
+    characters so '╜CLP' → 'CLP', '╜ELP' → 'ELP', etc.
+
+    Code remapping (FBL, H, WOP, ML …) is intentionally NOT done here —
+    those codes must be handled on the receiving API side.
+
+    If stripping leaves an empty string (e.g. a cell that was entirely
+    garbage bytes) the original raw value is returned so callers can still
+    log it.
+    """
+    clean = re.sub(r"^[^A-Za-z]+", "", raw or "").strip()
+    return clean if clean else raw
+
 DEPARTMENT_NAMES = {
     "delivery", "ta", "sales & bd", "marketing", "hr", "f&a", "management", "it", "default",
 }
@@ -1041,8 +1071,19 @@ def _post_attendance_chunk(
             )
 
         if attempt < max_retries:
-            delay = min(2 ** (attempt - 1), 8)
-            LOGGER.info("Retrying DDO++ API POST in %s seconds", delay)
+            # Gateway errors (502/503) mean the upstream server is restarting.
+            # Use a much longer back-off so it can recover before the next try.
+            # All other transient errors keep the original short exponential delay.
+            if last_status_code in (502, 503):
+                delay = min(30 * attempt, 90)  # 30 s → 60 s → 90 s
+                LOGGER.info(
+                    "Retrying DDO++ API POST in %s seconds (HTTP %s — gateway back-off)",
+                    delay,
+                    last_status_code,
+                )
+            else:
+                delay = min(2 ** (attempt - 1), 8)  # 1 s → 2 s → 4 s
+                LOGGER.info("Retrying DDO++ API POST in %s seconds", delay)
             time.sleep(delay)
 
     batch.api_result = {
@@ -1303,11 +1344,14 @@ def _days_from_grouped(period, grouped):
     days = []
     for idx, day_date in enumerate(period["dates"]):
         raw = statuses[idx] if idx < len(statuses) else ""
+        # Clean raw_status before it reaches the API: strip OLE encoding
+        # garbage prefixes (╜, ½, etc.) and remap unknown codes (FBL→EL).
+        raw_api = _clean_raw_status_for_api(raw)
         days.append(
             DayRecord(
                 date=day_date,
-                status=_normalize_status(raw),
-                raw_status=raw,
+                status=_normalize_status(raw),   # still uses original for local STATUS_MAP lookup
+                raw_status=raw_api,              # cleaned value sent to DDO++ API
                 header=period["day_headers"][idx],
                 in_time=_parse_time(in_times[idx] if idx < len(in_times) else ""),
                 out_time=_parse_time(out_times[idx] if idx < len(out_times) else ""),

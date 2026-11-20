@@ -14,7 +14,7 @@ echo    - Install Python 3 if missing (via winget)
 echo    - Install required Python packages
 echo    - Create folders and .env
 echo    - Create the attendance drop folder
-echo    - Register Task Scheduler: eSSL 01:00+13:00, importer 01:10+13:10 (daily)
+echo    - Register Task Scheduler: eSSL 11:50+23:50, importer 12:00+00:00 (daily)
 echo    - Add Start Menu shortcuts + "Run Attendance Now" Desktop button
 echo.
 echo  Right-click -^> Run as administrator if Task Scheduler fails.

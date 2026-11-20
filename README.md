@@ -147,9 +147,9 @@ That install package will:
 6. Create the attendance drop folder (`D:\Attendance` by default)  
 7. Open Notepad so you can set `LOCATION_CODE` and the API token  
 8. **Register both Task Scheduler jobs** (every day):
-   - `DDO-eSSL-Export` at **01:00** (1:00 AM) and **13:00** (1:00 PM): exports from eSSL, then runs the importer straight away
-   - `DDO-Attendance-Importer` at **01:10** and **13:10**: backup upload (e.g. Excel HR dropped in by hand)
-   - If the PC was off at the scheduled time (power cut), `DDO-eSSL-Export` runs as soon as the PC is back and logged in, and uploads right after its export. The importer job does not catch up on its own, so it can't run before the new file exists.
+   - `DDO-eSSL-Export` at **11:50** (11:50 AM) and **23:50** (11:50 PM): export from eSSL only
+   - `DDO-Attendance-Importer` at **12:00** (noon) and **00:00** (midnight): upload whatever Excel is in the drop folder
+   - If the PC was off at the scheduled time (power cut), both jobs run as soon as the PC is back and logged in. The importer first waits (up to 30 min) while `DDO-eSSL-Export` is running or has not yet run for its latest slot, so it never uploads before the new file exists.
 9. Add **Start Menu** shortcuts under `DDO++ Attendance Agent`, plus a **`Run Attendance Now`** button on the Desktop
 
 Skip scheduler registration if you only want packages/config:
@@ -233,7 +233,7 @@ python scripts\importer_script.py --location NOIDA "C:\path\to\report.xls"
 On **Monthly Status Report** filter dialog, before Generate:
 
 1. Report Type = **Basic Work Duration**
-2. **From Date** = **To Date** = **today** (local PC date; both 1 AM and 1 PM runs use the same calendar day so afternoon upserts refresh morning punches)
+2. **From Date** = **To Date** = **today** (local PC date; both the 11:50 AM and 11:50 PM runs use the same calendar day so the evening run upserts and refreshes the morning punches)
 3. Tick **Filter Company**
 4. Click **Deselect All**
 5. Click **WalkingTree** only
@@ -303,13 +303,13 @@ It refuses to start if a scheduled run is already in progress. Don't touch the m
 
 ### Schedule (optional)
 
-Importer (default **daily** at **01:10** and **13:10**, backup upload; no catch-up after a missed start):
+Importer (default **daily** at **12:00** noon and **00:00** midnight; catches up after a missed start and waits for the export first):
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_daily_scheduler.ps1
 ```
 
-eSSL export + import (default **daily** at **01:00** and **13:00**, catches up after a missed start; session logged on + unlocked; monitor may be off):
+eSSL export only (default **daily** at **11:50** AM and **23:50** (11:50 PM), catches up after a missed start; session logged on + unlocked; monitor may be off):
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_essl_export_scheduler.ps1

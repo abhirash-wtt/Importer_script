@@ -1,14 +1,14 @@
 # Register daily Task Scheduler job for eSSL -> Excel export (pywinauto).
 #
-# Default: every day at 01:00 (1 AM) and 13:00 (1 PM)
+# Default: every day at 11:50 (11:50 AM) and 23:50 (11:50 PM)
 #
 #   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_essl_export_scheduler.ps1
 #   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_essl_export_scheduler.ps1 -Unregister
-#   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_essl_export_scheduler.ps1 -DailyTimes 01:00,13:00
+#   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_essl_export_scheduler.ps1 -DailyTimes 11:50,23:50
 
 param(
     [string]$TaskName = "DDO-eSSL-Export",
-    [string[]]$DailyTimes = @("01:00", "13:00"),
+    [string[]]$DailyTimes = @("11:50", "23:50"),
     # Legacy single-time alias (if set, overrides DailyTimes to one value)
     [string]$At = "",
     [switch]$Unregister,
@@ -19,7 +19,25 @@ $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Root = Split-Path -Parent $ScriptDir
 $Script = Join-Path $Root "scripts\essl_export.py"
-$Chain = Join-Path $Root "scripts\run_now.ps1"
+
+function Find-Python {
+    foreach ($dir in @(
+        "${env:ProgramFiles}\Python313",
+        "${env:ProgramFiles}\Python312",
+        "${env:ProgramFiles}\Python311",
+        "${env:ProgramFiles}\Python310",
+        "${env:LOCALAPPDATA}\Programs\Python\Python313",
+        "${env:LOCALAPPDATA}\Programs\Python\Python312",
+        "${env:LOCALAPPDATA}\Programs\Python\Python311",
+        "${env:LOCALAPPDATA}\Programs\Python\Python310"
+    )) {
+        $exe = Join-Path $dir "python.exe"
+        if (Test-Path $exe) { return $exe }
+    }
+    $cmd = Get-Command python -ErrorAction SilentlyContinue
+    if ($cmd -and $cmd.Source -notmatch 'WindowsApps') { return $cmd.Source }
+    throw "Python 3 was not found. Re-run Setup.bat."
+}
 
 if ($Unregister) {
     Unregister-ScheduledTask -TaskName $TaskName -Confirm:$false -ErrorAction SilentlyContinue
@@ -30,21 +48,18 @@ if ($Unregister) {
 if (-not (Test-Path $Script)) {
     throw "essl_export.py not found in $Root\scripts"
 }
-if (-not (Test-Path $Chain)) {
-    throw "run_now.ps1 not found in $Root\scripts"
-}
 
 if ($At) {
     $DailyTimes = @($At)
 }
 
-# Export then import in one task, so a catch-up run after a missed start
-# (power cut, PC off) uploads straight after the export instead of racing it.
-$argsList = "-NoProfile -ExecutionPolicy Bypass -File `"$Chain`" -Scheduled"
-if ($SkipSync) { $argsList += " -SkipSync" }
+# Export only. DDO-Attendance-Importer uploads separately and waits for this task if needed.
+$Python = Find-Python
+$argsList = "`"$Script`""
+if ($SkipSync) { $argsList += " --skip-sync" }
 
 $action = New-ScheduledTaskAction `
-    -Execute "powershell.exe" `
+    -Execute $Python `
     -Argument $argsList `
     -WorkingDirectory $Root
 
@@ -60,7 +75,7 @@ $settings = New-ScheduledTaskSettingsSet `
 $principal = New-ScheduledTaskPrincipal -UserId $env:USERNAME -LogonType Interactive -RunLevel Limited
 
 $timesLabel = $DailyTimes -join " and "
-$description = "Export attendance from eSSL into D:\Attendance, then upload to DDO++, daily at $timesLabel (catches up after a missed start)."
+$description = "Export attendance Excel from eSSL eTimeTrackLite into D:\Attendance daily at $timesLabel — 11:50 AM and 11:50 PM (catches up after a missed start)."
 
 Register-ScheduledTask `
     -TaskName $TaskName `
@@ -71,8 +86,8 @@ Register-ScheduledTask `
     -Description $description `
     -Force | Out-Null
 
-Write-Host "Registered $TaskName daily at $timesLabel (export, then import)"
-Write-Host "  action: powershell.exe $argsList"
+Write-Host "Registered $TaskName daily at $timesLabel (export only)"
+Write-Host "  action: $Python $argsList"
 Write-Host "  dates: From=To=today (local PC date); override with ESSL_REPORT_DATE=YYYY-MM-DD"
 Write-Host "Run once now:"
 Write-Host "  python scripts\essl_export.py --login-only"

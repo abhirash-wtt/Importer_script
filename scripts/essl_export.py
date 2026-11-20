@@ -332,26 +332,101 @@ def close_mdi_children(main, max_rounds: int = 8) -> None:
     time.sleep(0.2)
 
 
+def _press(ctrl, what: str, invoke_first: bool = True, invoke_timeout: float = 5.0) -> bool:
+    """
+    Press a button. UIA Invoke needs no mouse/focus, so it still works when the
+    screen is locked or another window has focus; click_input is the fallback.
+    Invoke runs in a worker thread because it blocks if the button opens a modal.
+    """
+
+    def try_invoke() -> bool:
+        result: dict = {}
+
+        def worker():
+            try:
+                ctrl.invoke()
+                result["ok"] = True
+            except Exception as exc:
+                result["error"] = exc
+
+        t = threading.Thread(target=worker, daemon=True)
+        t.start()
+        t.join(invoke_timeout)
+        if t.is_alive():
+            LOGGER.info("%s: invoke still running after %.0fs (modal opened)", what, invoke_timeout)
+            return True
+        if result.get("ok"):
+            return True
+        LOGGER.warning("%s: invoke failed (%s)", what, result.get("error"))
+        return False
+
+    def try_click() -> bool:
+        try:
+            ctrl.click_input()
+            return True
+        except Exception as exc:
+            LOGGER.warning("%s: click failed (%s)", what, exc)
+            return False
+
+    order = (try_invoke, try_click) if invoke_first else (try_click, try_invoke)
+    return any(step() for step in order)
+
+
 def _click_dialog_close_buttons(main) -> bool:
-    """Click Close only on filter dialogs that also have Generate (e.g. Monthly/Daily Status Report)."""
-    for c in list(main.descendants(control_type="Window")):
+    """
+    Close the report viewer, then its filter dialog (Monthly/Daily Status Report).
+    The viewer is modal over the filter dialog, so the filter's Close is disabled until it goes.
+    """
+    windows = list(main.descendants(control_type="Window"))
+    viewers, filters = [], []
+    for c in windows:
         title = (c.window_text() or "").strip()
         if not title or "eTimeTrackLite" in title:
             continue
         buttons = list(c.descendants(control_type="Button"))
         labels = [(b.window_text() or "").strip() for b in buttons]
-        if "Generate" not in labels or "Close" not in labels:
+        if "Close" not in labels:
             continue
+        if "Generate" in labels:
+            filters.append((title, c, buttons))
+        elif "Report" in title:
+            viewers.append((title, c, buttons))
+
+    for title, _c, buttons in viewers:
         for b in buttons:
             if (b.window_text() or "").strip() != "Close":
                 continue
-            try:
-                LOGGER.info("Closing filter dialog: %s", title)
-                b.click_input()
+            LOGGER.info("Closing report viewer: %s", title)
+            if _press(b, "Report viewer Close"):
                 time.sleep(0.6)
                 return True
-            except Exception:
+
+    for title, c, buttons in filters:
+        try:
+            if not c.is_enabled():
                 continue
+        except Exception:
+            pass
+        closes = [b for b in buttons if (b.window_text() or "").strip() == "Close"]
+        closes.sort(key=lambda b: b.element_info.automation_id != "btn_Close")
+        for b in closes:
+            LOGGER.info("Closing filter dialog: %s", title)
+            if _press(b, "Filter dialog Close"):
+                time.sleep(0.6)
+                return True
+    return False
+
+
+def _invoke_close_all(main) -> bool:
+    """Windows -> Close All via UIA (no keyboard focus needed)."""
+    try:
+        for c in main.descendants(control_type="MenuItem"):
+            if (c.window_text() or "").strip() == "Close All":
+                c.invoke()
+                time.sleep(0.6)
+                return True
+    except Exception as exc:
+        LOGGER.warning("Close All failed (%s)", exc)
     return False
 
 
@@ -380,21 +455,9 @@ def ensure_plain_ui(main, max_rounds: int = 12):
         # Ctrl+F4 only works when eSSL has the keyboard, so scheduled runs
         # since 10 Oct left Device Management open and the report never opened.
         if "[" in title:
-            closed = False
-            try:
-                close_all = [
-                    c
-                    for c in main.descendants(control_type="MenuItem")
-                    if (c.window_text() or "").strip() == "Close All"
-                ]
-                if close_all:
-                    close_all[0].invoke()
-                    LOGGER.info("Closed open pages via Windows -> Close All")
-                    time.sleep(0.6)
-                    closed = True
-            except Exception as exc:
-                LOGGER.warning("Close All failed (%s) — trying Ctrl+F4", exc)
-            if not closed:
+            if _invoke_close_all(main):
+                LOGGER.info("Closed open pages via Windows -> Close All")
+            else:
                 LOGGER.info("Closing MDI child via Ctrl+F4: %s", title)
                 send_keys("^{F4}")
                 time.sleep(0.5)
@@ -408,9 +471,12 @@ def ensure_plain_ui(main, max_rounds: int = 12):
                 leftover_title = ct
                 break
         if leftover_title:
-            LOGGER.info("Closing leftover child via Ctrl+F4: %s", leftover_title)
-            send_keys("^{F4}")
-            time.sleep(0.5)
+            if _invoke_close_all(main):
+                LOGGER.info("Closing leftover child via Windows -> Close All: %s", leftover_title)
+            else:
+                LOGGER.info("Closing leftover child via Ctrl+F4: %s", leftover_title)
+                send_keys("^{F4}")
+                time.sleep(0.5)
             continue
 
         title = main.window_text() or ""
@@ -471,7 +537,13 @@ def do_logout(main) -> None:
     if btn is None:
         raise RuntimeError("Log Off (3rd toolbar icon) not found after closing dialogs.")
 
-    btn.click_input()
+    # Never Invoke here: it blocks eSSL's UI thread behind the modal Login dialog,
+    # and then the Login Close button cannot be pressed either.
+    try:
+        btn.click_input()
+    except Exception as exc:
+        LOGGER.warning("Log Off click failed (%s) — closing the app instead", exc)
+        return
     time.sleep(1.2)
 
     # Confirm Yes/OK if a prompt appears
@@ -502,42 +574,67 @@ def close_login_or_app() -> None:
     LOGGER.info("Clicking Close on login dialog (final step)")
     time.sleep(0.8)
 
+    pids = _essl_pids()
     login = find_login_window(timeout=8)
     if login is not None:
+        btn = None
         try:
-            login.set_focus()
+            btn = login.child_window(auto_id="btn_Close", control_type="Button").wrapper_object()
         except Exception:
-            pass
-        time.sleep(0.3)
-        try:
-            close_btn = login.child_window(auto_id="btn_Close", control_type="Button")
-            if close_btn.exists(timeout=1):
-                close_btn.click_input()
-                time.sleep(1.0)
-                LOGGER.info("Login dialog Close clicked")
-                return
-        except Exception:
-            pass
-        btn = first_by_title(login, "Close", "Button")
-        if btn is not None:
-            btn.click_input()
-            time.sleep(1.0)
+            btn = first_by_title(login, "Close", "Button")
+        if btn is not None and _press(btn, "Login dialog Close", invoke_first=False, invoke_timeout=3.0):
             LOGGER.info("Login dialog Close clicked")
-            return
+            if _wait_essl_exit(pids, 10):
+                return
+    else:
+        LOGGER.warning("Login dialog not found after Log Off")
 
-    # Fallback: Alt+F4 on any remaining eTimeTrack window
+    # Fallback: Alt+F4, then WM_CLOSE, on the remaining eTimeTrack window
     main = _connect_main_fast()
     if main is not None:
         try:
             main.set_focus()
             send_keys("%{F4}")
-            time.sleep(1.0)
             LOGGER.info("Sent Alt+F4 to close application")
+        except Exception as exc:
+            LOGGER.warning("Alt+F4 failed (%s)", exc)
+        if _wait_essl_exit(pids, 8):
             return
-        except Exception:
-            pass
+        if ctypes:
+            for w in Desktop(backend="win32").windows():
+                try:
+                    if w.process_id() in pids:
+                        ctypes.windll.user32.PostMessageW(w.handle, 0x0010, 0, 0)  # WM_CLOSE
+                except Exception:
+                    pass
+            LOGGER.info("Sent WM_CLOSE to eTimeTrackLite windows")
+            if _wait_essl_exit(pids, 10):
+                return
 
-    LOGGER.warning("Could not find Login Close button — app may still be open")
+    if _essl_pids():
+        LOGGER.warning("eTimeTrackLite is still open after Log Off — close it manually")
+
+
+def _essl_pids() -> set[int]:
+    pids = set()
+    try:
+        for w in Desktop(backend="win32").windows():
+            if "eTimeTrack" in (w.window_text() or ""):
+                pids.add(w.process_id())
+    except Exception:
+        pass
+    return pids
+
+
+def _wait_essl_exit(pids: set[int], timeout: float) -> bool:
+    """True once none of the given eTimeTrackLite processes has a window left."""
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        if not (pids & _essl_pids()):
+            LOGGER.info("eTimeTrackLite closed")
+            return True
+        time.sleep(0.5)
+    return False
 
 
 def menu_click(main, *path: str) -> None:
@@ -1638,6 +1735,7 @@ def _find_export_flyout(export_rect, timeout: float = 4.0):
     different popup class/position — match by proximity, not a single class.
     """
     deadline = time.time() + timeout
+    weak = None
     while time.time() < deadline:
         for backend in ("win32", "uia"):
             try:
@@ -1667,19 +1765,25 @@ def _find_export_flyout(export_rect, timeout: float = 4.0):
                     continue
                 cls_l = cls.lower()
                 title_l = title.lower()
-                looks_like_menu = (
+                # Hovering Export shows a tooltip (and its drop shadow) right under it;
+                # never treat those as the menu.
+                if "tooltip" in cls_l or "sysshadow" in cls_l:
+                    continue
+                strong = (
                     "20808" in cls_l
                     or "dropdown" in cls_l
                     or "popup" in cls_l
                     or cls in {"#32768", "ToolbarWindow32"}
                     or "excel" in title_l
                     or "export" in title_l
-                    or (not title and wr.height() <= 120)
                 )
-                if looks_like_menu:
+                if strong:
                     return w
+                if weak is None and not title and wr.height() <= 120:
+                    weak = w
         time.sleep(0.15)
-    return None
+    # Untitled small window near Export: only used when no real menu class showed up.
+    return weak
 
 
 def _click_flyout_excel_items(popup) -> bool:
@@ -1722,14 +1826,60 @@ def _click_flyout_excel_items(popup) -> bool:
     return False
 
 
+def _click_visible_excel_item(essl_pid) -> bool:
+    """
+    Click an on-screen "Excel" menu item in eSSL's own windows. Hidden menu items keep
+    their text in the UI tree, so only items actually visible with a real on-screen
+    rectangle are clicked (clicking a hidden one sends the mouse to a random spot).
+    """
+    if essl_pid is None:
+        return False
+    for backend in ("uia", "win32"):
+        try:
+            windows = Desktop(backend=backend).windows()
+        except Exception:
+            continue
+        for w in windows:
+            try:
+                if w.process_id() != essl_pid:
+                    continue
+                nodes = w.descendants()
+            except Exception:
+                continue
+            for mi in nodes:
+                try:
+                    text = (mi.window_text() or "").strip().lower()
+                    if "excel" not in text or not mi.is_visible():
+                        continue
+                    r = mi.rectangle()
+                    if r.width() <= 0 or r.height() <= 0 or r.left < 0 or r.top < 0:
+                        continue
+                    mi.click_input()
+                except Exception:
+                    continue
+                LOGGER.info("Clicked on-screen Excel item: %s at %s", text, r)
+                time.sleep(1.0)
+                if _find_save_as_dialog(timeout=3):
+                    return True
+    return False
+
+
 def _open_save_as_via_export(export_item) -> bool:
     """Try several Export click patterns until Save As appears (11.x and 12.x)."""
     rect = export_item.rectangle()
+    try:
+        essl_pid = export_item.process_id()
+    except Exception:
+        essl_pid = None
+    # Chevron first: on 12.x only the dropdown arrow opens the Excel flyout; on builds where
+    # Export is a plain button, a click at its right edge is still a normal button click.
     clicks = [
-        ("center", (rect.mid_point().x, rect.mid_point().y)),
         ("chevron-right", (max(rect.left + 4, rect.right - 2), rect.mid_point().y)),
+        ("center", (rect.mid_point().x, rect.mid_point().y)),
         ("label-left", (rect.left + min(24, max(8, rect.width() // 3)), rect.mid_point().y)),
     ]
+    # The first click on Export often only activates the toolbar; the next click opens the
+    # flyout. So each attempt is one click, then wait for a real menu or Save As.
     for name, coords in clicks:
         LOGGER.info("Export open attempt: %s click=%s", name, coords)
         try:
@@ -1739,45 +1889,23 @@ def _open_save_as_via_export(export_item) -> bool:
         mouse.click(coords=coords)
         time.sleep(0.6)
 
-        popup = _find_export_flyout(rect, timeout=3.5)
+        popup = _find_export_flyout(rect, timeout=3.0)
         if popup is not None:
             if _click_flyout_excel_items(popup):
                 return True
         else:
-            LOGGER.info("No Export flyout after %s — checking Save As / Excel menu items", name)
+            LOGGER.info("No Export flyout after %s click", name)
 
         # Some builds open Save As directly from Export (no flyout)
-        if _find_save_as_dialog(timeout=2):
+        if _find_save_as_dialog(timeout=1.5):
             LOGGER.info("Save As appeared directly after Export click (%s)", name)
             return True
 
-        # Visible Excel menu items anywhere
-        for backend in ("uia", "win32"):
-            try:
-                for w in Desktop(backend=backend).windows():
-                    try:
-                        nodes = w.descendants()
-                    except Exception:
-                        continue
-                    for mi in nodes:
-                        try:
-                            text = (mi.window_text() or "").strip().lower()
-                        except Exception:
-                            continue
-                        if "excel" not in text:
-                            continue
-                        try:
-                            mi.click_input()
-                            LOGGER.info("Clicked on-screen Excel item: %s", text)
-                            time.sleep(1.0)
-                            if _find_save_as_dialog(timeout=3):
-                                return True
-                        except Exception:
-                            continue
-            except Exception:
-                continue
-
-        # Double-click Export as last try for this strategy
+    # Last resorts, only after every single-click attempt failed.
+    if _click_visible_excel_item(essl_pid):
+        return True
+    for name, coords in clicks:
+        LOGGER.info("Export open attempt: double-click %s", name)
         mouse.double_click(coords=coords)
         time.sleep(0.8)
         if _find_save_as_dialog(timeout=2.5):
